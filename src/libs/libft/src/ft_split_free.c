@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2025/03/20 19:58:41 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:48:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/**
+ * Frees an ARRAY of STRINGS, usually allocated by ft_split().
+ * @param split The ARRAY of STRINGS to free.
+ */
+void	*ft_split_free(char **split)
 {
-	t_rtapp	app;
+	int	i;
 
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	i = -1;
+	if (split)
+	{
+		while (split[++i])
+			free(split[i]);
+		free(split);
+	}
+	return (NULL);
 }

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 17:26:21 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:09:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/**
+ * Searches for a pointer to the last LIST node to be found.
+ * @param lst The starting node.
+ * @return A pointer to the last LIST node.
+ * @note If the starting node doesn't exists, returns NULL.
+ */
+t_list	*ft_lstlast(t_list *lst)
 {
-	t_rtapp	app;
-
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
 }

@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstsize_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 17:19:46 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:14:04 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/**
+ * Counts the amount of node included on a LIST.
+ * @param lst The starting node where to start counting.
+ * @return An int with the amount of nodes inside of the LIST.
+ */
+int	ft_lstsize(t_list *lst)
 {
-	t_rtapp	app;
+	int	i;
 
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

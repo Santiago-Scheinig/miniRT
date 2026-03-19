@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 14:10:37 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:28:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/**
+ * Writes a character into a specific file descriptor.
+ * @param c The character to be printed.
+ * @param fd The file descriptor to print into.
+ * @return The amount of characters printed.
+ */
+int	ft_putchar_fd(char c, int fd)
 {
-	t_rtapp	app;
-
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	return (write(fd, &c, 1));
 }

@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/14 19:45:14 by sscheini          #+#    #+#             */
+/*   Updated: 2024/09/14 20:49:38 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-
-int	main(int argc, char **argv)
+int	ft_toupper(int c)
 {
-	t_rtapp	app;
-
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	if (c >= 'a' && c <= 'z')
+		return (c - 32);
+	return (c);
 }

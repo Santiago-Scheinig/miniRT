@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstadd_front_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 16:59:50 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:03:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "libft.h"
 
-int	main(int argc, char **argv)
+/**
+ * Adds a LIST node at the start of a LIST HEAD.
+ * @param lst The LIST HEAD where to add the new node.
+ * @param new The new LIST node to add.
+ * @note The previous node at the start of the LIST HEAD is set
+ * as the next node of the new LIST HEAD.
+ */
+void	ft_lstadd_front(t_list **lst, t_list *new)
 {
-	t_rtapp	app;
-
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	new->next = lst[0];
+	lst[0] = new;
 }

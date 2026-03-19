@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:46:04 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 12:53:51 by sscheini          #+#    #+#             */
+/*   Updated: 2025/05/27 21:52:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-
-int	main(int argc, char **argv)
+/**
+ * Iterates a FUNCTION on every character of a STRING.
+ * @param s The STRING to iterate into.
+ * @param f The FUNCTION to iterate on every character of the STRING.
+ * @note This function modifies the original STRING, doesn't 
+ * allocate a new one.
+ */
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	t_rtapp	app;
+	int		i;
 
-	app = rtapp_init(argv);
-	if (!app)
-		return (appfree(app));
-	if (!rtapp_render(app))
-		return (appfree(app));
-	if (!rtapp_run(app.img))
-		return (appfree(app));
-	if (!rtapp_kill(app))
-		return (appfree(app));
-	return (0);
+	i = 0;
+	while (s[i])
+	{
+		(*f)(i, &s[i]);
+		i++;
+	}
 }
