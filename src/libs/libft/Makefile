@@ -56,6 +56,7 @@ SRC		=	$(SRCDIR)ft_argjoin.c					\
 			$(SRCDIR)ft_tolower.c					\
 			$(SRCDIR)ft_toupper.c					\
 			$(SRCDIR)ft_utoa_base.c					\
+			$(SRCDIR)ft_vprintfd.c					\
 			$(SRCDIR)get_next_line.c				\
 			$(SRCDIR)get_next_line_utils.c			\
 #
