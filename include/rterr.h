@@ -6,30 +6,32 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 18:27:31 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:56:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <errno.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/wait.h>
 
 typedef enum e_logtype
 {
-	RTLOG_LOG = 1,
-	RTLOG_ERR,
+	RT_LOG = 1,
+	RT_ERRLOG,
 }	t_logtype;
 
 typedef enum e_rterr
 {
-	RTERR_SUCCESS,
-	RTERR_FAILURE,
-	RTERR_INVARGC,
-	RTERR_INVCHAR,
-	RTERR_INVARGV,
-	RTERR_LOGINIT,
-	RTERR_MEMINIT,
+	RT_SUCCESS,
+	RT_FAILURE,
 }	t_rterr;
 
-void	log(t_logtype type, pid_t pid, const char *fmt, ...);
+typedef struct s_rtlog
+{
+	int	orig_outfd;
+	int	orig_errfd;
+}	t_rtlog;
+
+void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...);

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2025/05/27 22:57:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 18:51:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -399,7 +399,6 @@ void	*ft_split_free(char **split);
 typedef struct s_list
 {
 	void			*content;
-	void			**vectors;
 	struct s_list	*next;
 }	t_list;
 

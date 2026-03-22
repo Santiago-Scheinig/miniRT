@@ -6,35 +6,42 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 18:34:47 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:36:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rterr.h"
 
-static int	get_ms()
+static void	print_hms_timestamp(pid_t pid, int fd)
 {
 	struct timeval	tv;
-	
+	long			total_sec;
+	long			hours;
+	long			minutes;
+	long			seconds;
+
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_sec / 1000);
+	total_sec = tv.tv_sec;
+	hours = (total_sec / 3600) % 24;
+	minutes = (total_sec / 60) % 60;
+	seconds = total_sec % 60;
+	ft_printfd(fd, "[%02d:%02d:%02d][%d]", hours, minutes, seconds, pid);
 }
 
-void	log(t_logtype type, pid_t pid, const char *fmt, ...)
+void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 {
-	va_list	args;
-	long	ms;
-	int		fd;
-
-	if (type == RTLOG_ERR)
+	va_list			args;
+	int				fd;
+	
+	if (type == RT_ERRLOG)
 		fd = STDERR_FILENO;
 	else
 		fd = STDOUT_FILENO;
 	va_start(args, fmt);
-	if (type == RTLOG_ERR)
+	if (type == RT_ERRLOG)
 		ft_printfd(fd, "ERROR\n");
-	ft_printfd(fd, "[%010ldms][pid:%d]", get_ms(), pid);
-	if (type == RTLOG_LOG)
+	print_hms_timestamp(pid, fd);
+	if (type == RT_LOG)
 		ft_printfd(fd, "[INFO]");
 	ft_printfd(fd, ": ");
 	ft_vprintfd(fd, fmt, args);

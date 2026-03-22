@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 17:20:20 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:45:30 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,16 @@ int	main(int argc, char **argv)
 {
 	t_rtapp	app;
 
-	if (!rtapp_init(argc, argv, &app))
-		return (appfree(&app));
+	memset(&app, 0, sizeof(t_rtapp));
+	if (rtapp_init(argc, argv, &app))
+	{
+		rtapp_kill(&app);
+		return (RT_FAILURE);
+	}
 /* 	if (!rtapp_render(app))
 		return (appfree(app));
 	if (!rtapp_run(app.img))
 		return (appfree(app)); */
-	if (!rtapp_kill(&app))
-		return (appfree(&app));
-	return (0);
+	rtapp_kill(&app);
+	return (RT_SUCCESS);
 }

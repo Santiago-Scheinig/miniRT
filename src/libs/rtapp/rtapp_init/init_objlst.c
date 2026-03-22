@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 17:17:22 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 19:50:58 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp.h"
 
-int	init_objlst(t_list *lines, t_rtapp *app)
+/* int	init_objlst(t_list *lines, t_rtapp *app)
 {
-	
-}
+	rtlog(RTLOG_LOG, 0, "Running app...");
+} */
