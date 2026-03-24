@@ -1,10 +1,11 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
 SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_log.c		\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_file.c	\
 			$(SRCDIR)$(APPDIR)rtapp_init/init_objlst.c	\
-			$(SRCDIR)$(APPDIR)rtapp_init/parser.c		\
 			$(SRCDIR)$(APPDIR)rtapp.c					\
 			$(SRCDIR)$(ERRDIR)rterr_log.c				\
+			$(SRCDIR)$(ELMDIR)sphere.c					\
 
 BSRC	=	#- *_bonus.c															-#
 

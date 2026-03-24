@@ -40,6 +40,7 @@ SRC		=	$(SRCDIR)ft_argjoin.c					\
 			$(SRCDIR)ft_read_file.c					\
 			$(SRCDIR)ft_split.c						\
 			$(SRCDIR)ft_split_free.c				\
+			$(SRCDIR)ft_split_base.c				\
 			$(SRCDIR)ft_strchr.c					\
 			$(SRCDIR)ft_strdup.c					\
 			$(SRCDIR)ft_strlen.c					\

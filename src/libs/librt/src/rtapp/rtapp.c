@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 18:12:44 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:35:41 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,17 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 		rtlog(RT_ERRLOG, 0, "Invalid number of arguments");
 		return (RT_FAILURE);
 	}
-	aux = parser(argv[1]);
+	aux = init_file(argv[1]);
 	if (!aux)
 		return (RT_FAILURE);
 	app->objects = aux;
 	app->logfd.orig_outfd = -1;
 	app->logfd.orig_errfd = -1;
-	if (init_log(app))
-		return (RT_SUCCESS);
 	if (init_objlst(aux, app))
 		return (RT_FAILURE);
-	rtlog(RT_ERRLOG, 0, "objects list initialized.");
-	rtlog(RT_ERRLOG, 0, "rtapp_init successfully executed.");
+	rtlog(RT_LOG, 0, "objects list initialized.");
+	if (init_log(app))
+		return (RT_SUCCESS);
 	return (RT_SUCCESS);
 }
 

@@ -1,20 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp_init.h                                       :+:      :+:    :+:   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 18:57:11 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/24 20:29:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-#include "libft.h"
-
-t_list	*init_file(char *file);
-
-int		init_log(t_rtapp *app);
-
-int		init_objlst(t_list *lines, t_rtapp *app);
+void	*new_cylinder(char **str)
+{
+	(void) str;
+	return (NULL);
+}

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 16:52:51 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 20:33:38 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,10 @@
 
 typedef enum e_elements
 {
-	PLANE,
-	CYLINDER,
-	SPHERE,
+	INV = -1,
+	PL,
+	CY,
+	SP,
 }	t_elements;
 
 typedef struct s_elem_light_p
@@ -68,5 +69,7 @@ typedef struct s_elem_light_a
 	float		ratio;
 	int			rgb;
 }	t_elem_light_a;
+
+void	*new_sphere(char *str);
 
 #endif

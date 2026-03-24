@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:51:07 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 17:36:26 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 19:31:26 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	dup2_logs(int log_fd, int errlog_fd, t_rtapp *app)
 {
-	//log("[ms][pid]: STDOUT_FILENO, STDERR_FILENO fds redirected to log.txt, errlog.txt files respectibly.");
 	if (log_fd != -1)
 	{
 		if (dup2(log_fd, STDOUT_FILENO) == -1)
@@ -34,7 +33,7 @@ static void	dup2_logs(int log_fd, int errlog_fd, t_rtapp *app)
 		}
 		close(errlog_fd);
 	}
-	rtlog(RT_LOG, 0, "STDERR_FILENO fd redirected to log.txt");
+	rtlog(RT_LOG, 0, "STDERR_FILENO fd redirected to errlog.txt");
 }
 
 int	init_log(t_rtapp *app)

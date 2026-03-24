@@ -1,20 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp_init.h                                       :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 18:57:11 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/24 20:29:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-#include "libft.h"
+#include <stdio.h>
 
-t_list	*init_file(char *file);
-
-int		init_log(t_rtapp *app);
-
-int		init_objlst(t_list *lines, t_rtapp *app);
+void	*new_sphere(char **str)
+{
+	(void) str;
+	return (NULL);
+}

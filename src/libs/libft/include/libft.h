@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 18:51:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:52:55 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ size_t	ft_strlen(const char *s);
  * NULL terminated.
  */
 char	**ft_split(char const *s, char c);
+
+/**
+ * Splits a STRING into an ARRAY of STRINGS, using an array of 
+ * divisor characters.
+ * @param s The STRING to split.
+ * @param c_str The array of characters which divides each word.
+ * @return An ARRAY of STRINGS that includes every divided word and is 
+ * NULL terminated.
+ */
+char	**ft_split_base(char const *s, char *c_str);
 
 /**
  * Splits a STRING into an ARRAY of STRINGS, using a divisor character.
