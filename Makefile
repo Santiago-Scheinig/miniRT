@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/03/22 20:27:57 by sscheini         ###   ########.fr        #
+#    Updated: 2026/03/24 17:15:43 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,16 @@ NAME_BONUS = miniRT_bonus
 
 #	Source files
 MAIN_SRC =	$(SOURCE_DIR)/main.c								\
-			$(SOURCE_DIR)/libs/rtapp/rtapp.c					\
-			$(SOURCE_DIR)/libs/rterr/rterr_log.c				\
-			$(SOURCE_DIR)/libs/rtapp/rtapp_init/parser.c		\
-			$(SOURCE_DIR)/libs/rtapp/rtapp_init/init_log.c		\
-			$(SOURCE_DIR)/libs/rtapp/rtapp_init/init_objlst.c	\
 
 BONUS_SRC = $(SOURCE_DIR)/main_bonus.c
 
 #	================================ Library Configuration =============================	#
 
 #	Libraries to build (in build order)
-LIBS = libs/libft #librtapp #minilibx #librterr #librtmlx #librtmth
+LIBS = libs/libft libs/librt #minilibx #librterr #librtmlx #librtmth
 
 #	Library linking order: most dependent first, base libraries last
-LINK_LIBS = -l:libft.a #librtapp #librterr #librtmth #librtmlx #minilibx #libft
+LINK_LIBS = -l:librt.a -l:libft.a #librterr #librtmth #librtmlx #minilibx #libft
 
 #	Library linking order for bonus build
 LINK_LIBS_BONUS = #librtapp_bonus #librterr #librtmth #librtmlx #minilibx #libft
@@ -45,7 +40,7 @@ OBJECT_DIR = obj
 DEPEND_DIR = dep
 
 # Include paths for headers
-INCLUDE_DIRS = -I include/ -I include/rtapp/ -I include/elements/ -I src/libs/libft/include/ -I src/libs/minilibx/
+INCLUDE_DIRS = -I src/libs/libft/include -I src/libs/librt/include -I src/libs/librt/include/rtapp -I src/libs/librt/include/rtelm -I src/libs/minilibx/
 
 # Library paths for linking
 LIBRARY_PATHS = $(addprefix -L $(SOURCE_DIR)/, $(LIBS))
@@ -105,12 +100,7 @@ msg_bonus:
 # ================================ Directory Creation ================================ #
 
 $(OBJECT_DIR) $(DEPEND_DIR):
-	@mkdir -p $@/libs/elements
-	@mkdir -p $@/libs/rtapp
-	@mkdir -p $@/libs/rterr
-	@mkdir -p $@/libs/rtmlx
-	@mkdir -p $@/libs/rtmth
-	@mkdir -p $@/libs/rtapp/rtapp_init
+	@mkdir -p $@
 
 # ================================ Library Building ================================== #
 

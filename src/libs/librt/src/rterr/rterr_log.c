@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 19:36:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 18:08:29 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 	va_list			args;
 	int				fd;
 	
+/* 	if (!DEV && type != RT_ERRLOG)
+		return; */
 	if (type == RT_ERRLOG)
 		fd = STDERR_FILENO;
 	else

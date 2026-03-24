@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:51:07 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 20:11:14 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 17:36:26 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,23 @@ static void	dup2_logs(int log_fd, int errlog_fd, t_rtapp *app)
 
 int	init_log(t_rtapp *app)
 {
+	//int	mode;
 	int	log_fd;
 	int	errlog_fd;
 
+/* 	if (LOG_APP)
+		mode = O_APPEND;
+	if (LOG_TRC)
+		mode = O_TRUNC; 
+	if (!DEV)
+		return (RT_SUCCESS); */
 	app->logfd.orig_outfd = STDOUT_FILENO;
 	app->logfd.orig_errfd = STDERR_FILENO;
 	rtlog(RT_LOG, 0, "Initializing log files...");
-	log_fd = open("log.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
+	log_fd = open("log.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (log_fd == -1)
 		rtlog(RT_ERRLOG, 0, "Unable to initialize log.txt file");
-	errlog_fd = open("errlog.txt", O_RDWR | O_CREAT | O_APPEND, 0644);
+	errlog_fd = open("errlog.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (errlog_fd == -1)
 		rtlog(RT_ERRLOG, 0, "Unable to initialize errlog.txt file");
 	rtlog(RT_LOG, 0, "log.txt, errlog.txt files created.");

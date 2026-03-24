@@ -1,19 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp_init.h                                       :+:      :+:    :+:   */
+/*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/22 20:31:07 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/24 16:57:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "elements.h"
-#include "rterr.h"
-#include "libft.h"
-#include <fcntl.h>
+#ifndef RTAPP_H
+# define RTAPP_H
+
+# include "libft.h"
+# include "rtelm.h"
+# include "rterr.h"
+# if BONUS
+#  include "rtapp_bonus.h"
+# endif
+
+typedef struct s_object
+{
+	t_elements	id;
+	void		*obj;
+//	void		(void *)(*fio)(void *);
+}	t_object;
 
 typedef struct s_rtapp
 {
@@ -24,6 +36,8 @@ typedef struct s_rtapp
 	t_rtlog			logfd;
 }	t_rtapp;
 
-t_list	*parser(char *file);
+int	rtapp_init(int argc, char **argv, t_rtapp *app);
 
-int		init_log(t_rtapp *app);
+int rtapp_kill(t_rtapp *app);
+
+#endif

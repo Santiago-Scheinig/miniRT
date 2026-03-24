@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elements.h                                         :+:      :+:    :+:   */
+/*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 17:48:40 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/24 16:52:51 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEMENTS_H
-# define ELEMENTS_H
+#ifndef RTELM_H
+# define RTELM_H
 
 # include "rtmth.h"
 # if BONUS
