@@ -1,32 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp_init.h                                       :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 19:48:23 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/25 21:13:45 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/25 21:14:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-#include <float.h>
+#include "rtelm.h"
 
-typedef struct s_flim
+void	*new_light(char **str)
 {
-	float	min;
-	float	max;
-}	t_flim;
-
-t_list	*init_file(char *file);
-
-int		init_log(t_rtapp *app);
-
-int		init_objlst(t_list *lines, t_rtapp *app);
-
-t_object	*parse_plane(char **split, int i);
-
-t_object	*parse_cylinder(char **split, int i);
-
-t_object	*parse_sphere(char **split, int i);
+	(void) str;
+	return (NULL);
+}

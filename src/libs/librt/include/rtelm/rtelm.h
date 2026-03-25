@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 20:33:38 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:15:43 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 # define RTELM_H
 
 # include "rtmth.h"
+# include "libft.h"
 # if BONUS
-#  include "elements_bonus.h"
+#  include "rtelm_bonus.h"
 # else
 
 typedef enum e_elements
@@ -70,6 +71,16 @@ typedef struct s_elem_light_a
 	int			rgb;
 }	t_elem_light_a;
 
-void	*new_sphere(char *str);
+void	*new_camera(char **str);
+
+void	*new_light(char **str);
+
+void	*new_ambient_light(char **str);
+
+void	*new_plane(char **str);
+
+void	*new_cylinder(char **str);
+
+void	*new_sphere(char **str);
 
 #endif

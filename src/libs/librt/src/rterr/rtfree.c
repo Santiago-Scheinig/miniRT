@@ -1,32 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp_init.h                                       :+:      :+:    :+:   */
+/*   rtfree.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 19:48:23 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/25 18:56:32 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-#include <float.h>
+#include "rterr.h"
 
-typedef struct s_flim
+void	rtfree(void *content)
 {
-	float	min;
-	float	max;
-}	t_flim;
+	t_object	*aux;
 
-t_list	*init_file(char *file);
-
-int		init_log(t_rtapp *app);
-
-int		init_objlst(t_list *lines, t_rtapp *app);
-
-t_object	*parse_plane(char **split, int i);
-
-t_object	*parse_cylinder(char **split, int i);
-
-t_object	*parse_sphere(char **split, int i);
+	aux = content;
+	if (aux->obj)
+		free(aux->obj);
+}

@@ -6,13 +6,14 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 16:54:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 18:56:49 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTERR_H
 # define RTERR_H
 # include "libft.h"
+# include "rtapp.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>
@@ -39,5 +40,7 @@ typedef struct s_rtlog
 }	t_rtlog;
 
 void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...);
+
+void	rtfree(void *content);
 
 #endif

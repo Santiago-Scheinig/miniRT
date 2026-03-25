@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 16:57:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:17:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 
 typedef struct s_object
 {
-	t_elements	id;
-	void		*obj;
-//	void		(void *)(*fio)(void *);
+	void		*data;
+	void 		*(*intersection)(void *);
+	void 		*(*normal)(void *);
 }	t_object;
 
 typedef struct s_rtapp

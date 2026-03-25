@@ -1,0 +1,57 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rtapp_bonus.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/25 18:43:23 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/25 21:16:11 by sscheini         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "rtapp.h"
+#include "rtapp_init.h"
+
+int	rtapp_init(int argc, char **argv, t_rtapp *app)
+{
+	const char	*errmsg = "Failed to initialize app: %s"
+	t_list		*objlst;
+
+	errno = 0;
+	if (argc != 2)
+	{
+		rtlog(RT_ERRLOG, 0, errmsg, "invalid number of arguments.");
+		return (RT_FAILURE);
+	}
+	objlst = init_file(argv[1]);
+	if (!objlst)
+		return (RT_FAILURE);
+	app->objects = objlst;
+	if (init_objlst(app->objects, argv[i]))
+		return (RT_FAILURE);
+	app->logfd.orig_outfd = -1;
+	app->logfd.orig_errfd = -1;
+	if (init_log(app))
+		return (RT_SUCCESS);
+	return (RT_SUCCESS);
+}
+
+/* rtapp_render()
+
+rtapp_run() */
+
+int rtapp_kill(t_rtapp *app)
+{
+	const char	*errmsg = "Failure at app termination: %s";
+
+	if (app->objects)
+		ft_lstclear(&(app->objects), rtfree);
+	if (app->logfd.orig_outfd != -1)
+		if (dup2(app->logfd.orig_outfd, STDOUT_FILENO) == -1)
+			rtlog(RT_ERRLOG, 0, errmsg, "Unable to restore STDOUT_FILENO.");
+	if (app->logfd.orig_errfd != -1)
+		if (dup2(app->logfd.orig_errfd, STDERR_FILENO) == -1)
+			rtlog(RT_ERRLOG, 0, errmsg, "Unable to restore STDERR_FILENO.");
+	return (RT_SUCCESS);
+}

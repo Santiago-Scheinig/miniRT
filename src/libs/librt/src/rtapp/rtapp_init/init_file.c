@@ -1,31 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   init_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:27 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 18:21:45 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 20:26:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "rtapp_init.h"
 
-static int	validate_filename(char *file)
+static int	file_validate(char *file)
 {
 	char	*aux;
 	
 	aux = ft_strrchr(file, '.');
 	if (!aux)
 	{
-		rtlog(RT_ERRLOG, 0, "Invalid file '%s'. Use a valid .rt file", file);
+		rtlog(RT_ERRLOG, 0, "Invalid file '%s': use a valid .rt file", file);
 		return (RT_FAILURE);
 	}
 	aux++;
 	if (ft_strncmp(aux, "rt", 2))
 	{
-		rtlog(RT_ERRLOG, 0, "Invalid file '%s'. Use a valid .rt file", file);
+		rtlog(RT_ERRLOG, 0, "Invalid file '%s': use a valid .rt file", file);
 		return (RT_FAILURE);
 	}
 	return (RT_SUCCESS);
@@ -37,7 +37,7 @@ t_list	*init_file(char *file)
 	int		fd;
 
 	lines = NULL;
-	if (validate_filename(file))
+	if (file_validate(file))
 		return (NULL);
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
@@ -51,6 +51,5 @@ t_list	*init_file(char *file)
 		return (NULL);
 	}
 	close(fd);
-	rtlog(RT_LOG, 0, "'%s' file extension validated.", file);
 	return (lines);
 }

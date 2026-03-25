@@ -1,11 +1,19 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
-SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_log.c		\
-			$(SRCDIR)$(APPDIR)rtapp_init/init_file.c	\
-			$(SRCDIR)$(APPDIR)rtapp_init/init_objlst.c	\
-			$(SRCDIR)$(APPDIR)rtapp.c					\
-			$(SRCDIR)$(ERRDIR)rterr_log.c				\
-			$(SRCDIR)$(ELMDIR)sphere.c					\
+SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c				\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_objlst.c				\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_plane.c		\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_sphere.c		\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_cylinder.c	\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse.c				\
+			$(SRCDIR)$(APPDIR)rtapp.c								\
+			$(SRCDIR)$(ELMDIR)plane.c								\
+			$(SRCDIR)$(ELMDIR)sphere.c								\
+			$(SRCDIR)$(ELMDIR)cylinder.c							\
+			$(SRCDIR)$(ERRDIR)rtlog.c								\
+			$(SRCDIR)$(ERRDIR)rtfree.c								\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_log.c					\
+			#init_log.c wont be here, only in bonus
 
 BSRC	=	#- *_bonus.c															-#
 
@@ -49,6 +57,7 @@ $(OBJDIR):
 	@echo "$(COLOUR_GREEN)$(CNAME) - Object compilation:\n"
 	@mkdir -p $@$(APPDIR)
 	@mkdir -p $@$(APPDIR)rtapp_init/
+	@mkdir -p $@$(APPDIR)rtapp_init/parser
 	@mkdir -p $@$(APPDIR)rtapp_render/
 	@mkdir -p $@$(APPDIR)rtapp_run/
 	@mkdir -p $@$(ELMDIR)
