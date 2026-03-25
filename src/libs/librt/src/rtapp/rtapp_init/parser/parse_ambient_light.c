@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:11:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:32:39 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	validate_arg(char **split, int i)
 	return (RT_SUCCESS);
 }
 
-t_object	*parse_ambient_light(char **split, int i)
+t_elem_light_a parse_ambient_light(char **split, int i)
 {
 	t_flim			limits;
 
@@ -44,5 +44,5 @@ t_object	*parse_ambient_light(char **split, int i)
 		return (NULL);
 	if (parse_color(split[0], split[3], i))
 		return (NULL);
-	return (new_obj(split, new_ambient_light));
+	return (new_ambient_light(split));
 }

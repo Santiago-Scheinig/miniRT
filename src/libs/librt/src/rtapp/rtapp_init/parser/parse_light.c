@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:19 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:11:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:34:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	validate_arg(char **split, int i)
 	return (RT_SUCCESS);
 }
 
-t_object	*parse_light(char **split, int i)
+t_object *parse_light(char **split, int i)
 {
 	t_flim			limits;
 

@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:13:18 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:14:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:32:56 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-void	*new_ambient_light(char **str)
+t_elem_light_a new_ambient_light(char **str)
 {
 	(void) str;
 	return (NULL);

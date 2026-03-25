@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:17 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 20:20:17 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:31:47 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	validate_arg(char **split, int i)
 	return (RT_SUCCESS);
 }
 
-t_object	*parse_camera(char **split, int i)
+t_elem_camera parse_camera(char **split, int i)
 {
 	t_flim			limits;
 
@@ -52,5 +52,5 @@ t_object	*parse_camera(char **split, int i)
 	limits.max = 180;
 	if (parse_float(split[0], split[3], i, limits))
 		return (NULL);
-	return (new_obj(split, new_camera));
+	return (new_camera(split));
 }

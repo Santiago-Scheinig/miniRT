@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:14:35 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:33:07 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-void	*new_camera(char **str)
+t_elem_camera new_camera(char **str)
 {
 	(void) str;
 	return (NULL);

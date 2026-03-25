@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:25:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/25 21:36:57 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,22 @@ static int	obj_to_app(t_object *new_obj, t_rtapp *app)
 	
 }
 
-static t_object	*parse_element(char **split, int i)
+static t_object	*parse_element(char **split, int i, t_rtapp *app)
 {
 	if (!ft_strncmp(split[0], "pl", 3))
-		return (parse_plane(split, i));
+		return (parse_plane(split, i));//ft_lstadd_back(&(app->objects), ft_lstnew(parse_plane(split, i)));
 	if (!ft_strncmp(split[0], "cy", 3))
-		return (parse_cylinder(split, i));
+		return (parse_cylinder(split, i));//ft_lstadd_back(&(app->objects), ft_lstnew(parse_cylinder(split, i)));
 	if (!ft_strncmp(split[0], "sp", 3))
-		return (parse_sphere(split, i));
+		return (parse_sphere(split, i));//ft_lstadd_back(&(app->objects), ft_lstnew(parse_sphere(split, i)));
 	if (!ft_strncmp(split[0], "C", 2))
-		return (parse_camera(split, i));
+		return (parse_camera(split, i));//app->camera = parse_camera(split, i);
 	if (!ft_strncmp(split[0], "L", 2))
-		return (parse_light(split, i));
+		return (parse_light(split, i));//ft_lstadd_back(&(app->lights), ft_lstnew(parse_sphere(split, i)));
 	if (!ft_strncmp(split[0], "A", 2))
-		return (parse_ambience_light(split, i));
-	rtlog(RT_ERRLOG, 0, "Failed to parse line %i: %s", i, "invalid element.");
+		return (parse_ambience_light(split, i));//app->ambience = parse_camera(split, i);
+	if (/*invalide sp*/)
+		rtlog(RT_ERRLOG, 0, "Failed to parse line %i: %s", i, "invalid element.");
 	return (NULL);
 }
 
