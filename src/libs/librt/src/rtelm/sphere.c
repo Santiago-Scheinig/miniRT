@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:14:02 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:52:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-void	*new_sphere(char **str)
+t_object	*new_sphere(char **str)
 {
 	(void) str;
 	return (NULL);

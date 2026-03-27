@@ -6,11 +6,21 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:12:59 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 17:07:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp_init.h"
+#include "rtapp_parser.h"
+
+static int	ft_arglen(char **array)
+{
+	int	i;
+
+	i = 0;
+	while (array[i])
+		i++;
+	return (i);
+}
 
 static int	float_check(char *sp, char **split, int line, t_flim limits)
 {
@@ -31,7 +41,7 @@ static int	float_check(char *sp, char **split, int line, t_flim limits)
 				return (RT_FAILURE);
 			}
 		}
-		aux = ft_atof(split[i]);
+		aux = atof(split[i]);//need our own
 		if (aux > limits.max || aux < limits.min)
 		{
 			rtlog(RT_ERRLOG, 0, errmsg, sp, line, "float outside limits.");
@@ -59,7 +69,7 @@ int	parse_float(char *sp, char *str, int i, t_flim limits)
 		rtlog(RT_ERRLOG, 0, "Failed initialize %s: %s", sp, strerror(errno));
 		return (RT_FAILURE);
 	}
-	if (ft_arglen(split) > 2)
+	if (ft_arglen(split) > 2)//need ours
 	{
 		rtlog(RT_ERRLOG, 0, errmsg, sp, i, "invalid float.");
 		ans = RT_FAILURE;
@@ -102,27 +112,9 @@ int	parse_color(char *sp, char *str, int i)
 {
 	const char	*errmsg = "Parser error for %s in line %i: %s";
 
-	//Maybe this must return an int8_u, but we can change that later on;
-	rtlog(RT_ERRLOG, 0, errmsg, sp, i, "invalid color.");
-}
-
-t_object	*new_obj(char **split, void *(*constructor)(char **))
-{
-	t_object		*obj;
-	const char		*errmsg = "Failed to initialize %s: %s";
-
-	obj = ft_calloc(1, sizeof(t_object));
-	if (!obj)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, split[0], strerror(errno));
-		return (NULL);
-	}
-	obj->data = constructor(split);
-	if (!obj->data)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, split[0], strerror(errno));
-		free(obj);
-		return (NULL);
-	}
-	return (obj);
+	(void)str;
+	(void)sp;
+	(void)i;
+	rtlog(RT_ERRLOG, 0, errmsg, sp, i, "feat unfinished.");
+	return (0);
 }

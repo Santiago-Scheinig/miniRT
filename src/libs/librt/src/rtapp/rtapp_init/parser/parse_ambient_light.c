@@ -6,11 +6,11 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:32:39 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:44:22 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp_init.h"
+#include "rtapp_parser.h"
 
 static int	validate_arg(char **split, int i)
 {
@@ -32,17 +32,17 @@ static int	validate_arg(char **split, int i)
 	return (RT_SUCCESS);
 }
 
-t_elem_light_a parse_ambient_light(char **split, int i)
+int	parse_ambient_light(char **split, int i)
 {
 	t_flim			limits;
 
-	if (parse_args(split, i))
-		return (NULL);
+	if (validate_arg(split, i))
+		return (RT_FAILURE);
 	limits.min = 0;
 	limits.max = 1;
 	if (parse_float(split[0], split[1], i, limits))
-		return (NULL);
+		return (RT_FAILURE);
 	if (parse_color(split[0], split[3], i))
-		return (NULL);
-	return (new_ambient_light(split));
+		return (RT_FAILURE);
+	return (RT_SUCCESS);
 }

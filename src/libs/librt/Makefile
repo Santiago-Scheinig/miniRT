@@ -1,18 +1,27 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
-SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c				\
-			$(SRCDIR)$(APPDIR)rtapp_init/init_objlst.c				\
-			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_plane.c		\
-			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_sphere.c		\
-			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_cylinder.c	\
-			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse.c				\
-			$(SRCDIR)$(APPDIR)rtapp.c								\
-			$(SRCDIR)$(ELMDIR)plane.c								\
-			$(SRCDIR)$(ELMDIR)sphere.c								\
-			$(SRCDIR)$(ELMDIR)cylinder.c							\
-			$(SRCDIR)$(ERRDIR)rtlog.c								\
-			$(SRCDIR)$(ERRDIR)rtfree.c								\
-			$(SRCDIR)$(APPDIR)rtapp_init/init_log.c					\
+SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c					\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_objlst.c					\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_obj_utils.c				\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_elm_utils.c				\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_line.c			\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_plane.c			\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_sphere.c			\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_cylinder.c		\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_ambient_light.c	\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_camera.c			\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_light.c			\
+			$(SRCDIR)$(APPDIR)rtapp_init/parser/parse_utils.c			\
+			$(SRCDIR)$(APPDIR)rtapp.c									\
+			$(SRCDIR)$(ELMDIR)plane.c									\
+			$(SRCDIR)$(ELMDIR)sphere.c									\
+			$(SRCDIR)$(ELMDIR)cylinder.c								\
+			$(SRCDIR)$(ELMDIR)ambient_light.c							\
+			$(SRCDIR)$(ELMDIR)camera.c									\
+			$(SRCDIR)$(ELMDIR)light.c									\
+			$(SRCDIR)$(ERRDIR)rtlog.c									\
+			$(SRCDIR)$(ERRDIR)rtfree.c									\
+			$(SRCDIR)$(APPDIR)rtapp_init/init_log.c						\
 			#init_log.c wont be here, only in bonus
 
 BSRC	=	#- *_bonus.c															-#

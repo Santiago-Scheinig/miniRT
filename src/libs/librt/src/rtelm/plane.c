@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:21:38 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:14:07 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:52:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-void	*new_plane(char **str)
+t_object	*new_plane(char **str)
 {
 	(void) str;
 	return (NULL);

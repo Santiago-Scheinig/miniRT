@@ -6,27 +6,28 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 19:48:23 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 17:04:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp.h"
-#include <float.h>
 
-typedef struct s_flim
-{
-	float	min;
-	float	max;
-}	t_flim;
+t_list		*init_file(char *file);
 
-t_list	*init_file(char *file);
+int			init_log(t_rtapp *app);
 
-int		init_log(t_rtapp *app);
+int			init_objlst(t_list *lines, char *file, t_rtapp *app);
 
-int		init_objlst(t_list *lines, t_rtapp *app);
+int			init_plane(char **argv, int i, t_rtapp *app);
 
-t_object	*parse_plane(char **split, int i);
+int			init_cylinder(char **argv, int i, t_rtapp *app);
 
-t_object	*parse_cylinder(char **split, int i);
+int			init_sphere(char **argv, int i, t_rtapp *app);
 
-t_object	*parse_sphere(char **split, int i);
+int			init_light(char **argv, int i, t_rtapp *app);
+
+int			init_camera(char **argv, int i, t_rtapp *app);
+
+int			init_ambient_light(char **argv, int i, t_rtapp *app);
+
+t_object	*new_obj(char **split, t_object *(*constructor)(char **));

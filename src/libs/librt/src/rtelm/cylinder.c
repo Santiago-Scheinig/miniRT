@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:14:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:53:43 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-void	*new_cylinder(char **str)
+t_object	*new_cylinder(char **str)
 {
 	(void) str;
 	return (NULL);

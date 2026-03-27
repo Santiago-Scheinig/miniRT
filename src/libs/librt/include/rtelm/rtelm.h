@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:15:43 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:54:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,23 @@ typedef struct s_elem_light_a
 	int			rgb;
 }	t_elem_light_a;
 
-void	*new_camera(char **str);
+typedef struct s_object
+{
+	void		*data;
+	void 		*(*intersection)(void *);
+	void 		*(*normal)(void *);
+}	t_object;
 
-void	*new_light(char **str);
+t_elem_camera	new_camera(char **str);
 
-void	*new_ambient_light(char **str);
+t_elem_light_a	new_ambient_light(char **str);
 
-void	*new_plane(char **str);
+t_elem_light_p	*new_light(char **str);
 
-void	*new_cylinder(char **str);
+t_object		*new_plane(char **str);
 
-void	*new_sphere(char **str);
+t_object		*new_cylinder(char **str);
+
+t_object		*new_sphere(char **str);
 
 #endif

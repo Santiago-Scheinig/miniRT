@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 18:56:32 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 17:12:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	rtfree(void *content)
 	t_object	*aux;
 
 	aux = content;
-	if (aux->obj)
-		free(aux->obj);
+	if (aux->data)
+		free(aux->data);
 }

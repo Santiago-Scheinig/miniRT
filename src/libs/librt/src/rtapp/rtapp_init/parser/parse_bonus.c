@@ -6,11 +6,11 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:38 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/25 21:11:20 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:44:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp_init.h"
+#include "rtapp_parser.h"
 
 static t_object	*parse_element(char **split, int i)
 {
