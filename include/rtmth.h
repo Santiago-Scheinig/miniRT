@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 17:50:42 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 17:54:25 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,26 @@ t_vector	vector_sum_vector(t_vector v1, t_vector v2);
  * @return The resulting vector after subtracting v2 from v1.
  */
 t_vector	vector_sub_vector(t_vector v1, t_vector v2);
+
+/**
+ * @brief Calculates the dot product of two vectors.
+ * @param v1 The first vector for the dot product.
+ * @param v2 The second vector for the dot product.
+ * @return The dot product of the two vectors as a double.
+ * @note If the vectors are orthogonal, the dot product will be 0.
+ */
+double		vector_dot_product(t_vector v1, t_vector v2);
+
+/**
+ * @brief Calculates the cross product of two vectors.
+ * @param v1 The first vector for the cross product.
+ * @param v2 The second vector for the cross product.
+ * @return The cross product of the two vectors as a new vector.
+ * @note The resulting vector is perpendicular to both v1 and v2,
+ * and its magnitude is equal to the area
+ * of the parallelogram formed by v1 and v2.
+ */
+t_vector	vector_cross_product(t_vector v1, t_vector v2);
 
 /**
  * @brief Calculates the distance between two points represented as vectors.

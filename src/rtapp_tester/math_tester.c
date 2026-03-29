@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 17:47:08 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 17:58:36 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,48 @@ static int  test_vector_distance_points(void)
     return (0);
 }
 
+static int  test_vector_dot_product(void)
+{
+    t_vector v1 = vector_new(1.0, 2.0, 3.0);
+    t_vector v2 = vector_new(4.0, 5.0, 6.0);
+    double res = vector_dot_product(v1, v2);
+    if (res != 32.0)
+        return (1);
+    v1 = vector_new(0.0, 0.0, 0.0);
+    res = vector_dot_product(v1, v2);
+    if (res != 0.0)
+        return (1);
+    v1 = vector_new(-1.0, -2.0, -3.0);
+    res = vector_dot_product(v1, v2);
+    if (res != -32.0)
+        return (1);
+    return (0);
+}
+
+static int  test_vector_cross_product(void)
+{
+    t_vector v1 = vector_new(1.0, 2.0, 3.0);
+    t_vector v2 = vector_new(4.0, 5.0, 6.0);
+    t_vector res = vector_cross_product(v1, v2);
+    double  res_dot_1 = vector_dot_product(res, v1);
+    double  res_dot_2 = vector_dot_product(res, v2);
+    if (res.x != -3.0 || res.y != 6.0 || res.z != -3.0 || res_dot_1 != 0.0 || res_dot_2 != 0.0)
+        return (1);
+    v1 = vector_new(0.0, 0.0, 0.0);
+    res = vector_cross_product(v1, v2);
+    res_dot_1 = vector_dot_product(res, v1);
+    res_dot_2 = vector_dot_product(res, v2);
+    if (res.x != 0.0 || res.y != 0.0 || res.z != 0.0 || res_dot_1 != 0.0 || res_dot_2 != 0.0)
+        return (1);
+    v1 = vector_new(-1.0, -2.0, -3.0);
+    res = vector_cross_product(v1, v2);
+    res_dot_1 = vector_dot_product(res, v1);
+    res_dot_2 = vector_dot_product(res, v2);
+    if (res.x != 3.0 || res.y != -6.0 || res.z != 3.0 || res_dot_1 != 0.0 || res_dot_2 != 0.0)
+        return (1);
+    return (0);
+}
+
 int main(void)
 {
     int (*tests[])(void) = {
@@ -146,7 +188,9 @@ int main(void)
         test_vector_sub_vector,
         test_vector_module,
         test_vector_normalize,
-        test_vector_distance_points
+        test_vector_distance_points,
+        test_vector_dot_product,
+        test_vector_cross_product,
     };
     char* test_names[] = {
         "test_vector_new",
@@ -156,7 +200,10 @@ int main(void)
         "test_vector_sub_vector",
         "test_vector_module",
         "test_vector_normalize",
-        "test_vector_distance_points"
+        "test_vector_distance_points",
+        "test_vector_dot_product",
+        "test_vector_cross_product"
+
     };
     for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
         test_function(tests[i], test_names[i]);
