@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 17:16:41 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 17:28:24 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,46 @@ static int   test_vector_sub_vector(void)
     return (0);
 }
 
+static int  test_vector_module(void)
+{
+    t_vector v;
+    double res;
+    
+    v = vector_new(3.0, 4.0, 0.0);
+    res = vector_module(v);
+   if (res != 5.0)
+        return (1);
+    v = vector_new(0.0, 0.0, 0.0);
+    res = vector_module(v);
+    if (res != 0.0)
+        return (1);
+    v = vector_new(-1.0, -2.0, -2.0);
+    res = vector_module(v);
+    if (res != 3.0)
+        return (1);
+    return (0);
+}
+
+static int test_vector_normalize(void)
+{
+    t_vector v;
+    t_vector res;
+    
+    v = vector_new(3.0, 4.0, 0.0);
+    res = vector_normalize(v);
+    if (res.x != 0.6 || res.y != 0.8 || res.z != 0.0)
+        return (1);
+    v = vector_new(0.0, 0.0, 0.0);
+    res = vector_normalize(v);
+    if (res.x != 0.0 || res.y != 0.0 || res.z != 0.0)
+        return (1);
+    v = vector_new(-1.0, -2.0, -2.0);
+    res = vector_normalize(v);
+    if (res.x != -1.0/3.0 || res.y != -2.0/3.0 || res.z != -2.0/3.0)
+        return (1);
+    return (0);
+}
+
 int main(void)
 {
     int (*tests[])(void) = {
@@ -81,6 +121,8 @@ int main(void)
         test_vector_div_scalar,
         test_vector_sum_vector,
         test_vector_sub_vector,
+        test_vector_module,
+        test_vector_normalize
     };
     char* test_names[] = {
         "test_vector_new",
@@ -88,6 +130,8 @@ int main(void)
         "test_vector_div_scalar",
         "test_vector_sum_vector",
         "test_vector_sub_vector",
+        "test_vector_module",
+        "test_vector_normalize"
     };
     for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
         test_function(tests[i], test_names[i]);
