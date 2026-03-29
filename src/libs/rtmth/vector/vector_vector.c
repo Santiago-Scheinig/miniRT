@@ -1,42 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector_scalar.c                                    :+:      :+:    :+:   */
+/*   vector_vector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/29 15:00:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 17:18:00 by aramos-r         ###   ########.fr       */
+/*   Created: 2026/03/29 17:13:30 by aramos-r          #+#    #+#             */
+/*   Updated: 2026/03/29 17:18:44 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 
-t_vector	vector_mult_scalar(t_vector v, double scalar)
+t_vector	vector_sum_vector(t_vector v1, t_vector v2)
 {
 	t_vector	result;
 
-	result.x = v.x * scalar;
-	result.y = v.y * scalar;
-	result.z = v.z * scalar;
+	result.x = v1.x + v2.x;
+	result.y = v1.y + v2.y;
+	result.z = v1.z + v2.z;
 	return (result);
 }
 
-t_vector	vector_div_scalar(t_vector v, double scalar)
+t_vector	vector_sub_vector(t_vector v1, t_vector v2)
 {
 	t_vector	result;
 
-	if (scalar == 0.0f)
-	{
-		result.x = 0.0f;
-		result.y = 0.0f;
-		result.z = 0.0f;
-	}
-	else
-	{
-		result.x = v.x / scalar;
-		result.y = v.y / scalar;
-		result.z = v.z / scalar;
-	}
+	result.x = v1.x - v2.x;
+	result.y = v1.y - v2.y;
+	result.z = v1.z - v2.z;
 	return (result);
 }

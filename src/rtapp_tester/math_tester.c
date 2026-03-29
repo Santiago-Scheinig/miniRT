@@ -6,12 +6,29 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 17:11:38 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 17:16:41 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 #include <stdio.h>
+
+static void    test_function( int (*f)(void), char* name )
+{
+    if (f() == 0)
+        printf("%s: OK\n", name);
+    else
+        printf("%s: FAIL\n", name);
+}
+
+static int    test_vector_new(void)
+{
+    t_vector v = vector_new(1.0, 2.0, 3.0);
+    if (v.x == 1.0 && v.y == 2.0 && v.z == 3.0)
+        return (0);
+    else
+        return (1);
+}
 
 static int    test_vector_mult_scalar(void)
 {
@@ -35,21 +52,25 @@ static int    test_vector_div_scalar(void)
     return (0);
 }
 
-static int    test_vector_new(void)
+static int   test_vector_sum_vector(void)
 {
-    t_vector v = vector_new(1.0, 2.0, 3.0);
-    if (v.x == 1.0 && v.y == 2.0 && v.z == 3.0)
+    t_vector v1 = vector_new(1.0, 2.0, 3.0);
+    t_vector v2 = vector_new(4.0, 5.0, 6.0);
+    t_vector result = vector_sum_vector(v1, v2);
+    if (result.x == 5.0 && result.y == 7.0 && result.z == 9.0)
         return (0);
     else
         return (1);
 }
 
-static void    test_function( int (*f)(void), char* name )
+static int   test_vector_sub_vector(void)
 {
-    if (f() == 0)
-        printf("%s: OK\n", name);
-    else
-        printf("%s: FAIL\n", name);
+    t_vector v1 = vector_new(4.0, 5.0, 1.0);
+    t_vector v2 = vector_new(1.0, 2.0, 3.0);
+    t_vector result = vector_sub_vector(v1, v2);
+    if (!(result.x == 3.0 && result.y == 3.0 && result.z == -2.0))
+        return (1);
+    return (0);
 }
 
 int main(void)
@@ -58,11 +79,15 @@ int main(void)
         test_vector_new,
         test_vector_mult_scalar,
         test_vector_div_scalar,
+        test_vector_sum_vector,
+        test_vector_sub_vector,
     };
     char* test_names[] = {
         "test_vector_new",
         "test_vector_mult_scalar",
         "test_vector_div_scalar",
+        "test_vector_sum_vector",
+        "test_vector_sub_vector",
     };
     for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
         test_function(tests[i], test_names[i]);
