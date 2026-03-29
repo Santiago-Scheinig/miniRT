@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 20:21:38 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 20:37:01 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,13 +122,20 @@ double		vector_distance_points(t_vector p1, t_vector p2);
  * @note An identity matrix is a square matrix with ones on the main diagonal
  * and zeros elsewhere.
  */
-t_mat4		matrix_new_identity(void);
+t_mat4		mat4_new_identity(void);
 
 /**
  * @brief Creates a new matrix which is the transposed version of the given one.
  * @param mat The matrix to transpose.
  * @return The transposed matrix.
  */
-t_mat4		matrix_transposed(t_mat4 mat);
+t_mat4		mat4_transposed(t_mat4 mat);
+
+/**
+ * @brief Calculates the determinant of a 4x4 matrix.
+ * @param mat The matrix for which to calculate the determinant.
+ * @return The determinant of the matrix as a double.
+ */
+double		mat4_determinant(t_mat4 mat);
 
 #endif

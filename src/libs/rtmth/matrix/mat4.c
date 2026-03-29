@@ -6,13 +6,13 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 19:50:51 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 20:21:17 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 20:36:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 
-t_mat4	matrix_new_identity(void)
+t_mat4	mat4_new_identity(void)
 {
 	t_mat4	result;
 
@@ -35,7 +35,7 @@ t_mat4	matrix_new_identity(void)
 	return (result);
 }
 
-t_mat4	matrix_transposed(t_mat4 mat)
+t_mat4	mat4_transposed(t_mat4 mat)
 {
 	t_mat4	res;
 
@@ -56,4 +56,26 @@ t_mat4	matrix_transposed(t_mat4 mat)
 	res.m[3][2] = mat.m[2][3];
 	res.m[3][3] = mat.m[3][3];
 	return (res);
+}
+
+double	mat4_determinant(t_mat4 m)
+{
+	return (
+		m.m[0][0] * (m.m[1][1]
+			* (m.m[2][2] * m.m[3][3] - m.m[2][3] * m.m[3][2])
+		- m.m[1][2] * (m.m[2][1] * m.m[3][3] - m.m[2][3] * m.m[3][1])
+		+ m.m[1][3] * (m.m[2][1] * m.m[3][2] - m.m[2][2] * m.m[3][1]))
+		- m.m[0][1] * (m.m[1][0]
+			* (m.m[2][2] * m.m[3][3] - m.m[2][3] * m.m[3][2])
+		- m.m[1][2] * (m.m[2][0] * m.m[3][3] - m.m[2][3] * m.m[3][0])
+		+ m.m[1][3] * (m.m[2][0] * m.m[3][2] - m.m[2][2] * m.m[3][0]))
+		+ m.m[0][2] * (m.m[1][0]
+			* (m.m[2][1] * m.m[3][3] - m.m[2][3] * m.m[3][1])
+		- m.m[1][1] * (m.m[2][0] * m.m[3][3] - m.m[2][3] * m.m[3][0])
+		+ m.m[1][3] * (m.m[2][0] * m.m[3][1] - m.m[2][1] * m.m[3][0]))
+		- m.m[0][3] * (m.m[1][0]
+			* (m.m[2][1] * m.m[3][2] - m.m[2][2] * m.m[3][1])
+		- m.m[1][1] * (m.m[2][0] * m.m[3][2] - m.m[2][2] * m.m[3][0])
+		+ m.m[1][2] * (m.m[2][0] * m.m[3][1] - m.m[2][1] * m.m[3][0]))
+	);
 }

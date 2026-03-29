@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 20:14:00 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 20:42:43 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,9 +178,9 @@ static int  test_vector_cross_product(void)
 	return (0);
 }
 
-static int  test_matrix_new_identity(void)
+static int  test_mat4_new_identity(void)
 {
-	t_mat4 m = matrix_new_identity();
+	t_mat4 m = mat4_new_identity();
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
@@ -194,7 +194,7 @@ static int  test_matrix_new_identity(void)
 	return (0);
 }
 
-static int  test_matrix_transpose(void)
+static int  test_mat4_transpose(void)
 {
 	t_mat4	og;
 	t_mat4	transposed;
@@ -204,7 +204,7 @@ static int  test_matrix_transpose(void)
 			og.m[i][j] = i * 4 + j + 1;
 		}
 	}
-	transposed = matrix_transposed(og);
+	transposed = mat4_transposed(og);
 	if (transposed.m[0][0] != 1.0
 		|| transposed.m[0][1] != 5.0
 		|| transposed.m[0][2] != 9.0
@@ -226,6 +226,26 @@ static int  test_matrix_transpose(void)
 	return (0);
 }
 
+static int	test_mat4_determinant(void)
+{
+	t_mat4 m;
+	m.m[0][0] = 1.0; m.m[0][1] = 2.0; m.m[0][2] = 3.0; m.m[0][3] = 4.0;
+	m.m[1][0] = 5.0; m.m[1][1] = 6.0; m.m[1][2] = 7.0; m.m[1][3] = 8.0;
+	m.m[2][0] = 9.0; m.m[2][1] = 10.0; m.m[2][2] = 11.0; m.m[2][3] = 12.0;
+	m.m[3][0] = 13.0; m.m[3][1] = 14.0; m.m[3][2] = 15.0; m.m[3][3] = 16.0;
+	double res = mat4_determinant(m);
+	if (res != 0.0)
+		return (1);
+	m.m[0][0] = 5.0; m.m[0][1] = 7.0; m.m[0][2] = 9.0; m.m[0][3] = 0.0;
+	m.m[1][0] = 4.0; m.m[1][1] = 9.0; m.m[1][2] = 6.0; m.m[1][3] = 7.0;
+	m.m[2][0] = 1.0; m.m[2][1] = 6.0; m.m[2][2] = 3.0; m.m[2][3] = 5.0;
+	m.m[3][0] = 8.0; m.m[3][1] = 6.0; m.m[3][2] = 7.0; m.m[3][3] = 8.0;
+	res = mat4_determinant(m);
+	if (res != 196.0)
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -239,8 +259,9 @@ int main(void)
 		test_vector_distance_points,
 		test_vector_dot_product,
 		test_vector_cross_product,
-		test_matrix_new_identity,
-		test_matrix_transpose,
+		test_mat4_new_identity,
+		test_mat4_transpose,
+		test_mat4_determinant,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -253,8 +274,9 @@ int main(void)
 		"test_vector_distance_points",
 		"test_vector_dot_product",
 		"test_vector_cross_product",
-		"test_matrix_new_identity",
-		"test_matrix_transpose",
+		"test_mat4_new_identity",
+		"test_mat4_transpose",
+		"test_mat4_determinant",
 	};
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
 		test_function(tests[i], test_names[i]);
