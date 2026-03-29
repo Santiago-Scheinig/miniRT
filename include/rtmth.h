@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 17:54:25 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 19:48:40 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ typedef struct s_vector
 	double	y;
 	double	z;
 }	t_vector;
+
+typedef struct s_matrix
+{
+	double	m[4][4];
+}	t_matrix;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
@@ -110,5 +115,13 @@ t_vector	vector_cross_product(t_vector v1, t_vector v2);
  * @return The distance between the two points as a double.
  */
 double		vector_distance_points(t_vector p1, t_vector p2);
+
+/**
+ * @brief Creates a new identity matrix.
+ * @return The newly created identity matrix.
+ * @note An identity matrix is a square matrix with ones on the main diagonal
+ * and zeros elsewhere.
+ */
+t_matrix	matrix_new_identity(void);
 
 #endif

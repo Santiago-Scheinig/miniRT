@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 17:58:36 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 19:54:10 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,22 @@ static int  test_vector_cross_product(void)
     return (0);
 }
 
+static int  test_matrix_new_identity(void)
+{
+    t_matrix m = matrix_new_identity();
+    for (int i = 0; i < 4; i++)
+    {
+        for (int j = 0; j < 4; j++)
+        {
+            if (i == j && m.m[i][j] != 1.0)
+                return (1);
+            else if (i != j && m.m[i][j] != 0.0)
+                return (1);
+        }
+    }
+    return (0);
+}
+
 int main(void)
 {
     int (*tests[])(void) = {
@@ -191,6 +207,7 @@ int main(void)
         test_vector_distance_points,
         test_vector_dot_product,
         test_vector_cross_product,
+        test_matrix_new_identity,
     };
     char* test_names[] = {
         "test_vector_new",
@@ -202,8 +219,8 @@ int main(void)
         "test_vector_normalize",
         "test_vector_distance_points",
         "test_vector_dot_product",
-        "test_vector_cross_product"
-
+        "test_vector_cross_product",
+        "test_matrix_new_identity",
     };
     for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
         test_function(tests[i], test_names[i]);
