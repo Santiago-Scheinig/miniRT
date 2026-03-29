@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 20:42:43 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 21:37:06 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,56 @@ static int	test_mat4_determinant(void)
 	return (0);
 }
 
+static int	aux_mat4_equal(t_mat4 m1, t_mat4 m2)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (fabs(m1.m[i][j] - m2.m[i][j]) > EPSILON)
+				return (0);
+		}
+	}
+	return (1);
+}
+
+static void	aux_print_mat4(t_mat4 mat)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			printf("%f ", mat.m[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+static int	test_mat4_inverse(void)
+{
+	t_mat4 m;
+	m.m[0][0] = 1.0; m.m[0][1] = 2.0; m.m[0][2] = 3.0; m.m[0][3] = 4.0;
+	m.m[1][0] = 5.0; m.m[1][1] = 6.0; m.m[1][2] = 7.0; m.m[1][3] = 8.0;
+	m.m[2][0] = 9.0; m.m[2][1] = 10.0; m.m[2][2] = 11.0; m.m[2][3] = 12.0;
+	m.m[3][0] = 13.0; m.m[3][1] = 14.0; m.m[3][2] = 15.0; m.m[3][3] = 16.0;
+	t_mat4 inverse = mat4_inverse(m);
+	if (!aux_mat4_equal(inverse, mat4_new_identity()))
+		return (1);
+	m.m[0][0] = 5.0; m.m[0][1] = 7.0; m.m[0][2] = 9.0; m.m[0][3] = 0.0;
+	m.m[1][0] = 4.0; m.m[1][1] = 9.0; m.m[1][2] = 6.0; m.m[1][3] = 7.0;
+	m.m[2][0] = 1.0; m.m[2][1] = 6.0; m.m[2][2] = 3.0; m.m[2][3] = 5.0;
+	m.m[3][0] = 8.0; m.m[3][1] = 6.0; m.m[3][2] = 7.0; m.m[3][3] = 8.0;
+	inverse = mat4_inverse(m);
+	t_mat4 exp;
+	exp.m[0][0] = -39.0/196; exp.m[0][1] = 239.0/196; exp.m[0][2] = -277.0/196; exp.m[0][3] = -9.0/49;
+	exp.m[1][0] = -29.0/196; exp.m[1][1] = 233.0/196; exp.m[1][2] = -211.0/196; exp.m[1][3] = -18.0/49;
+	exp.m[2][0] = 33.0/98; exp.m[2][1] = -157.0/98; exp.m[2][2] = 159.0/98; exp.m[2][3] = 19.0/49;
+	exp.m[3][0] = 3.0/196; exp.m[3][1] = -139.0/196; exp.m[3][2] = 157.0/196; exp.m[3][3] = 12.0/49;
+	if (!aux_mat4_equal(inverse, exp))
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -262,6 +312,7 @@ int main(void)
 		test_mat4_new_identity,
 		test_mat4_transpose,
 		test_mat4_determinant,
+		test_mat4_inverse,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -277,6 +328,7 @@ int main(void)
 		"test_mat4_new_identity",
 		"test_mat4_transpose",
 		"test_mat4_determinant",
+		"test_mat4_inverse",
 	};
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
 		test_function(tests[i], test_names[i]);

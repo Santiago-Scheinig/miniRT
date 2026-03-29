@@ -6,12 +6,13 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 20:37:01 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 21:23:55 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
+# define EPSILON 0.00001
 
 # include <math.h>
 
@@ -26,6 +27,11 @@ typedef struct s_mat4
 {
 	double	m[4][4];
 }	t_mat4;
+
+typedef struct s_mat3
+{
+	double	m[3][3];
+}	t_mat3;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
@@ -137,5 +143,14 @@ t_mat4		mat4_transposed(t_mat4 mat);
  * @return The determinant of the matrix as a double.
  */
 double		mat4_determinant(t_mat4 mat);
+
+/**
+ * @brief Creates a new matrix which is the inverse of the given one.
+ * @param mat The matrix to invert.
+ * @return The inverted matrix.
+ * @warning If the matrix is not invertible (i.e., its determinant is 0),
+ * the function will return the identity matrix.
+ */
+t_mat4		mat4_inverse(t_mat4 mat);
 
 #endif
