@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 17:38:48 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 17:50:42 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,13 @@ t_vector	vector_sum_vector(t_vector v1, t_vector v2);
  * @return The resulting vector after subtracting v2 from v1.
  */
 t_vector	vector_sub_vector(t_vector v1, t_vector v2);
+
+/**
+ * @brief Calculates the distance between two points represented as vectors.
+ * @param p1 The first point as a vector.
+ * @param p2 The second point as a vector.
+ * @return The distance between the two points as a double.
+ */
+double		vector_distance_points(t_vector p1, t_vector p2);
 
 #endif
