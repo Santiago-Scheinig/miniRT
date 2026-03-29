@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 19:48:40 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/29 20:21:38 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ typedef struct s_vector
 	double	z;
 }	t_vector;
 
-typedef struct s_matrix
+typedef struct s_mat4
 {
 	double	m[4][4];
-}	t_matrix;
+}	t_mat4;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
@@ -122,6 +122,13 @@ double		vector_distance_points(t_vector p1, t_vector p2);
  * @note An identity matrix is a square matrix with ones on the main diagonal
  * and zeros elsewhere.
  */
-t_matrix	matrix_new_identity(void);
+t_mat4		matrix_new_identity(void);
+
+/**
+ * @brief Creates a new matrix which is the transposed version of the given one.
+ * @param mat The matrix to transpose.
+ * @return The transposed matrix.
+ */
+t_mat4		matrix_transposed(t_mat4 mat);
 
 #endif
