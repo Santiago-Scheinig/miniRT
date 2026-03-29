@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 21:37:06 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 01:31:06 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 static void    test_function( int (*f)(void), char* name )
 {
 	if (f() == 0)
-		printf("%s: OK\n", name);
+		printf("\e[0;32m%s: OK\n\e[0m", name);
 	else
-		printf("%s: FAIL\n", name);
+		printf("\e[0;31m%s: FAIL\n\e[0m", name);
 }
 
 static int    test_vector_new(void)
