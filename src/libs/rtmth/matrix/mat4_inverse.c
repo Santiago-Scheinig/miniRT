@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 20:53:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 21:34:57 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 01:28:24 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_mat4	mat4_inverse(t_mat4 mat)
 		j = 0;
 		while (j < 4)
 		{
-			res.m[i][j] = mat4_cofactor(mat, j, i) / det;
+			res.m[j][i] = mat4_cofactor(mat, i, j) / det;
 			j++;
 		}
 		i++;
