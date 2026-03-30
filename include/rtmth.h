@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:06:50 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:22:05 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,20 @@ typedef struct s_roots
 	double	sol1;
 	double	sol2;
 }	t_roots;
+
+/**
+ * @brief Structure to represent a ray in 3D space, defined by an origin point and a direction vector.
+ * @param origin The starting point of the ray, represented as a vector.
+ * @param direction The direction of the ray, represented as a vector.
+ * @note The direction vector should allways be normalized
+ * in the standard space (i.e., have a magnitude of 1)
+ * to ensure consistent behavior when performing ray calculations.
+ */
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direction;
+}	t_ray;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
