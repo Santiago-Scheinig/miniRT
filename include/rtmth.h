@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 17:05:31 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:41:56 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,44 @@ t_mat4		mat4_mult_mat4(t_mat4 m1, t_mat4 m2);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_translation(double tx, double ty, double tz);
+
+/**
+ * @brief Creates a new rotation matrix for a rotation
+ * around the x-axis by the given angle.
+ * @param angle The angle of rotation in radians, should be a double.
+ * @return The newly created rotation matrix.
+ * @note The resulting matrix will have the form:
+ * @note [ 1 0 0 0 ]
+ * @note [ 0 cos(angle) -sin(angle) 0 ]
+ * @note [ 0 sin(angle) cos(angle) 0 ]
+ * @note [ 0 0 0 1 ]
+ */
+t_mat4		mat4_rotation_x(double angle);
+
+/**
+ * @brief Creates a new rotation matrix for a rotation
+ * around the y-axis by the given angle.
+ * @param angle The angle of rotation in radians, should be a double.
+ * @return The newly created rotation matrix.
+ * @note The resulting matrix will have the form:
+ * @note [ cos(angle) 0 sin(angle) 0 ]
+ * @note [ 0 1 0 0 ]
+ * @note [ -sin(angle) 0 cos(angle) 0 ]
+ * @note [ 0 0 0 1 ]
+ */
+t_mat4		mat4_rotation_y(double angle);
+
+/**
+ * @brief Creates a new rotation matrix for a rotation
+ * around the z-axis by the given angle.
+ * @param angle The angle of rotation in radians, should be a double.
+ * @return The newly created rotation matrix.
+ * @note The resulting matrix will have the form:
+ * @note [ cos(angle) -sin(angle) 0 0 ]
+ * @note [ sin(angle) cos(angle) 0 0 ]
+ * @note [ 0 0 1 0 ]
+ * @note [ 0 0 0 1 ]
+ */
+t_mat4		mat4_rotation_z(double angle);
 
 #endif

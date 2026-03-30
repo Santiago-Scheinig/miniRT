@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 17:32:43 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:42:36 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,6 +334,45 @@ static int	test_mat4_translation(void)
 	return (0);
 }
 
+static int	test_mat4_rotation_x(void)
+{
+	t_mat4 res = mat4_rotation_x(M_PI / 2);
+	t_mat4 exp = mat4_new_identity();
+	exp.m[1][1] = 0.0;
+	exp.m[1][2] = -1.0;
+	exp.m[2][1] = 1.0;
+	exp.m[2][2] = 0.0;
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	return (0);
+}
+
+static int 	test_mat4_rotation_y(void)
+{
+	t_mat4 res = mat4_rotation_y(M_PI / 2);
+	t_mat4 exp = mat4_new_identity();
+	exp.m[0][0] = 0.0;
+	exp.m[0][2] = 1.0;
+	exp.m[2][0] = -1.0;
+	exp.m[2][2] = 0.0;
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	return (0);
+}
+
+static int 	test_mat4_rotation_z(void)
+{
+	t_mat4 res = mat4_rotation_z(M_PI / 2);
+	t_mat4 exp = mat4_new_identity();
+	exp.m[0][0] = 0.0;
+	exp.m[0][1] = -1.0;
+	exp.m[1][0] = 1.0;
+	exp.m[1][1] = 0.0;
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -352,7 +391,10 @@ int main(void)
 		test_mat4_determinant,
 		test_mat4_inverse,
 		test_mat4_mult_mat4,
-		test_mat4_translation
+		test_mat4_translation,
+		test_mat4_rotation_x,
+		test_mat4_rotation_y,
+		test_mat4_rotation_z
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -370,7 +412,10 @@ int main(void)
 		"test_mat4_determinant",
 		"test_mat4_inverse",
 		"test_mat4_mult_mat4",
-		"test_mat4_translation"
+		"test_mat4_translation",
+		"test_mat4_rotation_x",
+		"test_mat4_rotation_y",
+		"test_mat4_rotation_z"
 	};
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
 		test_function(tests[i], test_names[i]);
