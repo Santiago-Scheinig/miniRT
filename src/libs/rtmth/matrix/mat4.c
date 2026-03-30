@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 19:50:51 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/29 20:59:10 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:47:19 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,31 @@ double	mat4_determinant(t_mat4 m)
 		- m.m[1][1] * (m.m[2][0] * m.m[3][2] - m.m[2][2] * m.m[3][0])
 		+ m.m[1][2] * (m.m[2][0] * m.m[3][1] - m.m[2][1] * m.m[3][0]))
 	);
+}
+
+t_mat4	mat4_mult_matrix(t_mat4 m1, t_mat4 m2)
+{
+	t_mat4	res;
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	while (i < 4)
+	{
+		j = 0;
+		while (j < 4)
+		{
+			res.m[i][j] = 0.0;
+			k = 0;
+			while (k < 4)
+			{
+				res.m[i][j] += m1.m[i][k] * m2.m[k][j];
+				k++;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/29 21:23:55 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 16:53:01 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,16 @@ double		mat4_determinant(t_mat4 mat);
  * the function will return the identity matrix.
  */
 t_mat4		mat4_inverse(t_mat4 mat);
+
+/**
+ * @brief Multiplies two 4x4 matrices together.
+ * @param m1 The first matrix to be multiplied.
+ * @param m2 The second matrix to be multiplied.
+ * @return The resulting matrix after multiplication.
+ * @note Matrix multiplication is not commutative,
+ * meaning that mat4_mult_matrix(m1, m2)
+ * may not equal mat4_mult_matrix(m2, m1).
+ */
+t_mat4		mat4_mult_matrix(t_mat4 m1, t_mat4 m2);
 
 #endif
