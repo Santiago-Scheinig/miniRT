@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:54:37 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:30:17 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -453,6 +453,22 @@ static int	test_ray_point_at(void)
 	return (0);	
 }
 
+static int	test_mat4_mult_vector_point(void)
+{
+	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
+	t_vector v = vector_new(1.0, 1.0, 1.0);
+	t_vector res = mat4_mult_vector_point(m, v);
+	t_vector exp = vector_new(2.0, 3.0, 4.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	m = mat4_rotation_x(M_PI / 2);
+	res = mat4_mult_vector_point(m, v);
+	exp = vector_new(1.0, -1.0, 1.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -479,6 +495,7 @@ int main(void)
 		test_solve_quadratic,
 		test_ray_new,
 		test_ray_point_at,
+		test_mat4_mult_vector_point,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -504,6 +521,7 @@ int main(void)
 		"test_solve_quadratic",
 		"test_ray_new",
 		"test_ray_point_at",
+		"test_mat4_mult_vector_point",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)

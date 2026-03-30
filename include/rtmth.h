@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 20:19:31 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:23:24 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,6 +273,16 @@ t_mat4		mat4_rotation_z(double angle);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_scale(double sx, double sy, double sz);
+
+/**
+ * @brief Multiplies a 4x4 matrix by a vector, treating the vector as a point
+ * (i.e., with an implicit w component of 1). This is used for transforming
+ * points in 3D space using homogeneous coordinates.
+ * @param mat The 4x4 matrix to multiply.
+ * @param v The vector to be transformed, treated as a point.
+ * @return The resulting vector after multiplication, representing the transformed point.
+ */
+t_vector	mat4_mult_vector_point(t_mat4 mat, t_vector v);
 
 /**
  * @brief Solves a quadratic equation of the form ax^2 + bx + c = 0.
