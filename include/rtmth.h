@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:22:05 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:26:19 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ typedef struct s_roots
 }	t_roots;
 
 /**
- * @brief Structure to represent a ray in 3D space, defined by an origin point and a direction vector.
+ * @brief Structure to represent a ray in 3D space,
+ * defined by an origin point and a direction vector.
  * @param origin The starting point of the ray, represented as a vector.
  * @param direction The direction of the ray, represented as a vector.
  * @note The direction vector should allways be normalized
@@ -287,5 +288,16 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
  * the has_solutions field will be set to 0, and sol1 and sol2 will be undefined.
  */
 t_roots		solve_quadratic(double a, double b, double c);
+
+/**
+ * @brief Creates a new ray with the given origin and direction.
+ * @param origin The starting point of the ray, represented as a vector.
+ * @param direction The direction of the ray, represented as a vector.
+ * @return The newly created ray.
+ * @note The passed direction vector will be normalized
+ * before being stored in the ray structure
+ * to ensure consistent behavior when performing ray calculations.
+ */
+t_ray		ray_new(t_vector origin, t_vector direction);
 
 #endif
