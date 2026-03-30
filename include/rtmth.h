@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 16:53:01 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:05:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,25 @@ t_mat4		mat4_inverse(t_mat4 mat);
  * @param m2 The second matrix to be multiplied.
  * @return The resulting matrix after multiplication.
  * @note Matrix multiplication is not commutative,
- * meaning that mat4_mult_matrix(m1, m2)
- * may not equal mat4_mult_matrix(m2, m1).
+ * meaning that mat4_mult_mat4(m1, m2)
+ * may not equal mat4_mult_mat4(m2, m1).
  */
-t_mat4		mat4_mult_matrix(t_mat4 m1, t_mat4 m2);
+t_mat4		mat4_mult_mat4(t_mat4 m1, t_mat4 m2);
+
+/**
+ * @brief Creates a new translation matrix for the given translation values.
+ * This matrix can be used to translate points in 3D space by the specified
+ * amounts along the x, y, and z axes.
+ * @param tx The translation amount along the x-axis, should be a double.
+ * @param ty The translation amount along the y-axis, should be a double.
+ * @param tz The translation amount along the z-axis, should be a double.
+ * @return The newly created translation matrix.
+ * @note The resulting matrix will have the form:
+ * @note [ 1 0 0 tx ]
+ * @note [ 0 1 0 ty ]
+ * @note [ 0 0 1 tz ]
+ * @note [ 0 0 0 1 ]
+ */
+t_mat4		mat4_translation(double tx, double ty, double tz);
 
 #endif

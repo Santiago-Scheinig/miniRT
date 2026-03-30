@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 16:52:24 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:32:43 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,14 +296,14 @@ static int	test_mat4_inverse(void)
 	return (0);
 }
 
-static int	test_mat4_mult_matrix(void)
+static int	test_mat4_mult_mat4(void)
 {
 	t_mat4 m1;
 	m1.m[0][0] = 1.0; m1.m[0][1] = 2.0; m1.m[0][2] = 3.0; m1.m[0][3] = 4.0;
 	m1.m[1][0] = 5.0; m1.m[1][1] = 6.0; m1.m[1][2] = 7.0; m1.m[1][3] = 8.0;
 	m1.m[2][0] = 9.0; m1.m[2][1] = 10.0; m1.m[2][2] = 11.0; m1.m[2][3] = 12.0;
 	m1.m[3][0] = 13.0; m1.m[3][1] = 14.0; m1.m[3][2] = 15.0; m1.m[3][3] = 16.0;
-	t_mat4 res = mat4_mult_matrix(m1, mat4_new_identity());
+	t_mat4 res = mat4_mult_mat4(m1, mat4_new_identity());
 	if (!aux_mat4_equal(res, m1))
 		return (1);
 	t_mat4 m2;
@@ -311,12 +311,24 @@ static int	test_mat4_mult_matrix(void)
 	m2.m[1][0] = 4.0; m2.m[1][1] = 9.0; m2.m[1][2] = 6.0; m2.m[1][3] = 7.0;
 	m2.m[2][0] = 1.0; m2.m[2][1] = 6.0; m2.m[2][2] = 3.0; m2.m[2][3] = 5.0;
 	m2.m[3][0] = 8.0; m2.m[3][1] = 6.0; m2.m[3][2] = 7.0; m2.m[3][3] = 8.0;
-	res = mat4_mult_matrix(m1, m2);
+	res = mat4_mult_mat4(m1, m2);
 	t_mat4 exp;
 	exp.m[0][0] = 48.0; exp.m[0][1] = 67.0; exp.m[0][2] = 58.0; exp.m[0][3] = 61.0;
 	exp.m[1][0] = 120.0; exp.m[1][1] = 179.0; exp.m[1][2] = 158.0; exp.m[1][3] = 141.0;
 	exp.m[2][0] = 192.0; exp.m[2][1] = 291.0; exp.m[2][2] = 258.0; exp.m[2][3] = 221.0;
 	exp.m[3][0] = 264.0; exp.m[3][1] = 403.0; exp.m[3][2] = 358.0; exp.m[3][3] = 301.0;
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	return (0);
+}
+
+static int	test_mat4_translation(void)
+{
+	t_mat4 res = mat4_translation(1.0, 2.0, 3.0);
+	t_mat4 exp = mat4_new_identity();
+	exp.m[0][3] = 1.0;
+	exp.m[1][3] = 2.0;
+	exp.m[2][3] = 3.0;
 	if (!aux_mat4_equal(res, exp))
 		return (1);
 	return (0);
@@ -339,7 +351,8 @@ int main(void)
 		test_mat4_transpose,
 		test_mat4_determinant,
 		test_mat4_inverse,
-		test_mat4_mult_matrix
+		test_mat4_mult_mat4,
+		test_mat4_translation
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -356,7 +369,8 @@ int main(void)
 		"test_mat4_transpose",
 		"test_mat4_determinant",
 		"test_mat4_inverse",
-		"test_mat4_mult_matrix"
+		"test_mat4_mult_mat4",
+		"test_mat4_translation"
 	};
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
 		test_function(tests[i], test_names[i]);

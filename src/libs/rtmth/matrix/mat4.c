@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 19:50:51 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 16:47:19 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:05:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ double	mat4_determinant(t_mat4 m)
 	);
 }
 
-t_mat4	mat4_mult_matrix(t_mat4 m1, t_mat4 m2)
+t_mat4	mat4_mult_mat4(t_mat4 m1, t_mat4 m2)
 {
 	t_mat4	res;
 	int		i;
