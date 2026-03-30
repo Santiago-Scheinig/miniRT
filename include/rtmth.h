@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:44:33 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:50:50 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,23 @@ t_roots		solve_quadratic(double a, double b, double c);
  * @return The newly created ray.
  * @warning The direction vector should be normalized
  * if working in the normal space
+ * @warning If the direction vector is (0.0, 0.0, 0.0),
+ * the ray will be created with a zero direction and
+ * following ray calculations may not behave as expected.
  */
 t_ray		ray_new(t_vector origin, t_vector direction);
+
+/**
+ * @brief Calculates a point along the ray at a given
+ * distance t from the origin.
+ * @param ray The ray for which to calculate the point.
+ * @param t The distance from the ray's origin
+ * to the point, should be a double.
+ * @return The point along the ray at distance t
+ * from the origin, represented as a vector.
+ * @note The point is calculated using the formula: origin + t * direction.
+ * @warning The direction vector of the ray should be normalized
+ */
+t_vector	ray_point_at(t_ray ray, double t);
 
 #endif

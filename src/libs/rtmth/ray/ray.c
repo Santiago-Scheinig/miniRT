@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:24:09 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:42:47 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:53:01 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,14 @@ t_ray	ray_new(t_vector origin, t_vector direction)
 	ray.origin = origin;
 	ray.direction = direction;
 	return (ray);
+}
+
+t_vector	ray_point_at(t_ray ray, double t)
+{
+	t_vector	point;
+
+	point.x = ray.origin.x + ray.direction.x * t;
+	point.y = ray.origin.y + ray.direction.y * t;
+	point.z = ray.origin.z + ray.direction.z * t;
+	return (point);
 }

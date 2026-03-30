@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:43:07 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:54:37 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -424,13 +424,31 @@ static int	test_ray_new(void)
 {
 	t_vector origin = vector_new(1.0, 2.0, 3.0);
 	t_vector direction = vector_new(2.0, 3.0, 6.0);
-	t_ray ray = ray_new(origin, direction);
-	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, direction))
+	t_ray ray = ray_new(origin, vector_normalize(direction));
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, vector_normalize(direction)))
 		return (1);
 	origin = vector_new(1.0, 2.0, 3.0);
 	direction = vector_new(0.0, 0.0, 0.0);
-	ray = ray_new(origin, direction);
-	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, direction))
+	ray = ray_new(origin, vector_normalize(direction));
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, vector_normalize(direction)))
+		return (1);
+	return (0);	
+}
+
+static int	test_ray_point_at(void)
+{
+	t_ray ray;
+	ray.origin = vector_new(1.0, 2.0, 3.0);
+	ray.direction = vector_new(2.0, 3.0, 6.0);
+	double t = 2.0;
+	t_vector res = ray_point_at(ray, t);
+	t_vector exp = vector_new(5.0, 8.0, 15.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	ray.direction = vector_new(0.0, 0.0, 0.0);
+	res = ray_point_at(ray, t);
+	exp = vector_new(1.0, 2.0, 3.0);
+	if (!aux_vector_equal(res, exp))
 		return (1);
 	return (0);	
 }
@@ -460,6 +478,7 @@ int main(void)
 		test_mat4_scale,
 		test_solve_quadratic,
 		test_ray_new,
+		test_ray_point_at,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -484,6 +503,7 @@ int main(void)
 		"test_mat4_scale",
 		"test_solve_quadratic",
 		"test_ray_new",
+		"test_ray_point_at",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
