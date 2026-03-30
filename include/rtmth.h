@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:26:19 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:44:33 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,9 +294,8 @@ t_roots		solve_quadratic(double a, double b, double c);
  * @param origin The starting point of the ray, represented as a vector.
  * @param direction The direction of the ray, represented as a vector.
  * @return The newly created ray.
- * @note The passed direction vector will be normalized
- * before being stored in the ray structure
- * to ensure consistent behavior when performing ray calculations.
+ * @warning The direction vector should be normalized
+ * if working in the normal space
  */
 t_ray		ray_new(t_vector origin, t_vector direction);
 

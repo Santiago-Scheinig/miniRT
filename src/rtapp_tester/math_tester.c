@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:39:51 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:43:07 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -425,16 +425,12 @@ static int	test_ray_new(void)
 	t_vector origin = vector_new(1.0, 2.0, 3.0);
 	t_vector direction = vector_new(2.0, 3.0, 6.0);
 	t_ray ray = ray_new(origin, direction);
-	if (ray.origin.x != 1.0 || ray.origin.y != 2.0 || ray.origin.z != 3.0 || fabs(ray.direction.x - (2.0/7.0)) > EPSILON || fabs(ray.direction.y - (3.0/7.0)) > EPSILON || fabs(ray.direction.z - (6.0/7.0)) > EPSILON)
-		return (1);
-	t_vector dir_exp = vector_new(2.0 / 7.0, 3.0 / 7.0, 6.0 / 7.0);
-	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, dir_exp))
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, direction))
 		return (1);
 	origin = vector_new(1.0, 2.0, 3.0);
 	direction = vector_new(0.0, 0.0, 0.0);
-	dir_exp = vector_new(0.0, 0.0, 0.0);
 	ray = ray_new(origin, direction);
-	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, dir_exp))
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, direction))
 		return (1);
 	return (0);	
 }
