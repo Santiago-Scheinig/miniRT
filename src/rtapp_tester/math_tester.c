@@ -6,14 +6,21 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 17:42:36 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:55:11 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 #include <stdio.h>
 
-static void    test_function( int (*f)(void), char* name )
+static void	print_header(void)
+{
+	printf("\e[1;34m====================\n");
+	printf("   MATH TESTER\n");
+	printf("====================\e[0m\n");
+}
+
+static void	test_function( int (*f)(void), char* name )
 {
 	if (f() == 0)
 		printf("\e[0;32m%s: OK\n\e[0m", name);
@@ -21,7 +28,7 @@ static void    test_function( int (*f)(void), char* name )
 		printf("\e[0;31m%s: FAIL\n\e[0m", name);
 }
 
-static int    test_vector_new(void)
+static int	test_vector_new(void)
 {
 	t_vector v = vector_new(1.0, 2.0, 3.0);
 	if (v.x == 1.0 && v.y == 2.0 && v.z == 3.0)
@@ -30,7 +37,7 @@ static int    test_vector_new(void)
 		return (1);
 }
 
-static int    test_vector_mult_scalar(void)
+static int	test_vector_mult_scalar(void)
 {
 	t_vector v = vector_new(1.0, 2.0, 3.0);
 	t_vector result = vector_mult_scalar(v, 2.0);
@@ -40,7 +47,7 @@ static int    test_vector_mult_scalar(void)
 		return (1);
 }
 
-static int    test_vector_div_scalar(void)
+static int	test_vector_div_scalar(void)
 {
 	t_vector v = vector_new(2.0, 4.0, 6.0);
 	t_vector result = vector_div_scalar(v, 2.0);
@@ -52,7 +59,7 @@ static int    test_vector_div_scalar(void)
 	return (0);
 }
 
-static int   test_vector_sum_vector(void)
+static int	test_vector_sum_vector(void)
 {
 	t_vector v1 = vector_new(1.0, 2.0, 3.0);
 	t_vector v2 = vector_new(4.0, 5.0, 6.0);
@@ -63,7 +70,7 @@ static int   test_vector_sum_vector(void)
 		return (1);
 }
 
-static int   test_vector_sub_vector(void)
+static int	test_vector_sub_vector(void)
 {
 	t_vector v1 = vector_new(4.0, 5.0, 1.0);
 	t_vector v2 = vector_new(1.0, 2.0, 3.0);
@@ -73,7 +80,7 @@ static int   test_vector_sub_vector(void)
 	return (0);
 }
 
-static int  test_vector_module(void)
+static int	test_vector_module(void)
 {
 	t_vector v;
 	double res;
@@ -93,7 +100,7 @@ static int  test_vector_module(void)
 	return (0);
 }
 
-static int test_vector_normalize(void)
+static int	test_vector_normalize(void)
 {
 	t_vector v;
 	t_vector res;
@@ -113,7 +120,7 @@ static int test_vector_normalize(void)
 	return (0);
 }
 
-static int  test_vector_distance_points(void)
+static int	test_vector_distance_points(void)
 {
 	t_vector p1 = vector_new(1.0, 2.0, 3.0);
 	t_vector p2 = vector_new(4.0, 6.0, 3.0);
@@ -136,7 +143,7 @@ static int  test_vector_distance_points(void)
 	return (0);
 }
 
-static int  test_vector_dot_product(void)
+static int	test_vector_dot_product(void)
 {
 	t_vector v1 = vector_new(1.0, 2.0, 3.0);
 	t_vector v2 = vector_new(4.0, 5.0, 6.0);
@@ -154,7 +161,7 @@ static int  test_vector_dot_product(void)
 	return (0);
 }
 
-static int  test_vector_cross_product(void)
+static int	test_vector_cross_product(void)
 {
 	t_vector v1 = vector_new(1.0, 2.0, 3.0);
 	t_vector v2 = vector_new(4.0, 5.0, 6.0);
@@ -178,7 +185,7 @@ static int  test_vector_cross_product(void)
 	return (0);
 }
 
-static int  test_mat4_new_identity(void)
+static int	test_mat4_new_identity(void)
 {
 	t_mat4 m = mat4_new_identity();
 	for (int i = 0; i < 4; i++)
@@ -194,7 +201,7 @@ static int  test_mat4_new_identity(void)
 	return (0);
 }
 
-static int  test_mat4_transpose(void)
+static int	test_mat4_transpose(void)
 {
 	t_mat4	og;
 	t_mat4	transposed;
@@ -373,6 +380,18 @@ static int 	test_mat4_rotation_z(void)
 	return (0);
 }
 
+static int	test_mat4_scale(void)
+{
+	t_mat4 res = mat4_scale(2.0, 3.0, 4.0);
+	t_mat4 exp = mat4_new_identity();
+	exp.m[0][0] = 2.0;
+	exp.m[1][1] = 3.0;
+	exp.m[2][2] = 4.0;
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -394,7 +413,8 @@ int main(void)
 		test_mat4_translation,
 		test_mat4_rotation_x,
 		test_mat4_rotation_y,
-		test_mat4_rotation_z
+		test_mat4_rotation_z,
+		test_mat4_scale
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -415,8 +435,10 @@ int main(void)
 		"test_mat4_translation",
 		"test_mat4_rotation_x",
 		"test_mat4_rotation_y",
-		"test_mat4_rotation_z"
+		"test_mat4_rotation_z",
+		"test_mat4_scale"
 	};
+	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
 		test_function(tests[i], test_names[i]);
 	return (0);

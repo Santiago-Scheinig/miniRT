@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 17:41:56 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:52:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,5 +218,21 @@ t_mat4		mat4_rotation_y(double angle);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_rotation_z(double angle);
+
+/**
+ * @brief Creates a new scaling matrix for the given scaling factors.
+ * This matrix can be used to scale points in 3D space by the specified
+ * amounts along the x, y, and z axes.
+ * @param sx The scaling factor along the x-axis, should be a double.
+ * @param sy The scaling factor along the y-axis, should be a double.
+ * @param sz The scaling factor along the z-axis, should be a double.
+ * @return The newly created scaling matrix.
+ * @note The resulting matrix will have the form:
+ * @note [ sx 0 0 0 ]
+ * @note [ 0 sy 0 0 ]
+ * @note [ 0 0 sz 0 ]
+ * @note [ 0 0 0 1 ]
+ */
+t_mat4		mat4_scale(double sx, double sy, double sz);
 
 #endif

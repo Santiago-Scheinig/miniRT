@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 16:54:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 17:41:48 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 17:52:53 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,16 @@ t_mat4	mat4_rotation_z(double angle)
 	res.m[0][1] = -sin_a;
 	res.m[1][0] = sin_a;
 	res.m[1][1] = cos_a;
+	return (res);
+}
+
+t_mat4	mat4_scale(double sx, double sy, double sz)
+{
+	t_mat4	res;
+
+	res = mat4_new_identity();
+	res.m[0][0] = sx;
+	res.m[1][1] = sy;
+	res.m[2][2] = sz;
 	return (res);
 }
