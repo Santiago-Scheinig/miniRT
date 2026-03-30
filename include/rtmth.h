@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:50:50 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:19:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,5 +314,14 @@ t_ray		ray_new(t_vector origin, t_vector direction);
  * @warning The direction vector of the ray should be normalized
  */
 t_vector	ray_point_at(t_ray ray, double t);
+
+/**
+ * @brief Transforms a ray by applying
+ * a given transformation matrix to its origin and direction.
+ * @param ray The ray to be transformed.
+ * @param transform The transformation matrix to apply to the ray.
+ * @return The transformed ray.
+ */
+t_ray		ray_transform(t_ray ray, t_mat4 transform);
 
 #endif
