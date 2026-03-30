@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:24:09 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 20:20:42 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:35:43 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ t_vector	ray_point_at(t_ray ray, double t)
 t_ray	ray_transform(t_ray ray, t_mat4 transform)
 {
 	t_ray	transformed;
-	
-	transformed.origin = mat4_mult_vector_point(transform, ray.origin);
-	transformed.direction = mat4_mult_vector_dir(transform, ray.direction);
+
+	transformed.origin = vector_mult_mat4_point(ray.origin, transform);
+	transformed.direction = vector_mult_mat4_dir(ray.direction, transform);
 	return (transformed);
 }

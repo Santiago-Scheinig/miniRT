@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 20:23:24 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:35:49 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,11 +278,24 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
  * @brief Multiplies a 4x4 matrix by a vector, treating the vector as a point
  * (i.e., with an implicit w component of 1). This is used for transforming
  * points in 3D space using homogeneous coordinates.
- * @param mat The 4x4 matrix to multiply.
  * @param v The vector to be transformed, treated as a point.
- * @return The resulting vector after multiplication, representing the transformed point.
+ * @param mat The 4x4 matrix to multiply.
+ * @return The resulting vector after multiplication,
+ * representing the transformed point.
  */
-t_vector	mat4_mult_vector_point(t_mat4 mat, t_vector v);
+t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
+
+/**
+ * @brief Multiplies a 4x4 matrix by a vector, treating it as a direction
+ * (i.e., with an implicit w component of 0). This is used for transforming
+ * directions in 3D space, such as normals or ray directions, where translation
+ * should not affect the result.
+ * @param v The vector to be transformed, treated as a direction.
+ * @param mat The 4x4 matrix to multiply.
+ * @return The resulting vector after multiplication,
+ * representing the transformed direction.
+ */
+t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
 
 /**
  * @brief Solves a quadratic equation of the form ax^2 + bx + c = 0.
