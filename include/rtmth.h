@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 18:50:07 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:06:50 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct s_mat3
  */
 typedef struct s_roots
 {
-	int	has_solutions;
+	int		has_solutions;
 	double	sol1;
 	double	sol2;
 }	t_roots;
@@ -258,5 +258,20 @@ t_mat4		mat4_rotation_z(double angle);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_scale(double sx, double sy, double sz);
+
+/**
+ * @brief Solves a quadratic equation of the form ax^2 + bx + c = 0.
+ * @param a The coefficient of x^2, should be a double.
+ * @param b The coefficient of x, should be a double.
+ * @param c The constant term, should be a double.
+ * @return A structure containing the solutions of the equation.
+ * @note If the equation has real solutions,
+ * the has_solutions field will be set to 1,
+ * and sol1 and sol2 will contain the two solutions
+ * (which may be the same if there is a repeated root).
+ * @note If the equation does not have real solutions,
+ * the has_solutions field will be set to 0, and sol1 and sol2 will be undefined.
+ */
+t_roots		solve_quadratic(double a, double b, double c);
 
 #endif
