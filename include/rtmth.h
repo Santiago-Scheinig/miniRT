@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 19:06:50 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:35:49 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,21 @@ typedef struct s_roots
 	double	sol1;
 	double	sol2;
 }	t_roots;
+
+/**
+ * @brief Structure to represent a ray in 3D space,
+ * defined by an origin point and a direction vector.
+ * @param origin The starting point of the ray, represented as a vector.
+ * @param direction The direction of the ray, represented as a vector.
+ * @note The direction vector should allways be normalized
+ * in the standard space (i.e., have a magnitude of 1)
+ * to ensure consistent behavior when performing ray calculations.
+ */
+typedef struct s_ray
+{
+	t_vector	origin;
+	t_vector	direction;
+}	t_ray;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
@@ -260,6 +275,29 @@ t_mat4		mat4_rotation_z(double angle);
 t_mat4		mat4_scale(double sx, double sy, double sz);
 
 /**
+ * @brief Multiplies a 4x4 matrix by a vector, treating the vector as a point
+ * (i.e., with an implicit w component of 1). This is used for transforming
+ * points in 3D space using homogeneous coordinates.
+ * @param v The vector to be transformed, treated as a point.
+ * @param mat The 4x4 matrix to multiply.
+ * @return The resulting vector after multiplication,
+ * representing the transformed point.
+ */
+t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
+
+/**
+ * @brief Multiplies a 4x4 matrix by a vector, treating it as a direction
+ * (i.e., with an implicit w component of 0). This is used for transforming
+ * directions in 3D space, such as normals or ray directions, where translation
+ * should not affect the result.
+ * @param v The vector to be transformed, treated as a direction.
+ * @param mat The 4x4 matrix to multiply.
+ * @return The resulting vector after multiplication,
+ * representing the transformed direction.
+ */
+t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
+
+/**
  * @brief Solves a quadratic equation of the form ax^2 + bx + c = 0.
  * @param a The coefficient of x^2, should be a double.
  * @param b The coefficient of x, should be a double.
@@ -273,5 +311,40 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
  * the has_solutions field will be set to 0, and sol1 and sol2 will be undefined.
  */
 t_roots		solve_quadratic(double a, double b, double c);
+
+/**
+ * @brief Creates a new ray with the given origin and direction.
+ * @param origin The starting point of the ray, represented as a vector.
+ * @param direction The direction of the ray, represented as a vector.
+ * @return The newly created ray.
+ * @warning The direction vector should be normalized
+ * if working in the normal space
+ * @warning If the direction vector is (0.0, 0.0, 0.0),
+ * the ray will be created with a zero direction and
+ * following ray calculations may not behave as expected.
+ */
+t_ray		ray_new(t_vector origin, t_vector direction);
+
+/**
+ * @brief Calculates a point along the ray at a given
+ * distance t from the origin.
+ * @param ray The ray for which to calculate the point.
+ * @param t The distance from the ray's origin
+ * to the point, should be a double.
+ * @return The point along the ray at distance t
+ * from the origin, represented as a vector.
+ * @note The point is calculated using the formula: origin + t * direction.
+ * @warning The direction vector of the ray should be normalized
+ */
+t_vector	ray_point_at(t_ray ray, double t);
+
+/**
+ * @brief Transforms a ray by applying
+ * a given transformation matrix to its origin and direction.
+ * @param ray The ray to be transformed.
+ * @param transform The transformation matrix to apply to the ray.
+ * @return The transformed ray.
+ */
+t_ray		ray_transform(t_ray ray, t_mat4 transform);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:06:33 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 20:38:32 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -415,6 +415,97 @@ static int	test_solve_quadratic(void)
 	return (0);
 }
 
+static int	aux_vector_equal(t_vector v1, t_vector v2)
+{
+	return (fabs(v1.x - v2.x) < EPSILON && fabs(v1.y - v2.y) < EPSILON && fabs(v1.z - v2.z) < EPSILON);
+}
+
+static int	test_ray_new(void)
+{
+	t_vector origin = vector_new(1.0, 2.0, 3.0);
+	t_vector direction = vector_new(2.0, 3.0, 6.0);
+	t_ray ray = ray_new(origin, vector_normalize(direction));
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, vector_normalize(direction)))
+		return (1);
+	origin = vector_new(1.0, 2.0, 3.0);
+	direction = vector_new(0.0, 0.0, 0.0);
+	ray = ray_new(origin, vector_normalize(direction));
+	if (!aux_vector_equal(ray.origin, origin) || !aux_vector_equal(ray.direction, vector_normalize(direction)))
+		return (1);
+	return (0);	
+}
+
+static int	test_ray_point_at(void)
+{
+	t_ray ray;
+	ray.origin = vector_new(1.0, 2.0, 3.0);
+	ray.direction = vector_new(2.0, 3.0, 6.0);
+	double t = 2.0;
+	t_vector res = ray_point_at(ray, t);
+	t_vector exp = vector_new(5.0, 8.0, 15.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	ray.direction = vector_new(0.0, 0.0, 0.0);
+	res = ray_point_at(ray, t);
+	exp = vector_new(1.0, 2.0, 3.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	return (0);	
+}
+
+static int	test_vector_mult_mat4_point(void)
+{
+	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
+	t_vector v = vector_new(1.0, 1.0, 1.0);
+	t_vector res = vector_mult_mat4_point(v, m);
+	t_vector exp = vector_new(2.0, 3.0, 4.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	m = mat4_rotation_x(M_PI / 2);
+	res = vector_mult_mat4_point(v, m);
+	exp = vector_new(1.0, -1.0, 1.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	return (0);
+}
+
+static int	test_vector_mult_mat4_dir(void)
+{
+	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
+	t_vector v = vector_new(1.0, 1.0, 1.0);
+	t_vector res = vector_mult_mat4_dir(v, m);
+	t_vector exp = vector_new(1.0, 1.0, 1.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	m = mat4_rotation_x(M_PI / 2);
+	res = vector_mult_mat4_dir(v, m);
+	exp = vector_new(1.0, -1.0, 1.0);
+	if (!aux_vector_equal(res, exp))
+		return (1);
+	return (0);
+}
+
+static int	test_ray_transform(void)
+{
+	t_ray ray;
+	ray.origin = vector_new(1.0, 2.0, 3.0);
+	ray.direction = vector_new(2.0, 3.0, 6.0);
+	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
+	t_ray res = ray_transform(ray, m);
+	t_ray exp;
+	exp.origin = vector_new(2.0, 4.0, 6.0);
+	exp.direction = vector_new(2.0, 3.0, 6.0);
+	if (!aux_vector_equal(res.origin, exp.origin) || !aux_vector_equal(res.direction, exp.direction))
+		return (1);
+	m = mat4_rotation_x(M_PI / 2);
+	res = ray_transform(ray, m);
+	exp.origin = vector_new(1.0, -3.0, 2.0);
+	exp.direction = vector_new(2.0, -6.0, 3.0);
+	if (!aux_vector_equal(res.origin, exp.origin) || !aux_vector_equal(res.direction, exp.direction))
+		return (1);
+	return (0);	
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -439,6 +530,11 @@ int main(void)
 		test_mat4_rotation_z,
 		test_mat4_scale,
 		test_solve_quadratic,
+		test_ray_new,
+		test_ray_point_at,
+		test_vector_mult_mat4_point,
+		test_vector_mult_mat4_dir,
+		test_ray_transform,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -462,6 +558,11 @@ int main(void)
 		"test_mat4_rotation_z",
 		"test_mat4_scale",
 		"test_solve_quadratic",
+		"test_ray_new",
+		"test_ray_point_at",
+		"test_vector_mult_mat4_point",
+		"test_vector_mult_mat4_dir",
+		"test_ray_transform",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
