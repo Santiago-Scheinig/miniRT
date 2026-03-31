@@ -6,13 +6,19 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/30 17:52:31 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:06:50 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
 # define EPSILON 0.00001
+# ifndef TRUE
+#  define TRUE 1
+# endif
+# ifndef FALSE
+#  define FALSE 0
+# endif
 
 # include <math.h>
 
@@ -32,6 +38,24 @@ typedef struct s_mat3
 {
 	double	m[3][3];
 }	t_mat3;
+
+/**
+ * @brief Structure to hold the results of solving a quadratic equation.
+ * @param has_solutions An integer flag indicating whether
+ * the equation has real solutions (1) or not (0).
+ * @param sol1 The first solution of the equation, if it exists.
+ * If there are no solutions, this value is undefined.
+ * @param sol2 The second solution of the equation, if it exists.
+ * If there are no solutions, this value is undefined.
+ * @note If the equation has only one solution (i.e., a repeated root),
+ * both sol1 and sol2 will contain the same value.
+ */
+typedef struct s_roots
+{
+	int		has_solutions;
+	double	sol1;
+	double	sol2;
+}	t_roots;
 
 /**
  * @brief Creates a new vector with the given x, y, and z components.
@@ -234,5 +258,20 @@ t_mat4		mat4_rotation_z(double angle);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_scale(double sx, double sy, double sz);
+
+/**
+ * @brief Solves a quadratic equation of the form ax^2 + bx + c = 0.
+ * @param a The coefficient of x^2, should be a double.
+ * @param b The coefficient of x, should be a double.
+ * @param c The constant term, should be a double.
+ * @return A structure containing the solutions of the equation.
+ * @note If the equation has real solutions,
+ * the has_solutions field will be set to 1,
+ * and sol1 and sol2 will contain the two solutions
+ * (which may be the same if there is a repeated root).
+ * @note If the equation does not have real solutions,
+ * the has_solutions field will be set to 0, and sol1 and sol2 will be undefined.
+ */
+t_roots		solve_quadratic(double a, double b, double c);
 
 #endif

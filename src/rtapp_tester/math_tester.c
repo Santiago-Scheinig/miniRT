@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 17:55:11 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/03/30 19:06:33 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -392,6 +392,29 @@ static int	test_mat4_scale(void)
 	return (0);
 }
 
+static int	test_solve_quadratic(void)
+{
+	double a = 1.0;
+	double b = -3.0;
+	double c = 2.0;
+	t_roots res = solve_quadratic(a, b, c);
+	if (!res.has_solutions || fabs(res.sol1 - 2.0) > EPSILON || fabs(res.sol2 - 1.0) > EPSILON)
+		return (1);
+	a = 1.0;
+	b = 2.0;
+	c = 5.0;
+	res = solve_quadratic(a, b, c);
+	if (res.has_solutions)
+		return (1);
+	a = 1.0;
+	b = -2.0;
+	c = 1.0;
+	res = solve_quadratic(a, b, c);
+	if (!res.has_solutions || fabs(res.sol1 - 1.0) > EPSILON || fabs(res.sol2 - 1.0) > EPSILON || res.sol1 != res.sol2)
+		return (1);
+	return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -414,7 +437,8 @@ int main(void)
 		test_mat4_rotation_x,
 		test_mat4_rotation_y,
 		test_mat4_rotation_z,
-		test_mat4_scale
+		test_mat4_scale,
+		test_solve_quadratic,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -436,7 +460,8 @@ int main(void)
 		"test_mat4_rotation_x",
 		"test_mat4_rotation_y",
 		"test_mat4_rotation_z",
-		"test_mat4_scale"
+		"test_mat4_scale",
+		"test_solve_quadratic",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
