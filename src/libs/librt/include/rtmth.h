@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 15:54:11 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/01 20:11:30 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,6 +257,14 @@ t_mat4		mat4_rotation_y(double angle);
  * @note [ 0 0 0 1 ]
  */
 t_mat4		mat4_rotation_z(double angle);
+
+/**
+ * @brief Creates a new rotation matrix for a rotation around an arbitrary axis
+ * defined by a normal vector.
+ * @param normal The normal vector defining the axis and angle of rotation.
+ * @return The newly created rotation matrix.
+ */
+t_mat4		mat4_rotation(t_vector normal);
 
 /**
  * @brief Creates a new scaling matrix for the given scaling factors.
