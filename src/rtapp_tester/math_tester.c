@@ -6,12 +6,15 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 20:38:32 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/01 13:51:39 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 #include <stdio.h>
+#ifndef M_PI
+# define M_PI 3.14159265358979323846
+#endif
 
 static void	print_header(void)
 {
