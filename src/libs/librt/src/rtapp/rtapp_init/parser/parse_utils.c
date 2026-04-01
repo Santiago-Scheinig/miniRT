@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:38:34 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:56:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,5 +112,5 @@ int	parse_color(char *sp, char *str, int i)
 	else if (split[3])
 		ans = RT_FAILURE;
 	ft_split_free(split);
-	return (ans);
+	return (RT_SUCCESS);
 }
