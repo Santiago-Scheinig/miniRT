@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/01 15:53:49 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/01 20:56:22 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -509,6 +509,26 @@ static int	test_ray_transform(void)
 	return (0);	
 }
 
+static int test_mat4_rotation(void)
+{
+    return (1);
+}
+
+static int test_sphere_get_inverse_mat4(void)
+{
+    return (1);
+}
+
+static int test_plane_get_inverse_mat4(void)
+{
+    return (1);
+}
+
+int test_cylinder_get_inverse_mat4(void)
+{
+    return (1);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -538,6 +558,10 @@ int main(void)
 		test_vector_mult_mat4_point,
 		test_vector_mult_mat4_dir,
 		test_ray_transform,
+		test_mat4_rotation,
+		test_sphere_get_inverse_mat4,
+		test_plane_get_inverse_mat4,
+		test_cylinder_get_inverse_mat4,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -566,6 +590,10 @@ int main(void)
 		"test_vector_mult_mat4_point",
 		"test_vector_mult_mat4_dir",
 		"test_ray_transform",
+		"test_mat4_rotation",
+		"test_sphere_get_inverse_mat4",
+		"test_plane_get_inverse_mat4",
+		"test_cylinder_get_inverse_mat4",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
