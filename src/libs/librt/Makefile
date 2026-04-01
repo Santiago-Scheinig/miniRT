@@ -19,6 +19,15 @@ SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c					\
 			$(SRCDIR)$(ELMDIR)ambient_light.c							\
 			$(SRCDIR)$(ELMDIR)camera.c									\
 			$(SRCDIR)$(ELMDIR)light.c									\
+			$(SRCDIR)$(MTHDIR)matrix/mat4.c								\
+			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c						\
+			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c					\
+			$(SRCDIR)$(MTHDIR)equations/quadratic.c						\
+			$(SRCDIR)$(MTHDIR)raytracing/ray.c							\
+			$(SRCDIR)$(MTHDIR)raytracing/vector_mat4.c					\
+			$(SRCDIR)$(MTHDIR)vector/vector.c							\
+			$(SRCDIR)$(MTHDIR)vector/vector_vector.c					\
+			$(SRCDIR)$(MTHDIR)vector/vector_scalar.c					\
 			$(SRCDIR)$(ERRDIR)rtlog.c									\
 			$(SRCDIR)$(ERRDIR)rtfree.c									\
 			$(SRCDIR)$(APPDIR)rtapp_init/init_log.c						\
@@ -64,15 +73,17 @@ all: $(NAME)
 #- Creates a directory named $(OBJDIR).												-#
 $(OBJDIR):
 	@echo "$(COLOUR_GREEN)$(CNAME) - Object compilation:\n"
-	@mkdir -p $@$(APPDIR)
 	@mkdir -p $@$(APPDIR)rtapp_init/
 	@mkdir -p $@$(APPDIR)rtapp_init/parser
 	@mkdir -p $@$(APPDIR)rtapp_render/
 	@mkdir -p $@$(APPDIR)rtapp_run/
+	@mkdir -p $@$(MTHDIR)equations/
+	@mkdir -p $@$(MTHDIR)matrix/
+	@mkdir -p $@$(MTHDIR)raytracing/
+	@mkdir -p $@$(MTHDIR)vector/
 	@mkdir -p $@$(ELMDIR)
 	@mkdir -p $@$(ERRDIR)
 	@mkdir -p $@$(MLXDIR)
-	@mkdir -p $@$(MTHDIR)
 
 #
 #- Compiles each %(generic).c source into its respective %(generic).o				-#
