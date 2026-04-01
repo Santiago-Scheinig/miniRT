@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:51:37 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	print_hms_timestamp(pid_t pid, int fd)
 	ft_printfd(fd, "[%02d:%02d:%02d][%d]", hours, minutes, seconds, pid);
 }
 
-void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
+int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 {
 	va_list			args;
 	int				fd;
@@ -49,4 +49,5 @@ void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 	ft_vprintfd(fd, fmt, args);
 	ft_printfd(fd, "\n");
 	va_end(args);
+	return (fd - 1);
 }
