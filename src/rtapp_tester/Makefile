@@ -6,7 +6,7 @@
 #    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/15 17:51:38 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/01 18:00:18 by aramos-r         ###   ########.fr        #
+#    Updated: 2026/04/01 18:07:21 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,11 +23,11 @@ MATHHEADERFILE=$(MATHHEADERDIR)rtmth.h
 
 LDFLAGS= -I$(MATHHEADERDIR)
 
-math: $(MATHMAINFILE) $(MATHHEADERFILE) $(LIBRTFILE)
-	@$(CC) $(LDFLAGS) $(MATHMAINFILE) $(LIBRTFILE) -o $(NAME)
+math: $(MATHMAINFILE) $(MATHHEADERFILE) #$(LIBRTFILE)
+	@$(CC) $(LDFLAGS) $(MATHMAINFILE) $(LIBRTFILE) -lm -o $(NAME)
 	@./$(NAME)
 	@rm $(NAME)
-	@norminette ../libs/rtmth | grep Error || yes
+	@norminette ../libs/librt/src/rtmth | grep Error || true
 
 $(LIBRTFILE):
 	make -C ../../
