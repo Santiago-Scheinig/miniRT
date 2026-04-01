@@ -6,7 +6,16 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 17:34:13 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:35:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:40:56 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+int	ft_arglen(char **arg)
+{
+	int	i;
+
+	i = 0;
+	while (arg[i])
+		i++;
+	return (i);
+}

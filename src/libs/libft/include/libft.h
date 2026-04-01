@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 18:52:55 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:41:23 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
  * @return A pointer to the new joined STRING.
  */
 char	*ft_argjoin(char **argv, char c);
+
+int		ft_arglen(char **arg);
 
 /**
  * Searches for the last ocurrance of a character on a STRING.
