@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf_flags_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 19:58:50 by sscheini          #+#    #+#             */
-/*   Updated: 2025/05/19 17:08:21 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:36:04 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

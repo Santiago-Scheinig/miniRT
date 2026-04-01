@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_light_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:19 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/27 16:44:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:37:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
