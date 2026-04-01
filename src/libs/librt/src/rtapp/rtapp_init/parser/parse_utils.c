@@ -70,6 +70,32 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 	return (ans);
 }
 
+static int	vector_check(char *sp, char **split, int line, t_flim limits)
+{
+	const char	*errmsg = "Parser error for %s in line %i: %s";
+	t_vector	v;
+	int			ans;
+
+	ans = RT_SUCCESS;
+	if (parse_float(sp, split[0], line, limits))
+		ans = RT_FAILURE;
+	else if (parse_float(sp, split[1], line, limits))
+		ans = RT_FAILURE;
+	else if (parse_float(sp, split[2], line, limits))
+		ans = RT_FAILURE;
+	else if (split[3])
+	{
+		rtlog(RT_ERRLOG, 0, errmsg, sp, line, "invalid 3D vector.");
+		ans = RT_FAILURE;
+	}
+	v.x = atof(split[0]);//Need to change to ours
+	v.y = atof(split[1]);//Need to change to ours
+	v.z = atof(split[2]);//Need to change to ours
+	if (!v.x && !v.y && !v.z)
+		ans = RT_FAILURE;
+	return (ans);
+}
+
 int parse_vector(char *sp, char *str, int i, t_flim limits)
 {
 	const char	*errmsg = "Failed to initialize %s in line %i: %s";
