@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vector.c                                           :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/29 16:56:30 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/01 16:54:15 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
+/*   Updated: 2026/03/27 17:11:28 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtmth.h"
+#include "rtelm.h"
 
-t_vector	vector_new(double x, double y, double z)
+t_elem_camera new_camera(char **str)
 {
-	t_vector	result;
+	t_elem_camera	aux;
+	t_vector		aux_v;
 
-	result.x = x;
-	result.y = y;
-	result.z = z;
-	return (result);
-}
-
-double	vector_module(t_vector v)
-{
-	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
-}
-
-t_vector	vector_normalize(t_vector v)
-{
-	t_vector	result;
-
-	result = vector_div_scalar(v, vector_module(v));
-	return (result);
+	(void) str;
+	aux_v.x = 0;
+	aux_v.y = 0;
+	aux_v.z = 0;
+	aux.fov = 0;
+	aux.normal = aux_v;
+	aux.pos = aux_v;
+	return (aux);
 }
