@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:49:41 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/24 19:28:51 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:36:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,20 @@ static int	is_invalid(char	c, char	*c_str)
  * @param c The character which divides each word.
  * @return An INT with the amount of words counted.
  */
-static	int	ft_wrdcount(char const *s, char *c_str)
+static int ft_wrdcount(char const *s, char *c_str)
 {
-	int		ans;
-	int		count;
-	int		i;
+    int count = 0;
 
-	i = -1;
-	ans	= 0;
-	count = 0;
-	if (c_str[0] == 0)
-		return (0);
-	if (s[0] == 0)
-		return (0);
-	while (c_str[++i])
-		if (s[0] == c_str[i])
-			ans = 1;
-	if (!ans)
-		count++;
-	if (ans)
-		while (s[0] && is_invalid(s[0], c_str))
-			s++;
-	else
-		while (s[0] && !is_invalid(s[0], c_str))
-			s++;
-	if (s[0] && s[1])
-		count += ft_wrdcount(&s[1], c_str);
-	return (count);
+    while (*s)
+    {
+        while (*s && is_invalid(*s, c_str))
+            s++;
+        if (*s)
+            count++;
+        while (*s && !is_invalid(*s, c_str))
+            s++;
+    }
+    return count;
 }
 
 /**
@@ -70,26 +57,13 @@ static	int	ft_wrdcount(char const *s, char *c_str)
  * @param c The character which divides each word.
  * @return An INT with the lenght of the word.
  */
-static	int	ft_wrdlen(char const *s, char *c_str)
+static int ft_wrdlen(char const *s, char *c_str)
 {
-	int	i;
-	int	j;
-	int	ans;
+    int i = 0;
 
-	i = 0;
-	while (s[i])
-	{
-		j = -1;
-		ans	= 0;
-		while (c_str[++j])
-			if (s[i] == c_str[j])
-				ans = 1;
-		if (!ans)
-			i++;
-		else
-			break;
-	}
-	return (i);
+    while (s[i] && !is_invalid(s[i], c_str))
+        i++;
+    return i;
 }
 
 /**

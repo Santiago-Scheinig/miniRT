@@ -6,7 +6,7 @@
 #    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/15 17:51:38 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/01 17:53:35 by aramos-r         ###   ########.fr        #
+#    Updated: 2026/04/01 18:00:18 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,6 @@ NAME=mathtest
 MATHMAINFILE=math_tester.c
 LIBRTDIR=../libs/librt/
 LIBRTFILE=$(LIBRTDIR)librt.a
-LIBRT=rt
 
 MATHHEADERDIR=../libs/librt/include/
 MATHHEADERFILE=$(MATHHEADERDIR)rtmth.h
