@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector_mat4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 20:22:38 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 20:35:32 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:08:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m)
 {
 	t_vector	result;
-	double		w;
 
 	result.x = m.m[0][0] * v.x + m.m[0][1] * v.y + m.m[0][2] * v.z + m.m[0][3];
 	result.y = m.m[1][0] * v.x + m.m[1][1] * v.y + m.m[1][2] * v.z + m.m[1][3];

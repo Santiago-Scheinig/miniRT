@@ -1,6 +1,7 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
 SRC		=	$(SRCDIR)ft_argjoin.c					\
+			$(SRCDIR)ft_arglen.c					\
 			$(SRCDIR)ft_atoi.c						\
 			$(SRCDIR)ft_atol.c						\
 			$(SRCDIR)ft_atoi_base.c					\
