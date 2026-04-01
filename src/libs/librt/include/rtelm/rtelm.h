@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/27 16:54:17 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:38:25 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ typedef struct s_elem_light_a
 typedef struct s_object
 {
 	void		*data;
-	void 		*(*intersection)(void *);
-	void 		*(*normal)(void *);
+	void		*(*intersection)(void *);
+	void		*(*normal)(void *);
 }	t_object;
 
 t_elem_camera	new_camera(char **str);
@@ -89,5 +89,37 @@ t_object		*new_plane(char **str);
 t_object		*new_cylinder(char **str);
 
 t_object		*new_sphere(char **str);
+
+/**
+ * @brief Gets the inverse transformation matrix for a plane given
+ * a point and normal.
+ * @param point A point on the plane.
+ * @param normal The normal vector of the plane.
+ * @return The inverse transformation matrix.
+ */
+t_mat4			plane_get_inverse_mat4(t_vector point, t_vector normal);
+
+/**
+ * @brief Gets the inverse transformation matrix for a sphere given
+ * its center and diameter.
+ * @param center The center of the sphere.
+ * @param diameter The diameter of the sphere.
+ * @return The inverse transformation matrix.
+ */
+t_mat4			sphere_get_inverse_mat4(t_vector center, double diameter);
+
+/**
+ * @brief Gets the inverse transformation matrix for a cylinder given
+ * its center, diameter, normal vector, and height.
+ * @param center The center of the cylinder.
+ * @param diameter The diameter of the cylinder.
+ * @param normal The normal vector of the cylinder.
+ * @param height The height of the cylinder.
+ * @return The inverse transformation matrix.
+ */
+t_mat4			cylinder_get_inverse_mat4(t_vector center,
+					double diameter,
+					t_vector normal,
+					double height);
 
 #endif
