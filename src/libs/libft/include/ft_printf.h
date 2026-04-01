@@ -6,13 +6,14 @@
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 16:44:05 by sscheini          #+#    #+#             */
-/*   Updated: 2025/05/19 16:48:43 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/22 18:22:29 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft.h"
+# include <stdarg.h>
 
 /**
  * Creates and returns a CONST CHAR * that includes an hexadecimal base
@@ -40,5 +41,11 @@ int			ft_printf(char const *txt, ...);
  * Writes the formatted output to the fd specified as argument.
  */
 int			ft_printfd(int fd, char const *txt, ...);
+
+/**
+ * Writes the formatted output to the fd specified as argument.
+ * It recieves a va_list instead of creating one.
+ */
+int			ft_vprintfd(int fd, char const *s, va_list args);
 
 #endif

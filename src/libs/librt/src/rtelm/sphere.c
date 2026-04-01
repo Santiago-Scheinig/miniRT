@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtmth.h                                            :+:      :+:    :+:   */
+/*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 17:31:45 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:37:21 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTMTH_H
-# define RTMTH_H
+#include "rtelm.h"
 
-# include <math.h>
-
-typedef struct s_vector
+t_object	*new_sphere(char **str)
 {
-	float	x;
-	float	y;
-	float	z;
-}	t_vector;
-
-#endif
+	(void) str;
+	return (NULL);
+}

@@ -1,6 +1,7 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
 SRC		=	$(SRCDIR)ft_argjoin.c					\
+			$(SRCDIR)ft_arglen.c					\
 			$(SRCDIR)ft_atoi.c						\
 			$(SRCDIR)ft_atol.c						\
 			$(SRCDIR)ft_atoi_base.c					\
@@ -40,6 +41,7 @@ SRC		=	$(SRCDIR)ft_argjoin.c					\
 			$(SRCDIR)ft_read_file.c					\
 			$(SRCDIR)ft_split.c						\
 			$(SRCDIR)ft_split_free.c				\
+			$(SRCDIR)ft_split_base.c				\
 			$(SRCDIR)ft_strchr.c					\
 			$(SRCDIR)ft_strdup.c					\
 			$(SRCDIR)ft_strlen.c					\
@@ -56,6 +58,7 @@ SRC		=	$(SRCDIR)ft_argjoin.c					\
 			$(SRCDIR)ft_tolower.c					\
 			$(SRCDIR)ft_toupper.c					\
 			$(SRCDIR)ft_utoa_base.c					\
+			$(SRCDIR)ft_vprintfd.c					\
 			$(SRCDIR)get_next_line.c				\
 			$(SRCDIR)get_next_line_utils.c			\
 #

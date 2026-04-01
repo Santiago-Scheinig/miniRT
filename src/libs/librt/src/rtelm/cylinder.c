@@ -1,13 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rterr.h                                            :+:      :+:    :+:   */
+/*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 17:19:58 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:37:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef enum error
+#include "rtelm.h"
+
+t_object	*new_cylinder(char **str)
+{
+	(void) str;
+	return (NULL);
+}

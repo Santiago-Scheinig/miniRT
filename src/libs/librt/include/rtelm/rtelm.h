@@ -1,28 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elements.h                                         :+:      :+:    :+:   */
+/*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 17:48:40 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/03/27 16:54:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEMENTS_H
-# define ELEMENTS_H
+#ifndef RTELM_H
+# define RTELM_H
 
 # include "rtmth.h"
+# include "libft.h"
 # if BONUS
-#  include "elements_bonus.h"
+#  include "rtelm_bonus.h"
 # else
 
 typedef enum e_elements
 {
-	PLANE,
-	CYLINDER,
-	SPHERE,
+	INV = -1,
+	PL,
+	CY,
+	SP,
 }	t_elements;
 
 typedef struct s_elem_light_p
@@ -68,5 +70,24 @@ typedef struct s_elem_light_a
 	float		ratio;
 	int			rgb;
 }	t_elem_light_a;
+
+typedef struct s_object
+{
+	void		*data;
+	void 		*(*intersection)(void *);
+	void 		*(*normal)(void *);
+}	t_object;
+
+t_elem_camera	new_camera(char **str);
+
+t_elem_light_a	new_ambient_light(char **str);
+
+t_elem_light_p	*new_light(char **str);
+
+t_object		*new_plane(char **str);
+
+t_object		*new_cylinder(char **str);
+
+t_object		*new_sphere(char **str);
 
 #endif

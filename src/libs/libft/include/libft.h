@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2025/05/27 22:57:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 17:41:23 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,16 @@ size_t	ft_strlen(const char *s);
  * NULL terminated.
  */
 char	**ft_split(char const *s, char c);
+
+/**
+ * Splits a STRING into an ARRAY of STRINGS, using an array of 
+ * divisor characters.
+ * @param s The STRING to split.
+ * @param c_str The array of characters which divides each word.
+ * @return An ARRAY of STRINGS that includes every divided word and is 
+ * NULL terminated.
+ */
+char	**ft_split_base(char const *s, char *c_str);
 
 /**
  * Splits a STRING into an ARRAY of STRINGS, using a divisor character.
@@ -154,6 +164,8 @@ char	*ft_strjoin(char const *s1, char const *s2);
  * @return A pointer to the new joined STRING.
  */
 char	*ft_argjoin(char **argv, char c);
+
+int		ft_arglen(char **arg);
 
 /**
  * Searches for the last ocurrance of a character on a STRING.
@@ -399,7 +411,6 @@ void	*ft_split_free(char **split);
 typedef struct s_list
 {
 	void			*content;
-	void			**vectors;
 	struct s_list	*next;
 }	t_list;
 

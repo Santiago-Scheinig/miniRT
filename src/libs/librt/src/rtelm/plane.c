@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp.c                                            :+:      :+:    :+:   */
+/*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:34:21 by sscheini         ###   ########.fr       */
+/*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:37:20 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-rtapp_init()
+#include "rtelm.h"
 
-rtapp_render()
-
-rtapp_run()
-
-rtapp_kill()
+t_object	*new_plane(char **str)
+{
+	(void) str;
+	return (NULL);
+}

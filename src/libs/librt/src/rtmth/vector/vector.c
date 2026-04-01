@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp.h                                            :+:      :+:    :+:   */
+/*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/19 18:15:41 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/29 16:56:30 by aramos-r          #+#    #+#             */
+/*   Updated: 2026/04/01 16:54:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "rtmth.h"
 
-# include "rterr.h"
-# include "rtmlx.h"
-# include "rtmth.h"
-# include "libft.h"
-# include "elements.h"
-# if BONUS
-#  include "rtapp_bonus.h"
-# endif
-
-typedef struct s_object
+t_vector	vector_new(double x, double y, double z)
 {
-	t_elements	id;
-	void		*obj;
-	void		(void *)(*fio)(void *);
-}	t_object;
+	t_vector	result;
 
-typedef struct s_rtapp
+	result.x = x;
+	result.y = y;
+	result.z = z;
+	return (result);
+}
+
+double	vector_module(t_vector v)
 {
-	t_list			*objects;
-	t_list			*lights;
-	t_elem_camera	camera;
-	t_elem_light_a	ambient;
-}	t_rtapp;
+	return (sqrt(v.x * v.x + v.y * v.y + v.z * v.z));
+}
 
-#endif
+t_vector	vector_normalize(t_vector v)
+{
+	t_vector	result;
+
+	result = vector_div_scalar(v, vector_module(v));
+	return (result);
+}
