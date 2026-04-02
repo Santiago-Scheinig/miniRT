@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 14:45:21 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 20:22:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -455,7 +455,7 @@ static int	test_solve_quadratic(void)
 	double b = -3.0;
 	double c = 2.0;
 	t_roots res = solve_quadratic(a, b, c);
-	if (!res.has_solutions || fabs(res.sol1 - 2.0) > EPSILON || fabs(res.sol2 - 1.0) > EPSILON)
+	if (!res.has_solutions || fabs(res.sol1 - 1.0) > EPSILON || fabs(res.sol2 - 2.0) > EPSILON)
 		return (1);
 	a = 1.0;
 	b = 2.0;

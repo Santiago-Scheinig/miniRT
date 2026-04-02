@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 20:05:22 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 20:38:39 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,6 +227,31 @@ static int  test_plane_intersection(void)
     return (0);
 }
 
+static int  test_sphere_intersection(void)
+{
+    t_ray           ray;
+    t_ray           local_ray;
+    double          res;
+    t_vector        center;
+    double          diameter;
+    
+    ray.origin = vector_new(0.0, 0.0, 0.0);
+    ray.direction = vector_new(1.0, 0.0, 1.0);
+    ray.direction = vector_normalize(ray.direction);
+    center = vector_new(5.0, 0.0, 0.0);
+    diameter = 2.0;
+    local_ray = ray_transform(ray, sphere_get_inverse_mat4(center, diameter));
+    res = sphere_intersection(local_ray, NULL);
+    if (res - INFINITY > EPSILON)
+        return (1);
+    center.z = 4.8;
+    local_ray = ray_transform(ray, sphere_get_inverse_mat4(center, diameter));
+    res = sphere_intersection(local_ray, NULL);
+    if (fabs(res - sqrt((4.2 * 4.2 ) + (4.2 * 4.2))) > EPSILON)
+        return (1);
+    return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -234,12 +259,14 @@ int main(void)
 		test_sphere_get_inverse_mat4,
 		test_cylinder_get_inverse_mat4,
         test_plane_intersection,
+        test_sphere_intersection
 	};
 	char* test_names[] = {
 		"test_plane_get_inverse_mat4",
 		"test_sphere_get_inverse_mat4",
 		"test_cylinder_get_inverse_mat4",
         "test_plane_intersection",
+        "test_sphere_intersection"
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)

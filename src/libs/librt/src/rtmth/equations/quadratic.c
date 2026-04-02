@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 18:52:38 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 19:06:14 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 20:25:50 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_roots	solve_quadratic(double a, double b, double c)
 	t_roots	res;
 	double	discriminant;
 	double	sqrt_discriminant;
+	double	temp;
+	double	inv_denom;
 
 	discriminant = get_discriminant(a, b, c);
 	if (discriminant < 0)
@@ -30,8 +32,15 @@ t_roots	solve_quadratic(double a, double b, double c)
 	{
 		res.has_solutions = TRUE;
 		sqrt_discriminant = sqrt(discriminant);
-		res.sol1 = (-b + sqrt_discriminant) / (2 * a);
-		res.sol2 = (-b - sqrt_discriminant) / (2 * a);
+		inv_denom = 1.0 / (2.0 * a);
+		res.sol1 = (-b + sqrt_discriminant) * inv_denom;
+		res.sol2 = (-b - sqrt_discriminant) * inv_denom;
+		if (res.sol1 > res.sol2)
+		{
+			temp = res.sol1;
+			res.sol1 = res.sol2;
+			res.sol2 = temp;
+		}
 	}
 	return (res);
 }

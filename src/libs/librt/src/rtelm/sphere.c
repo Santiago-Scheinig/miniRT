@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 20:38:55 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 20:20:51 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,26 @@ t_mat4	sphere_get_inverse_mat4(t_vector center, double diameter)
 	scale = mat4_scale(diameter / 2.0, diameter / 2.0, diameter / 2.0);
 	inv = mat4_inverse(mat4_mult_mat4(trans, scale));
 	return (inv);
+}
+
+double	sphere_intersection(t_ray local_ray, void *data)
+{
+	double	a;
+	double	b;
+	double	c;
+	t_roots	roots;
+
+	(void) data;
+	a = vector_dot_product(local_ray.direction, local_ray.direction);
+	b = 2.0 * vector_dot_product(local_ray.direction, local_ray.origin);
+	c = vector_dot_product(local_ray.origin, local_ray.origin) - 1.0;
+	roots = solve_quadratic(a, b, c);
+	if (!roots.has_solutions)
+		return (INFINITY);
+	else if (roots.sol1 > EPSILON)
+		return (roots.sol1);
+	else if (roots.sol2 > EPSILON)
+		return (roots.sol2);
+	else
+		return (INFINITY);
 }
