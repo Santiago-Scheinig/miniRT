@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 20:54:39 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 21:42:55 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 21:59:19 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,13 @@ static double	get_cap_dist(t_ray local_ray, double height)
 		return (INFINITY);
 }
 
-static double	get_ends_intersection(t_ray local_ray, void *data)
+static double	get_ends_intersection(t_ray local_ray)
 {
 	double			top_intersection;
 	double			bottom_intersection;
-	t_elem_cylinder	*cylinder;
 
-	cylinder = (t_elem_cylinder *)data;
-	top_intersection = get_cap_dist(local_ray, cylinder->height / 2.0);
-	bottom_intersection = get_cap_dist(local_ray, -cylinder->height / 2.0);
+	top_intersection = get_cap_dist(local_ray, 1.0);
+	bottom_intersection = get_cap_dist(local_ray, -1.0);
 	if (top_intersection > EPSILON && bottom_intersection > EPSILON)
 		return (fmin(top_intersection, bottom_intersection));
 	else if (top_intersection > EPSILON)
@@ -66,23 +64,21 @@ static t_roots	get_roots(t_ray local_ray)
 	return (roots);
 }
 
-static double	get_sides_intersection(t_ray local_ray, void *data)
+static double	get_sides_intersection(t_ray local_ray)
 {
-	t_elem_cylinder	*cylinder;
 	t_roots			roots;
 	t_vector		intersection_point;
 
-	cylinder = (t_elem_cylinder *)data;
 	roots = get_roots(local_ray);
 	if (!roots.has_solutions)
 		return (INFINITY);
 	intersection_point = ray_point_at(local_ray, roots.sol1);
-	if (roots.sol1 > EPSILON && intersection_point.y > -cylinder->height / 2.0
-		&& intersection_point.y < cylinder->height / 2.0)
+	if (roots.sol1 > EPSILON && intersection_point.y > -1.0
+		&& intersection_point.y < 1.0)
 		return (roots.sol1);
 	intersection_point = ray_point_at(local_ray, roots.sol2);
-	if (roots.sol2 > EPSILON && intersection_point.y > -cylinder->height / 2.0
-		&& intersection_point.y < cylinder->height / 2.0)
+	if (roots.sol2 > EPSILON && intersection_point.y > -1.0
+		&& intersection_point.y < 1.0)
 		return (roots.sol2);
 	return (INFINITY);
 }
@@ -92,8 +88,9 @@ double	cylinder_intersection(t_ray local_ray, void *data)
 	double	sides_intersection;
 	double	ends_intersection;
 
-	sides_intersection = get_sides_intersection(local_ray, data);
-	ends_intersection = get_ends_intersection(local_ray, data);
+	(void)data;
+	sides_intersection = get_sides_intersection(local_ray);
+	ends_intersection = get_ends_intersection(local_ray);
 	if (sides_intersection < EPSILON && ends_intersection < EPSILON)
 		return (INFINITY);
 	else if (sides_intersection > EPSILON && ends_intersection > EPSILON)

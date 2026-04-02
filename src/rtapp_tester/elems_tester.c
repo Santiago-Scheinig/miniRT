@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 21:50:57 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 22:15:22 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,12 +278,11 @@ static int  test_cylinder_intersection(void)
     if (fabs(res - INFINITY) > EPSILON)
         return (1);
 
-    cylinder.pos.z = -2.0;
+    cylinder.pos.z = 5.5;
 
     local_ray = ray_transform(ray, cylinder_get_inverse_mat4(cylinder.pos, cylinder.diam, cylinder.normal, cylinder.height));
 
     res = cylinder_intersection(local_ray, (void *)&cylinder);
-
     if (fabs(res - 4.242641) > EPSILON)
         return (1);
 
