@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 18:01:27 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 18:12:46 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,48 @@ static int test_sphere_get_inverse_mat4(void)
 
 int test_cylinder_get_inverse_mat4(void)
 {
-    return (1);
+    t_vector    center;
+    double      diameter;
+    t_vector    normal;
+    double      height;
+    t_mat4      matrix;
+    t_vector    p1;
+    t_vector    p1_exp;
+    t_vector    p1_res;
+    t_vector    p2;
+    t_vector    p2_exp;
+    t_vector    p2_res;
+    t_vector    p3;
+    t_vector    p3_exp;
+    t_vector    p3_res;
+
+    center = vector_new(0.0, 10.0, 0.0);
+    diameter = 2.0;
+    normal = vector_new(0.0, 1.0, 0.0);
+    height = 5.0;
+
+    matrix = cylinder_get_inverse_mat4(center, diameter, normal, height);
+    
+    p1 = vector_new(0.0, 10.0, 0.0);
+    p1_exp = vector_new(0.0, 0.0, 0.0);
+    p1_res = vector_mult_mat4_point(p1, matrix);
+
+    if (!aux_vector_equal(p1_res, p1_exp))
+        return (1);
+    
+    p2 = vector_new(1.0, 10.0, 0.0);
+    p2_exp = vector_new(0.0, 0.0, -1.0);
+    p2_res = vector_mult_mat4_point(p2, matrix);
+
+    if (!aux_vector_equal(p2_res, p2_exp))
+        return (1);
+    
+    p3 = vector_new(0.0, 12.5, 0.0);
+    p3_exp = vector_new(0.0, 1.0, 0.0);
+    p3_res = vector_mult_mat4_point(p3, matrix);
+    if (!aux_vector_equal(p3_res, p3_exp))
+        return (1);
+    return (0);
 }
 
 int main(void)
