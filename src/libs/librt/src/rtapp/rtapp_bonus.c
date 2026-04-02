@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:43:23 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:13 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 18:31:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 
 	errno = 0;
 	if (argc != 2)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, "invalid number of arguments.");
-		return (RT_FAILURE);
-	}
+		return (rtlog(RT_ERRLOG, 0, errmsg, "invalid number of arguments."));
 	objlst = init_file(argv[1]);
 	if (!objlst)
 		return (RT_FAILURE);

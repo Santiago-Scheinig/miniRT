@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:42:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:48:00 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,20 @@ int init_light(char **argv, int i, t_rtapp *app)
 		return (RT_FAILURE);
 	new_light_p = new_light(argv);
 	if (!new_light_p)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno));
-		return (RT_FAILURE);
-	}
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno)));
 	new_node = ft_lstnew(new_light_p);
 	if (!new_node)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno));
-		return (RT_FAILURE);
-	}
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno)));
 	ft_lstadd_back(&(app->lights), new_node);
 	return (RT_SUCCESS);
 }
 
 int	init_ambient_light(char **argv, int i, t_rtapp *app)
 {
+	const char	*errmsg = "Parser error for %s in line %i: %s";
+
+	if (app->ambient.ratio != -1)
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], i, "already defined."));
 	if (parse_ambient_light(argv, i))
 		return (RT_FAILURE);
 	app->ambient = new_ambient_light(argv);
@@ -47,6 +45,10 @@ int	init_ambient_light(char **argv, int i, t_rtapp *app)
 
 int init_camera(char **argv, int i, t_rtapp *app)
 {
+	const char	*errmsg = "Parser error for %s in line %i: %s";
+
+	if (app->camera.fov != -1)
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], i, "already defined."));
 	if (parse_camera(argv, i))
 		return (RT_FAILURE);
 	app->camera = new_camera(argv);

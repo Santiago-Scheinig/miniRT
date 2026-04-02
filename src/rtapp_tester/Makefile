@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+         #
+#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/15 17:51:38 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/01 17:20:01 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/01 18:06:53 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,6 @@ CC=cc
 LDFLAGS=-lm
 
 MATHMAINFILE=math_tester.c
-MATHDIR=../libs/rtmth
 MATHHEADER = -I ../libs/librt/include
 
 .PHONY: all math

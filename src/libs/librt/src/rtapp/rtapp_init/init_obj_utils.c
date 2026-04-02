@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 18:31:58 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ int init_plane(char **argv, int i, t_rtapp *app)
 	if (!new_node)
 	{
 		rtfree(aux);
-		rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno));
-		return (RT_FAILURE);
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
 	return (RT_SUCCESS);
@@ -50,8 +49,7 @@ int init_cylinder(char **argv, int i, t_rtapp *app)
 	if (!new_node)
 	{
 		rtfree(aux);
-		rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno));
-		return (RT_FAILURE);
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
 	return (RT_SUCCESS);
@@ -72,8 +70,7 @@ int init_sphere(char **argv, int i, t_rtapp *app)
 	if (!new_node)
 	{
 		rtfree(aux);
-		rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno));
-		return (RT_FAILURE);
+		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
 	return (RT_SUCCESS);
