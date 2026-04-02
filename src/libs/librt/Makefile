@@ -16,6 +16,7 @@ SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c					\
 			$(SRCDIR)$(ELMDIR)plane.c									\
 			$(SRCDIR)$(ELMDIR)sphere.c									\
 			$(SRCDIR)$(ELMDIR)cylinder.c								\
+			$(SRCDIR)$(ELMDIR)cylinder_intersection.c					\
 			$(SRCDIR)$(ELMDIR)ambient_light.c							\
 			$(SRCDIR)$(ELMDIR)camera.c									\
 			$(SRCDIR)$(ELMDIR)light.c									\

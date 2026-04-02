@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 18:52:38 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 20:25:50 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 21:16:03 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_roots	solve_quadratic(double a, double b, double c)
 	double	inv_denom;
 
 	discriminant = get_discriminant(a, b, c);
-	if (discriminant < 0)
+	if (discriminant < 0 || fabs(a) < EPSILON)
 		res.has_solutions = FALSE;
 	else
 	{
