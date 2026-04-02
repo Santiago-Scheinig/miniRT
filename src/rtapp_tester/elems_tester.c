@@ -6,11 +6,11 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 14:00:34 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:48:05 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtmth.h"
+#include "rtelm.h"
 #include <stdio.h>
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
@@ -19,7 +19,7 @@
 static void	print_header(void)
 {
 	printf("\e[1;34m====================\n");
-	printf("   MATH TESTER\n");
+	printf("   ELEMS TESTER\n");
 	printf("====================\e[0m\n");
 }
 
