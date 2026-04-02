@@ -6,12 +6,14 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/01 20:56:22 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 14:45:21 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
@@ -29,6 +31,83 @@ static void	test_function( int (*f)(void), char* name )
 		printf("\e[0;32m%s: OK\n\e[0m", name);
 	else
 		printf("\e[0;31m%s: FAIL\n\e[0m", name);
+}
+
+static int	aux_vector_equal(t_vector v1, t_vector v2)
+{
+	return (fabs(v1.x - v2.x) < EPSILON && fabs(v1.y - v2.y) < EPSILON && fabs(v1.z - v2.z) < EPSILON);
+}
+
+static int	aux_mat4_equal(t_mat4 m1, t_mat4 m2)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			if (fabs(m1.m[i][j] - m2.m[i][j]) > EPSILON)
+				return (0);
+		}
+	}
+	return (1);
+}
+
+static void	aux_print_mat4(t_mat4 mat)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			printf("%f ", mat.m[i][j]);
+		}
+		printf("\n");
+	}
+}
+
+static t_mat4	aux_mat4_from_vector_column(t_vector v1, t_vector v2, t_vector v3)
+{
+	t_mat4 res = mat4_new_identity();
+	res.m[0][0] = v1.x;
+	res.m[1][0] = v1.y;
+	res.m[2][0] = v1.z;
+	res.m[0][1] = v2.x;
+	res.m[1][1] = v2.y;
+	res.m[2][1] = v2.z;
+	res.m[0][2] = v3.x;
+	res.m[1][2] = v3.y;
+	res.m[2][2] = v3.z;
+	return (res);
+}
+
+static t_mat4	aux_mat4_from_vector_row(t_vector v1, t_vector v2, t_vector v3)
+{
+	t_mat4 res = mat4_new_identity();
+	res.m[0][0] = v1.x;
+	res.m[0][1] = v1.y;
+	res.m[0][2] = v1.z;
+	res.m[1][0] = v2.x;
+	res.m[1][1] = v2.y;
+	res.m[1][2] = v2.z;
+	res.m[2][0] = v3.x;
+	res.m[2][1] = v3.y;
+	res.m[2][2] = v3.z;
+	return (res);
+}
+
+static double	aux_get_random_double(double min, double max)
+{
+	return (min + (double)rand() / RAND_MAX * (max - min));
+}
+
+static t_vector	aux_col_from_mat4(t_mat4 m, int i)
+{
+	t_vector res = vector_new(m.m[0][i], m.m[1][i], m.m[2][i]);
+	return (res);
+}
+
+static t_vector	aux_row_from_mat4(t_mat4 m, int i)
+{
+	t_vector res = vector_new(m.m[i][0], m.m[i][1], m.m[i][2]);
+	return (res);
 }
 
 static int	test_vector_new(void)
@@ -256,31 +335,6 @@ static int	test_mat4_determinant(void)
 	return (0);
 }
 
-static int	aux_mat4_equal(t_mat4 m1, t_mat4 m2)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (fabs(m1.m[i][j] - m2.m[i][j]) > EPSILON)
-				return (0);
-		}
-	}
-	return (1);
-}
-
-static void	aux_print_mat4(t_mat4 mat)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			printf("%f ", mat.m[i][j]);
-		}
-		printf("\n");
-	}
-}
-
 static int	test_mat4_inverse(void)
 {
 	t_mat4 m;
@@ -418,11 +472,6 @@ static int	test_solve_quadratic(void)
 	return (0);
 }
 
-static int	aux_vector_equal(t_vector v1, t_vector v2)
-{
-	return (fabs(v1.x - v2.x) < EPSILON && fabs(v1.y - v2.y) < EPSILON && fabs(v1.z - v2.z) < EPSILON);
-}
-
 static int	test_ray_new(void)
 {
 	t_vector origin = vector_new(1.0, 2.0, 3.0);
@@ -511,26 +560,54 @@ static int	test_ray_transform(void)
 
 static int test_mat4_rotation(void)
 {
-    return (1);
-}
+	// 1. Casos Deterministas Precalculados (Cálculo Manual)
+	t_vector	normal = vector_new(0.0, 1.0, 0.0);
+	t_mat4		res = mat4_rotation(normal);
+	t_vector	mult = vector_mult_mat4_dir(normal, res);
+	if (!aux_vector_equal(mult, normal))
+		return (1);
+	t_mat4		exp = aux_mat4_from_vector_column(vector_new(0.0, 0.0, 1.0), vector_new(0.0, 1.0, 0.0), vector_new(-1.0, 0.0, 0.0));
+	if (!aux_mat4_equal(res, exp))
+		return (1);
 
-static int test_sphere_get_inverse_mat4(void)
-{
-    return (1);
-}
+	// 2. Prueba por Transformación de Eje (El Requisito Fundamental)
+	normal = vector_new(0.0, 0.0, 1.0);
+	res = mat4_rotation(normal);
+	exp = aux_mat4_from_vector_column(vector_new(1.0, 0.0, 0.0), vector_new(0.0, 0.0, 1.0), vector_new(0.0, -1.0, 0.0));
+	if (!aux_mat4_equal(res, exp))
+		return (1);
+	double x = aux_get_random_double(-10.0, 10.0);
+	double y = aux_get_random_double(-10.0, 10.0);
+	double z = aux_get_random_double(-10.0, 10.0);
+	normal = vector_new(x, y, z);
+	res = mat4_rotation(normal);
+	t_vector col1 = aux_col_from_mat4(res, 1);
+	if (!aux_vector_equal(col1, vector_normalize(normal)))
+		return (1);
 
-static int test_plane_get_inverse_mat4(void)
-{
-    return (1);
-}
+	// 3. Prueba de Ortogonalidad (Validación de Invariantes)
 
-int test_cylinder_get_inverse_mat4(void)
-{
-    return (1);
+	x = aux_get_random_double(-10.0, 10.0);
+	y = aux_get_random_double(-10.0, 10.0);
+	z = aux_get_random_double(-10.0, 10.0);
+	normal = vector_new(x, y, z);
+	res = mat4_rotation(normal);
+	t_vector col0 = aux_col_from_mat4(res, 0);
+	col1 = aux_col_from_mat4(res, 1);
+	t_vector col2 = aux_col_from_mat4(res, 2);
+	double dot01 = vector_dot_product(col0, col1);
+	double dot02 = vector_dot_product(col0, col2);
+	double dot12 = vector_dot_product(col1, col2);
+	if (fabs(dot01) > EPSILON || fabs(dot02) > EPSILON || fabs(dot12) > EPSILON)
+		return (1);
+	if (fabs(1 - vector_module(col0)) > EPSILON || fabs(1 - vector_module(col1)) > EPSILON || fabs(1 - vector_module(col2)) > EPSILON)
+		return (1);
+	return (0);
 }
 
 int main(void)
 {
+	srand(time(NULL));
 	int (*tests[])(void) = {
 		test_vector_new,
 		test_vector_mult_scalar,
@@ -559,9 +636,6 @@ int main(void)
 		test_vector_mult_mat4_dir,
 		test_ray_transform,
 		test_mat4_rotation,
-		test_sphere_get_inverse_mat4,
-		test_plane_get_inverse_mat4,
-		test_cylinder_get_inverse_mat4,
 	};
 	char* test_names[] = {
 		"test_vector_new",
@@ -591,9 +665,6 @@ int main(void)
 		"test_vector_mult_mat4_dir",
 		"test_ray_transform",
 		"test_mat4_rotation",
-		"test_sphere_get_inverse_mat4",
-		"test_plane_get_inverse_mat4",
-		"test_cylinder_get_inverse_mat4",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
