@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:38:25 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 18:47:56 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_elem_light_a
 typedef struct s_object
 {
 	void		*data;
-	void		*(*intersection)(void *);
+	void		*(*intersection)(t_ray ray, void *data);
 	void		*(*normal)(void *);
 }	t_object;
 
@@ -121,5 +121,37 @@ t_mat4			cylinder_get_inverse_mat4(t_vector center,
 					double diameter,
 					t_vector normal,
 					double height);
+
+/**
+ * @brief Calculates the distance of the closest
+ * intersection of a ray with a plane.
+ * @param ray The ray to test for intersection.
+ * @param data A pointer to the plane data (t_elem_plane *).
+ * @return The distance to the closest intersection point,
+ * or INFINITY if there is no intersection.
+ * @note INFINITY is greater than any finite distance,
+ * so it can be used to indicate no intersection.
+ */
+double			plane_intersection(t_ray ray, void *data);
+
+/**
+ * @brief Calculates the distance of the closest
+ * intersection of a ray with a sphere.
+ * @param ray The ray to test for intersection.
+ * @param data A pointer to the sphere data (t_elem_sphere *).
+ * @return The distance to the closest intersection point,
+ * or INFINITY if there is no intersection.
+ */
+double			sphere_intersection(t_ray ray, void *data);
+
+/**
+ * @brief Calculates the distance of the closest
+ * intersection of a ray with a cylinder.
+ * @param ray The ray to test for intersection.
+ * @param data A pointer to the cylinder data (t_elem_cylinder *).
+ * @return The distance to the closest intersection point,
+ * or INFINITY if there is no intersection.
+ */
+double			cylinder_intersection(t_ray ray, void *data);
 
 #endif
