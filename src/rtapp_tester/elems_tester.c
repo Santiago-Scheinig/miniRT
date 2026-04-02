@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 18:12:46 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 20:05:22 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	aux_vector_equal(t_vector v1, t_vector v2)
 	return (fabs(v1.x - v2.x) < EPSILON && fabs(v1.y - v2.y) < EPSILON && fabs(v1.z - v2.z) < EPSILON);
 }
 
-static int test_plane_get_inverse_mat4(void)
+static int  test_plane_get_inverse_mat4(void)
 {
     // Test rayo con origen y direccion
     t_elem_plane plane;
@@ -206,17 +206,40 @@ int test_cylinder_get_inverse_mat4(void)
     return (0);
 }
 
+static int  test_plane_intersection(void)
+{
+    t_elem_plane    plane;
+    t_ray           ray;
+    t_ray           local_ray;
+    double          res;
+    
+    plane.normal = vector_new(0.0, 1.0, 0.0);
+    plane.pos = vector_new(0.0, 5.0, 0.0);
+    plane.rgb = 0xFFFFFF;
+
+    ray.origin = vector_new(0.0, 0.0, 0.0);
+    ray.direction = vector_new(0.0, 1.0, 1.0);
+    ray.direction = vector_normalize(ray.direction);
+    local_ray = ray_transform(ray, plane_get_inverse_mat4(plane.pos, plane.normal));
+    res = plane_intersection(local_ray, &plane);
+    if (fabs(res - sqrt(50.0)) > EPSILON)
+        return (1);
+    return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
 		test_plane_get_inverse_mat4,
 		test_sphere_get_inverse_mat4,
 		test_cylinder_get_inverse_mat4,
+        test_plane_intersection,
 	};
 	char* test_names[] = {
 		"test_plane_get_inverse_mat4",
 		"test_sphere_get_inverse_mat4",
 		"test_cylinder_get_inverse_mat4",
+        "test_plane_intersection",
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)

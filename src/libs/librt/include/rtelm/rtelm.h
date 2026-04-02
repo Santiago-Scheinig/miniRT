@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/02 18:47:56 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/02 19:43:11 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,36 @@ typedef struct s_elem_light_a
 	int			rgb;
 }	t_elem_light_a;
 
+/**
+ * @brief Structure to represent a generic 3D object in the ray tracer.
+ * @param data A pointer to the specific data structure for the object type
+ * (e.g., t_elem_plane, t_elem_sphere, t_elem_cylinder).
+ * @param inverse The inverse transformation matrix for the object, used to
+ * transform rays into the object's local space for intersection calculations.
+ * @param transposed_inv The transposed inverse transformation matrix, used for
+ * transforming normals correctly when calculating lighting.
+ * @param intersection A function pointer to the intersection function for the
+ * object, which takes a ray in the object's local space and it's data
+ *  and returns the distance
+ * to the closest intersection point, or INFINITY if there is no intersection.
+ * @param get_normal A function pointer to the normal calculation function for
+ * the object, which takes a point on the object's surface and its data,
+ * and returns the normal vector at that point.
+ * @note The specific data structure pointed to by data should be cast to the
+ * appropriate type (e.g., t_elem_plane *) when used in the intersection and
+ * get_normal functions.
+ * @warning The ray passed to the intersection function must
+ * be in the object's local space,
+ * which typically means it should be transformed using the inverse matrix
+ * before calling the intersection function.
+ */
 typedef struct s_object
 {
 	void		*data;
-	void		*(*intersection)(t_ray ray, void *data);
-	void		*(*normal)(void *);
+	t_mat4		inverse;
+	t_mat4		transposed_inv;
+	double		(*intersection)(t_ray local_ray, void *data);
+	t_vector	(*get_normal)(t_vector point, void *data);
 }	t_object;
 
 t_elem_camera	new_camera(char **str);
