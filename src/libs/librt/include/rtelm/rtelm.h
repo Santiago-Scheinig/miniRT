@@ -6,12 +6,18 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/03 13:46:23 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:56:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_H
 # define RTELM_H
+# ifndef SCREEN_WIDTH
+#  define SCREEN_WIDTH 1920
+# endif
+# ifndef SCREEN_HEIGHT
+#  define SCREEN_HEIGHT 1080
+# endif
 
 # include "rtmth.h"
 # include "libft.h"
@@ -63,6 +69,8 @@ typedef struct s_elem_camera
 	t_vector	pos;
 	t_vector	normal;
 	int			fov;
+	t_vector	right;
+	t_vector	up;
 }	t_elem_camera;
 
 typedef struct s_elem_light_a
@@ -211,5 +219,29 @@ t_vector		sphere_get_normal(t_vector local_point, void *data);
  * transformed to global and then nomalized before use.
  */
 t_vector		cylinder_get_normal(t_vector local_point, void *data);
+
+/**
+ * @brief Initializes right and up vectors for the camera
+ * based on its normal vector and field of view.
+ * @param camera A pointer to the camera element.
+ * @note This function should be called after setting the camera's position,
+ * normal vector and field of view, and it will calculate the
+ * right and up vectors accordingly to ensure
+ * the camera's orientation is correct for
+ * generating rays through the screen pixels.
+ */
+void			camera_base_init(t_elem_camera *camera);
+
+/**
+ * @brief Generates a ray from the camera
+ * through a specific pixel on the screen.
+ * @param x The x-coordinate of the pixel on the screen.
+ * @param y The y-coordinate of the pixel on the screen.
+ * @param camera The camera element containing the
+ * position, normal, and field of view.
+ * @return A global ray originating from the camera and passing
+ * through the specified pixel.
+ */
+t_ray			get_pixel_ray(int x, int y, t_elem_camera camera);
 
 #endif
