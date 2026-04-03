@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/03 13:32:23 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 13:46:23 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,29 +180,35 @@ double			sphere_intersection(t_ray ray, void *data);
 double			cylinder_intersection(t_ray ray, void *data);
 
 /**
- * @brief Calculates the normalized normal vector
+ * @brief Calculates the local normal vector
  * at a given local point on a plane.
  * @param local_point The point on the plane in local coordinates.
  * @param data A pointer to the plane data (t_elem_plane *).
- * @return The global normalized vector at the specified point.
+ * @return The local normal vector at the specified point.
+ * @note This vector is in local coordinates and should be
+ * transformed to global and then nomalized before use.
  */
 t_vector		plane_get_normal(t_vector local_point, void *data);
 
 /**
- * @brief Calculates the normalized normal vector
+ * @brief Calculates the local normal vector
  * at a given local point on a sphere.
  * @param local_point The point on the sphere in local coordinates.
  * @param data A pointer to the sphere data (t_elem_sphere *).
- * @return The global normalized vector at the specified point.
+ * @return The local normal vector at the specified point.
+ * @note This vector is in local coordinates and should be
+ * transformed to global and then nomalized before use.
  */
 t_vector		sphere_get_normal(t_vector local_point, void *data);
 
 /**
- * @brief Calculates the normalized normal vector
+ * @brief Calculates the local normal vector
  * at a given local point on a cylinder.
  * @param local_point The point on the cylinder in local coordinates.
  * @param data A pointer to the cylinder data (t_elem_cylinder *).
- * @return The global normalized vector at the specified point.
+ * @return The local normal vector at the specified point.
+ * @note This vector is in local coordinates and should be
+ * transformed to global and then nomalized before use.
  */
 t_vector		cylinder_get_normal(t_vector local_point, void *data);
 

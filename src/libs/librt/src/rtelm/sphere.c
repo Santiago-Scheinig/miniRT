@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/02 20:20:51 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 13:42:03 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,10 @@ double	sphere_intersection(t_ray local_ray, void *data)
 		return (roots.sol2);
 	else
 		return (INFINITY);
+}
+
+t_vector	sphere_get_normal(t_vector local_point, void *data)
+{
+	(void) data;
+	return (local_point);
 }

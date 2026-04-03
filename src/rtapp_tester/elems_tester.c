@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 22:15:22 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:00:58 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -289,6 +289,63 @@ static int  test_cylinder_intersection(void)
     return (0);
 }
 
+static int  test_plane_get_normal(void)
+{
+    t_elem_plane    plane;
+    t_vector        local_point;
+    t_vector        normal;
+
+    plane.normal = vector_new(0.0, 1.0, 0.0);
+    plane.pos = vector_new(0.0, 5.0, 0.0);
+    plane.rgb = 0xFFFFFF;
+
+    local_point = vector_new(1.0, 5.0, 1.0);
+    normal = plane_get_normal(local_point, &plane);
+    if (!aux_vector_equal(normal, vector_new(0.0, 1.0, 0.0)))
+        return (1);
+    return (0);
+}
+
+static int  test_sphere_get_normal(void)
+{
+    t_vector        local_point;
+    t_vector        normal;
+
+    local_point = vector_new(1.0, 1.0, 1.0);
+    normal = sphere_get_normal(local_point, NULL);
+    if (!aux_vector_equal(normal, local_point))
+        return (1);
+    return (0);
+}
+
+static int  test_cylinder_get_normal(void)
+{
+    t_vector        local_point;
+    t_vector        normal;
+    double          sqrt2;
+
+    // Test normal en tapa superior
+    local_point = vector_new(0.0, 1.0, 0.0);
+    normal = cylinder_get_normal(local_point, NULL);
+    if (!aux_vector_equal(normal, vector_new(0.0, 1.0, 0.0)))
+        return (1);
+    
+    // Test normal en tapa inferior
+    local_point = vector_new(0.0, -1.0, 0.0);
+    normal = cylinder_get_normal(local_point, NULL);
+    if (!aux_vector_equal(normal, vector_new(0.0, -1.0, 0.0)))
+        return (1);
+
+    // Test normal en lateral
+    sqrt2 = sqrt(0.5);
+    local_point = vector_new(sqrt2, 0.5, sqrt2);
+    normal = cylinder_get_normal(local_point, NULL);
+    if (!aux_vector_equal(normal, vector_new(sqrt2, 0.0, sqrt2)))
+        return (1);
+
+    return (0);
+}
+
 int main(void)
 {
 	int (*tests[])(void) = {
@@ -297,7 +354,11 @@ int main(void)
 		test_cylinder_get_inverse_mat4,
         test_plane_intersection,
         test_sphere_intersection,
-        test_cylinder_intersection
+        test_cylinder_intersection,
+        test_plane_get_normal,
+        test_sphere_get_normal,
+        test_cylinder_get_normal
+
 	};
 	char* test_names[] = {
 		"test_plane_get_inverse_mat4",
@@ -305,7 +366,10 @@ int main(void)
 		"test_cylinder_get_inverse_mat4",
         "test_plane_intersection",
         "test_sphere_intersection",
-        "test_cylinder_intersection"
+        "test_cylinder_intersection",
+        "test_plane_get_normal",
+        "test_sphere_get_normal",
+        "test_cylinder_get_normal"
 	};
 	print_header();
 	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)

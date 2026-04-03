@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/02 20:05:30 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 13:41:43 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ double	plane_intersection(t_ray ray, void *data)
 		return (INFINITY);
 	else
 		return (t);
+}
+
+t_vector	plane_get_normal(t_vector local_point, void *data)
+{
+	(void) local_point;
+	(void) data;
+	return (vector_new(0.0, 1.0, 0.0));
 }
