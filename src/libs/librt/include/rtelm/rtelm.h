@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 12:00:32 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 12:04:27 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,13 +223,13 @@ t_vector		cylinder_get_normal(t_vector local_point, void *data);
 /**
  * @brief Generates a ray from the camera
  * through a specific pixel on the screen.
- * @param x The x-coordinate of the pixel on the screen.
- * @param y The y-coordinate of the pixel on the screen.
  * @param camera The camera element containing the
  * position, normal, and field of view.
+ * @param x The x-coordinate of the pixel on the screen.
+ * @param y The y-coordinate of the pixel on the screen.
  * @return A global ray originating from the camera and passing
  * through the specified pixel.
  */
-t_ray			get_pixel_ray(int x, int y, t_elem_camera *camera);
+t_ray			get_pixel_ray(t_elem_camera *camera, int x, int y);
 
 #endif
