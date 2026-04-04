@@ -3,22 +3,47 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/15 17:51:38 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/01 18:06:53 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/04 13:34:16 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC=cc
-LDFLAGS=-lm
+
+NAME=mathtest
 
 MATHMAINFILE=math_tester.c
-MATHHEADER = -I ../libs/librt/include
+LIBRTDIR=../libs/librt/
+LIBRTFILE=$(LIBRTDIR)librt.a
 
-.PHONY: all math
+MATHHEADERDIR=../libs/librt/include/
+MATHHEADERFILE=$(MATHHEADERDIR)rtmth.h
 
-math: $(MATHSOURCES) $(MATHMAINFILE)
-	@$(CC) $(MATHMAINFILE) ../libs/librt/librt.a $(LDFLAGS) $(MATHHEADER) -o math_tester
-	@./math_tester
-	@rm math_tester
+MATH_CFLAGS= -I$(MATHHEADERDIR)
+
+all: math elems
+
+.PHONY: all math elems
+
+math: $(MATHMAINFILE) $(MATHHEADERFILE) $(LIBRTFILE)
+	make -C ../../
+	@$(CC) $(MATH_CFLAGS) $(MATHMAINFILE) $(LIBRTFILE) -lm -o $(NAME)
+	@./$(NAME)
+	@rm $(NAME)
+	@norminette ../libs/librt/src/rtmth | grep Error || true
+
+ELEMSMAINFILE=elems_tester.c
+ELEMSHEADERDIR=../libs/librt/include/rtelm/
+ELEMSHEADERFILE=$(ELEMSHEADERDIR)rtelm.h
+LIBFTHEADERDIR=../libs/libft/include/
+
+ELEMS_CFLAGS= -I$(ELEMSHEADERDIR) -I$(MATHHEADERDIR) -I$(LIBFTHEADERDIR)
+
+elems: $(ELEMSMAINFILE) $(ELEMSHEADERFILE) $(LIBRTFILE)
+	make -C ../../
+	@$(CC) $(ELEMS_CFLAGS) $(ELEMSMAINFILE) $(LIBRTFILE) -lm -o $(NAME)
+	@./$(NAME)
+	@rm $(NAME)
+	@norminette ../libs/librt/src/rtelm | grep Error || true

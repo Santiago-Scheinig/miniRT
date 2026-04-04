@@ -6,13 +6,16 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 15:54:11 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:59:40 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
 # define EPSILON 0.00001
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 # ifndef TRUE
 #  define TRUE 1
 # endif
@@ -43,9 +46,9 @@ typedef struct s_mat3
  * @brief Structure to hold the results of solving a quadratic equation.
  * @param has_solutions An integer flag indicating whether
  * the equation has real solutions (1) or not (0).
- * @param sol1 The first solution of the equation, if it exists.
+ * @param sol1 The smallest solution of the equation, if it exists.
  * If there are no solutions, this value is undefined.
- * @param sol2 The second solution of the equation, if it exists.
+ * @param sol2 The largest solution of the equation, if it exists.
  * If there are no solutions, this value is undefined.
  * @note If the equation has only one solution (i.e., a repeated root),
  * both sol1 and sol2 will contain the same value.
@@ -259,6 +262,14 @@ t_mat4		mat4_rotation_y(double angle);
 t_mat4		mat4_rotation_z(double angle);
 
 /**
+ * @brief Creates a new rotation matrix for a rotation around an arbitrary axis
+ * defined by a normal vector.
+ * @param normal The normal vector defining the axis and angle of rotation.
+ * @return The newly created rotation matrix.
+ */
+t_mat4		mat4_rotation(t_vector normal);
+
+/**
  * @brief Creates a new scaling matrix for the given scaling factors.
  * This matrix can be used to scale points in 3D space by the specified
  * amounts along the x, y, and z axes.
@@ -305,7 +316,9 @@ t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
  * @return A structure containing the solutions of the equation.
  * @note If the equation has real solutions,
  * the has_solutions field will be set to 1,
- * and sol1 and sol2 will contain the two solutions
+ * and sol1 and sol2 will contain the two solutions,
+ * in which sol1 will be the smaller solution and sol2
+ * will be the larger solution
  * (which may be the same if there is a repeated root).
  * @note If the equation does not have real solutions,
  * the has_solutions field will be set to 0, and sol1 and sol2 will be undefined.

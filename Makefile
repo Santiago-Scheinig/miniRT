@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/03/24 17:15:43 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/01 20:42:16 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ BONUS_SRC = $(SOURCE_DIR)/main_bonus.c
 LIBS = libs/libft libs/librt #minilibx #librterr #librtmlx #librtmth
 
 #	Library linking order: most dependent first, base libraries last
-LINK_LIBS = -l:librt.a -l:libft.a #librterr #librtmth #librtmlx #minilibx #libft
+LINK_LIBS = -l:librt.a -l:libft.a -lm #librterr #librtmth #librtmlx #minilibx #libft
 
 #	Library linking order for bonus build
 LINK_LIBS_BONUS = #librtapp_bonus #librterr #librtmth #librtmlx #minilibx #libft

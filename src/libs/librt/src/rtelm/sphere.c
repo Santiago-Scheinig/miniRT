@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:21 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/03 13:42:03 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,4 +16,44 @@ t_object	*new_sphere(char **str)
 {
 	(void) str;
 	return (NULL);
+}
+
+t_mat4	sphere_get_inverse_mat4(t_vector center, double diameter)
+{
+	t_mat4	inv;
+	t_mat4	trans;
+	t_mat4	scale;
+
+	trans = mat4_translation(center.x, center.y, center.z);
+	scale = mat4_scale(diameter / 2.0, diameter / 2.0, diameter / 2.0);
+	inv = mat4_inverse(mat4_mult_mat4(trans, scale));
+	return (inv);
+}
+
+double	sphere_intersection(t_ray local_ray, void *data)
+{
+	double	a;
+	double	b;
+	double	c;
+	t_roots	roots;
+
+	(void) data;
+	a = vector_dot_product(local_ray.direction, local_ray.direction);
+	b = 2.0 * vector_dot_product(local_ray.direction, local_ray.origin);
+	c = vector_dot_product(local_ray.origin, local_ray.origin) - 1.0;
+	roots = solve_quadratic(a, b, c);
+	if (!roots.has_solutions)
+		return (INFINITY);
+	else if (roots.sol1 > EPSILON)
+		return (roots.sol1);
+	else if (roots.sol2 > EPSILON)
+		return (roots.sol2);
+	else
+		return (INFINITY);
+}
+
+t_vector	sphere_get_normal(t_vector local_point, void *data)
+{
+	(void) data;
+	return (local_point);
 }

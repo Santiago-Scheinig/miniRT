@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 19:50:51 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 17:05:31 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 11:36:09 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,31 @@ t_mat4	mat4_mult_mat4(t_mat4 m1, t_mat4 m2)
 		}
 		i++;
 	}
+	return (res);
+}
+
+t_mat4	mat4_rotation(t_vector normal)
+{
+	t_vector	right;
+	t_vector	forward;
+	t_vector	guide;
+	t_mat4		res;
+
+	normal = vector_normalize(normal);
+	guide = vector_new(0.0, 1.0, 0.0);
+	if (fabs(normal.y) > 1.0 - EPSILON)
+		guide = vector_new(1.0, 0.0, 0.0);
+	right = vector_normalize(vector_cross_product(guide, normal));
+	forward = vector_normalize(vector_cross_product(right, normal));
+	res = mat4_new_identity();
+	res.m[0][0] = right.x;
+	res.m[1][0] = right.y;
+	res.m[2][0] = right.z;
+	res.m[0][1] = normal.x;
+	res.m[1][1] = normal.y;
+	res.m[2][1] = normal.z;
+	res.m[0][2] = forward.x;
+	res.m[1][2] = forward.y;
+	res.m[2][2] = forward.z;
 	return (res);
 }
