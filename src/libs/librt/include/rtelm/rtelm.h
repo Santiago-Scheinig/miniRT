@@ -6,19 +6,13 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 13:34:20 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:31:32 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_H
 # define RTELM_H
-# ifndef SCREEN_WIDTH
-#  define SCREEN_WIDTH 1920
-# endif
-# ifndef SCREEN_HEIGHT
-#  define SCREEN_HEIGHT 1080
-# endif
-
+# include "rtapp.h"
 # include "rtmth.h"
 # include "libft.h"
 # if BONUS

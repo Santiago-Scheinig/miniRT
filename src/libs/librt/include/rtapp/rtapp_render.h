@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/04 18:11:25 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:41:36 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ t_tile_queue	new_tile_queue(void);
  * (1) or if the queue is empty (0).
  * @note This function updates the tile queue's current position
  * to the next tile after retrieving it.
+ * @warning The returned tile range goes from
+ * [x_start, x_end) and [y_start, y_end),
+ * meaning that x_end and y_end are exclusive bounds for the tile's area.
+ * So, for example, if x_start is 0 and x_end is 16, the tile covers the pixels
+ * from x=0 to x=15, but not x=16, because x_end is exclusive.
  */
 int				get_next_tile(t_tile_queue *queue, t_tile *tile);
 
