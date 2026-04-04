@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:09 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:51:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ t_object	*new_obj(char **split, t_object *(*constructor)(char **))
 
 int	init_objlst(t_list *lines, char *file, t_rtapp *app)
 {
+	const char	*errmsg = "Failed to validate %s: %s";
 	t_list		*head;
 	int			i;
 
 	rtlog(RT_LOG, 0, "< Validating '%s' file >", file);
 	i = 0;
+	app->ambient.ratio = -1;
+	app->camera.fov = -1;
 	head = lines;
 	while (lines)
 	{
@@ -47,6 +50,9 @@ int	init_objlst(t_list *lines, char *file, t_rtapp *app)
 		i++;
 	}
 	ft_lstclear(&head, free);
-	rtlog(RT_LOG, 0, "< '%s' file validated >", file);
-	return (RT_SUCCESS);
+	if (app->ambient.ratio == -1)
+		return (rtlog(RT_ERRLOG, 0, errmsg, file, "no ambient light defined."));
+	if (app->camera.fov == -1)
+		return (rtlog(RT_ERRLOG, 0, errmsg, file, "no camera defined."));
+	return (rtlog(RT_LOG, 0, "< '%s' file validated >", file));
 }

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 19:15:56 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,27 @@ static void	*get_initializer(char *specifier)
 
 static int	parse_element(char **split, int i, t_rtapp *app)
 {
+	const char	*msg = "Failed to parse line %i: %s";
 	int	(*initializer)(char **, int, t_rtapp *);
 	
 	initializer = get_initializer(split[0]);
 	if (!initializer)
-	{
-		rtlog(RT_ERRLOG, 0, "Failed to parse line %i: %s", i, "invalid element.");
-		return (RT_FAILURE);
-	}
+		return (rtlog(RT_ERRLOG, 0, msg, i, "invalid element."));
 	if (initializer(split, i, app))
 		return (RT_FAILURE);
-	return (RT_FAILURE);
+	return (RT_SUCCESS);
 }
 
 int	parse_line(t_list *line, int i, t_rtapp *app)
 {
+	const char	*msg = "Failed to parse line %i: %s";
 	char		*aux;
 	char		**split;
 
 	aux = (char *) line->content;
-	split = ft_split_base(aux, " \t");
+	split = ft_split_base(aux, " \t\n");
 	if (!split || !split[0])
-	{
-		rtlog(RT_ERRLOG, 0, "Failed to parse line %i: %s", i, strerror(errno));
-		return (RT_FAILURE);
-	}
+		return (rtlog(RT_ERRLOG, 0, msg, i, strerror(errno)));
 	rtlog(RT_LOG, 0, "Parsing %s element on line %i.", split[0], i);
 	if (parse_element(split, i, app))
 	{
@@ -64,6 +60,5 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 		return (RT_FAILURE);
 	}
 	ft_split_free(split);
-	rtlog(RT_LOG, 0, "Element initialized.");
-	return (RT_SUCCESS);
+	return (rtlog(RT_LOG, 0, "Element initialized."));
 }

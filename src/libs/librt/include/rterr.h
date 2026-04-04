@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rterr.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/03/27 17:12:10 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/01 18:29:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_rtlog
 	int	orig_errfd;
 }	t_rtlog;
 
-void	rtlog(t_logtype type, pid_t pid, const char *fmt, ...);
+int		rtlog(t_logtype type, pid_t pid, const char *fmt, ...);
 
 void	rtfree(void *content);
 
