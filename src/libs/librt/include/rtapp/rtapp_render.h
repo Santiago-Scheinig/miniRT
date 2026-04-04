@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/04 18:03:10 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:11:25 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,27 @@ typedef struct s_tile_queue
 	int	current_x;
 	int	current_y;
 }   t_tile_queue;
+
+/**
+ * @brief Initializes the tile queue for rendering.
+ * This function sets the initial position of the tile queue to the starting
+ * coordinates (0, 0), which means that the rendering process will begin
+ * from the top-left corner of the image.
+ * @return A t_tile_queue structure initialized to the
+ * starting position of the tile queue.
+ */
+t_tile_queue	new_tile_queue(void);
+
+/**
+ * @brief Retrieves the next tile from the tile queue.
+ * @param queue A pointer to the tile queue from which to get the next tile.
+ * @param tile A pointer to a t_tile structure where the next tile's coords.
+ * will be stored.
+ * @return An integer indicating whether there are more tiles to process
+ * (1) or if the queue is empty (0).
+ * @note This function updates the tile queue's current position
+ * to the next tile after retrieving it.
+ */
+int				get_next_tile(t_tile_queue *queue, t_tile *tile);
 
 #endif
