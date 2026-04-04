@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/03 14:56:52 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 11:29:21 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,18 +219,6 @@ t_vector		sphere_get_normal(t_vector local_point, void *data);
  * transformed to global and then nomalized before use.
  */
 t_vector		cylinder_get_normal(t_vector local_point, void *data);
-
-/**
- * @brief Initializes right and up vectors for the camera
- * based on its normal vector and field of view.
- * @param camera A pointer to the camera element.
- * @note This function should be called after setting the camera's position,
- * normal vector and field of view, and it will calculate the
- * right and up vectors accordingly to ensure
- * the camera's orientation is correct for
- * generating rays through the screen pixels.
- */
-void			camera_base_init(t_elem_camera *camera);
 
 /**
  * @brief Generates a ray from the camera

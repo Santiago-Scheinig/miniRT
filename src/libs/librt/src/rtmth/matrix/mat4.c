@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 19:50:51 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 19:58:03 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 11:36:09 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ t_mat4	mat4_rotation(t_vector normal)
 
 	normal = vector_normalize(normal);
 	guide = vector_new(0.0, 1.0, 0.0);
-	if (normal.y > 0.999 || normal.y < -0.999)
+	if (fabs(normal.y) > 1.0 - EPSILON)
 		guide = vector_new(1.0, 0.0, 0.0);
 	right = vector_normalize(vector_cross_product(guide, normal));
 	forward = vector_normalize(vector_cross_product(right, normal));

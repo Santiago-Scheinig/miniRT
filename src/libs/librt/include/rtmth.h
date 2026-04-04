@@ -6,13 +6,16 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/02 20:20:13 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/03 14:59:40 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
 # define EPSILON 0.00001
+# ifndef M_PI
+#  define M_PI 3.14159265358979323846
+# endif
 # ifndef TRUE
 #  define TRUE 1
 # endif

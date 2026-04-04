@@ -6,11 +6,31 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/02 14:54:54 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 11:55:20 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+
+static void	camera_base_init(t_elem_camera *camera)
+{
+	t_vector	guide;
+	t_vector	right_norm;
+	t_vector	up_norm;
+	double		v_width;
+
+	v_width = 2.0 * tan((camera->fov / 2.0) * (M_PI / 180.0));
+	guide = vector_new(0.0, 1.0, 0.0);
+	if (fabs(camera->normal.y) > 1.0 - EPSILON)
+		guide = vector_new(1.0, 0.0, 0.0);
+	right_norm = vector_cross_product(camera->normal, guide);
+	right_norm = vector_normalize(right_norm);
+	up_norm = vector_cross_product(right_norm, camera->normal);
+	up_norm = vector_normalize(up_norm);
+	camera->right = vector_mult_scalar(right_norm, v_width);
+	camera->up = vector_mult_scalar(up_norm,
+			v_width * ((double)SCREEN_HEIGHT / (double)SCREEN_WIDTH));
+}
 
 t_elem_camera	new_camera(char **str)
 {
@@ -24,5 +44,6 @@ t_elem_camera	new_camera(char **str)
 	aux.fov = 0;
 	aux.normal = aux_v;
 	aux.pos = aux_v;
+	camera_base_init(&aux);
 	return (aux);
 }
