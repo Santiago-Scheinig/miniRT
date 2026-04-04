@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 11:55:20 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 12:01:16 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,21 @@ t_elem_camera	new_camera(char **str)
 	aux.pos = aux_v;
 	camera_base_init(&aux);
 	return (aux);
+}
+
+t_ray	get_pixel_ray(t_elem_camera *camera, int x, int y)
+{
+	t_ray	ray;
+	double	s;
+	double	t;
+	t_vector	pixel_dir;
+
+	s = (x + 0.5) / (double)SCREEN_WIDTH - 0.5;
+	t = 0.5 - (y + 0.5) / (double)SCREEN_HEIGHT;
+	pixel_dir = vector_sum_vector(camera->normal,
+		vector_mult_scalar(camera->right, s));
+	pixel_dir = vector_sum_vector(pixel_dir,
+		vector_mult_scalar(camera->up, t));
+	ray = ray_new(camera->pos, vector_normalize(pixel_dir));
+	return (ray);
 }

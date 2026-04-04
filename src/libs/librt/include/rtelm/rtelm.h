@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 11:29:21 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 12:00:32 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,6 @@ t_vector		cylinder_get_normal(t_vector local_point, void *data);
  * @return A global ray originating from the camera and passing
  * through the specified pixel.
  */
-t_ray			get_pixel_ray(int x, int y, t_elem_camera camera);
+t_ray			get_pixel_ray(int x, int y, t_elem_camera *camera);
 
 #endif
