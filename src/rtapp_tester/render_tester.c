@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/04 18:38:49 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/04 18:57:06 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ static int  test_get_next_tile(void)
     }
     if (tile.x_start != 240 || tile.y_start != 16 || tile.x_end != 256 || tile.y_end != 32)
         return (1);
+    for (int i = 135; i < 8159; i++)
+    {
+        if (!get_next_tile(&queue, &tile))
+            return (1);
+    }
+    for (int i = 0; i < 200; i++)
+    {
+        if (get_next_tile(&queue, &tile))
+            return (1);
+    }
     return (0);
 }
 
