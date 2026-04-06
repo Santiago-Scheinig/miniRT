@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:32:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:12 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:48:51 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ int	ft_read_file(t_list **lines, int fd)
 	str = get_next_line(fd);
 	while (str)
 	{
+		if (str[0] == '\n')
+		{
+			str = get_next_line(fd);
+			continue;
+		}
 		new = ft_lstnew(str);
 		if (!new)
 		{
@@ -38,11 +43,6 @@ int	ft_read_file(t_list **lines, int fd)
 			return (-1);
 		}
 		ft_lstadd_back(lines, new);
-		if (!(*lines))
-		{
-			ft_lstclear(lines, free);
-			return (-1);
-		}
 		count++;
 		str = get_next_line(fd);
 	}

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:43:23 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 18:31:12 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:45:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 int	rtapp_init(int argc, char **argv, t_rtapp *app)
 {
-	const char	*errmsg = "Failed to initialize app: %s"
+	const char	*err = "initialization of miniRT app failed: %s";
 	t_list		*objlst;
 
 	errno = 0;
 	if (argc != 2)
-		return (rtlog(RT_ERRLOG, 0, errmsg, "invalid number of arguments."));
+		return (rtlog(RT_ERRLOG, 0, err, "invalid number of arguments."));
 	objlst = init_file(argv[1]);
 	if (!objlst)
 		return (RT_FAILURE);
@@ -40,15 +40,15 @@ rtapp_run() */
 
 int rtapp_kill(t_rtapp *app)
 {
-	const char	*errmsg = "Failure at app termination: %s";
+	const char	*err = "termination of miniRT app failed: %s";
 
 	if (app->objects)
 		ft_lstclear(&(app->objects), rtfree);
 	if (app->logfd.orig_outfd != -1)
 		if (dup2(app->logfd.orig_outfd, STDOUT_FILENO) == -1)
-			rtlog(RT_ERRLOG, 0, errmsg, "Unable to restore STDOUT_FILENO.");
+			rtlog(RT_ERRLOG, 0, err, "unable to restore stdout_fileno.");
 	if (app->logfd.orig_errfd != -1)
 		if (dup2(app->logfd.orig_errfd, STDERR_FILENO) == -1)
-			rtlog(RT_ERRLOG, 0, errmsg, "Unable to restore STDERR_FILENO.");
+			rtlog(RT_ERRLOG, 0, err, "unable to restore stdout_fileno.");
 	return (RT_SUCCESS);
 }

@@ -31,8 +31,6 @@ SRC		=	$(SRCDIR)$(APPDIR)rtapp_init/init_file.c					\
 			$(SRCDIR)$(MTHDIR)vector/vector_scalar.c					\
 			$(SRCDIR)$(ERRDIR)rtlog.c									\
 			$(SRCDIR)$(ERRDIR)rtfree.c									\
-			$(SRCDIR)$(APPDIR)rtapp_init/init_log.c						\
-			#init_log.c wont be here, only in bonus
 
 BSRC	=	#- *_bonus.c															-#
 

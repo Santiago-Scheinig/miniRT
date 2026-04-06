@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:36:50 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:59:34 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	double_check(char *str, char **split, t_flim limits)
 
 int	parse_double(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*err = "[line: %i] parser for %s failed: %s";
 	char		**split;
 	int			ans;
 
@@ -43,7 +43,7 @@ int	parse_double(char *sp, char *str, int i, t_flim limits)
 		return (RT_FAILURE);
 	split = ft_split(str, '.');
 	if (!split)
-		return (rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno)));
+		return (rtlog(RT_ERRLOG, 0, err, i, sp, strerror(errno)));
 	if (ft_arglen(split) > 2)
 		ans = RT_FAILURE;
 	if (double_check(str, split, limits))
@@ -70,12 +70,12 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 
 int parse_vector(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*errmsg = "[line: %i] parser for %s failed: %s";
 	char		**split;
 	
 	split = ft_split(str, ',');
 	if (!split)
-		return (rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno)));
+		return (rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno)));
 	if (vector_check(sp, split, i, limits))
 	{
 		ft_split_free(split);
@@ -87,7 +87,7 @@ int parse_vector(char *sp, char *str, int i, t_flim limits)
 
 int	parse_color(char *sp, char *str, int i)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*errmsg = "[line: %i] parser for %s failed: %s";
 	char		**split;
 	t_flim		limits;
 	int			ans;
@@ -98,7 +98,7 @@ int	parse_color(char *sp, char *str, int i)
 	split = ft_split(str, ',');
 	if (!split)
 	{
-		rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno));
+		rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno));
 		ans = RT_FAILURE;
 	}
 	if (parse_double(sp, split[0], i, limits))

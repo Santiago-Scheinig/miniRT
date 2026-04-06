@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:47:07 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:02:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:57:41 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 static int	validate_arg(char **split, int i)
 {
-	const char	*msg;
-	const char	*err = "Parser for %s failed in line %i: %s";
+	const char	*status;
+	const char	*err = "[line: %i] parser for %s failed: %s";
 
-	msg = NULL;
+	status = NULL;
 	if (!split[1])
-		msg = "Cylinder vector coordinates undeclared.";
+		status = "cylinder vector coordinates undeclared.";
 	else if (!split[2])
-		msg = "Cylinder vector normal undeclared.";
+		status = "cylinder vector normal undeclared.";
 	else if (!split[3])
-		msg = "Cylinder diameter undeclared.";
+		status = "cylinder diameter undeclared.";
 	else if (!split[4])
-		msg = "Cylinder height undeclared.";
+		status = "cylinder height undeclared.";
 	else if (!split[5])
-		msg = "Cylinder color undeclared.";
+		status = "cylinder color undeclared.";
 	else if (split[6])
-		msg = "Cylinder has excess arguments declaration.";
-	if (msg)
-		return (rtlog(RT_ERRLOG, 0, err, split[0], i, msg));
+		status = "cylinder has excess arguments declaration.";
+	if (status)
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
 	return (RT_SUCCESS);
 }
 
 int	parse_cylinder(char **split, int i)
 {
-	const char	*msg = "Parser error for %s in line %i: %s";
+	const char	*err = "[line: %i] parser for %s failed: %s";
 	t_flim			limits;
 
 	if (validate_arg(split, i))
@@ -45,18 +45,18 @@ int	parse_cylinder(char **split, int i)
 	limits.min = -FLT_MAX;
 	limits.max = FLT_MAX;
 	if (parse_vector(split[0], split[1], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid coordinates."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates."));
 	limits.min = -1;
 	limits.max = 1;
 	if (parse_vector(split[0], split[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid normal.")); 
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid normal.")); 
 	limits.min = 0;
 	limits.max = FLT_MAX;
 	if (parse_double(split[0], split[3], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid diameter."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid diameter."));
 	if (parse_double(split[0], split[4], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid height."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid height."));
 	if (parse_color(split[0], split[5], i))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid color."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }

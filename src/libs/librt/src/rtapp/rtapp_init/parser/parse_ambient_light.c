@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:02:18 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:57:25 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,24 @@
 
 static int	validate_arg(char **split, int i)
 {
-	const char	*msg;
-	const char	*err = "Parser for %s failed in line %i: %s";
+	const char	*status;
+	const char	*err = "[line: %i] parser for %s failed: %s";
 
-	msg = NULL;
+	status = NULL;
 	if (!split[1])
-		msg = "Ambient light ratio undeclared.";
+		status = "ambient light ratio undeclared.";
 	else if (!split[2])
-		msg = "Ambient light color undeclared.";
+		status = "ambient light color undeclared.";
 	else if (split[3])
-		msg = "Ambient light has excess arguments declaration.";
-	if (msg)
-		return (rtlog(RT_ERRLOG, 0, err, split[0], i, msg));
+		status = "ambient light has excess arguments declaration.";
+	if (status)
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
 	return (RT_SUCCESS);
 }
 
 int	parse_ambient_light(char **split, int i)
 {
-	const char		*msg = "Parser error for %s in line %i: %s";
+	const char		*err = "[line: %i] parser for %s failed: %s";
 	t_flim			limits;
 
 	if (validate_arg(split, i))
@@ -39,8 +39,8 @@ int	parse_ambient_light(char **split, int i)
 	limits.min = 0;
 	limits.max = 1;
 	if (parse_double(split[0], split[1], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid ratio."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid ratio."));
 	if (parse_color(split[0], split[2], i))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid color."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }

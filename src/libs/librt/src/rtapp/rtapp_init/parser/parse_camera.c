@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:17 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:02:12 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 18:57:33 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 static int	validate_arg(char **split, int i)
 {
-	const char	*msg;
-	const char	*err = "Parser for %s failed in line %i: %s";
+	const char	*status;
+	const char	*err = "[line: %i] parser for %s failed: %s";
 
-	msg = NULL;
+	status = NULL;
 	if (!split[1])
-		msg = "Camera vector coordinates undeclared.";
+		status = "camera vector coordinates undeclared.";
 	else if (!split[2])
-		msg = "Camera vector normal undeclared.";
+		status = "camera vector normal undeclared.";
 	else if (!split[3])
-		msg = "Camera FOV undeclared.";
+		status = "camera FOV undeclared.";
 	else if (split[4])
-		msg = "Camera has excess arguments declaration.";
-	if (msg)
-		return (rtlog(RT_ERRLOG, 0, err, split[0], i, msg));
+		status = "camera has excess arguments declaration.";
+	if (status)
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
 	return (RT_SUCCESS);
 }
 
 int	parse_camera(char **split, int i)
 {
-	const char	*msg = "Parser error for %s in line %i: %s";
+	const char	*err = "[line: %i] parser for %s failed: %s";
 	t_flim			limits;
 
 	if (validate_arg(split, i))
@@ -41,14 +41,14 @@ int	parse_camera(char **split, int i)
 	limits.min = -FLT_MAX;
 	limits.max = FLT_MAX;
 	if (parse_vector(split[0], split[1], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid coordinates."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates."));
 	limits.min = -1;
 	limits.max = 1;
 	if (parse_vector(split[0], split[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid normal."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid normal."));
 	limits.min = 0;
 	limits.max = 180;
 	if (parse_double(split[0], split[3], i, limits))
-		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid FOV."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid FOV."));
 	return (RT_SUCCESS);
 }
