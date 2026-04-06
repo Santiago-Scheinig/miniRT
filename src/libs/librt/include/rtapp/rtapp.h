@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 18:18:02 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:40:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_H
 # define RTAPP_H
+
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 

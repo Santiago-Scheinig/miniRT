@@ -6,12 +6,15 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:28:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:40:40 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
-#include <float.h>
+#ifndef RTAPP_PARSER_H
+# define RTAPP_PARSER_H
+
+# include "rtapp.h"
+# include <float.h>
 
 typedef struct s_flim
 {
@@ -38,3 +41,5 @@ int				parse_sphere(char **split, int i);
 int				parse_ambient_light(char **split, int i);
 
 int				parse_camera(char **split, int i);
+
+#endif
