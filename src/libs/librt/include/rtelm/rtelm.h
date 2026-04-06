@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 18:31:32 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 16:44:44 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_H
 # define RTELM_H
-# include "rtapp.h"
+
+# include "rtmlx.h"
 # include "rtmth.h"
 # include "libft.h"
 # if BONUS
