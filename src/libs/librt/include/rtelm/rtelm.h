@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:00:04 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:52:42 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,6 @@
 # if BONUS
 #  include "rtelm_bonus.h"
 # else
-
-typedef enum e_elements
-{
-	INV = -1,
-	PL,
-	CY,
-	SP,
-}	t_elements;
 
 typedef struct s_elem_light_p
 {
@@ -41,6 +33,7 @@ typedef struct s_elem_plane
 	t_vector	pos;
 	t_vector	normal;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_plane;
 
 typedef struct s_elem_cylinder
@@ -50,6 +43,7 @@ typedef struct s_elem_cylinder
 	double		diam;
 	double		height;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_cylinder;
 
 typedef struct s_elem_sphere
@@ -57,6 +51,7 @@ typedef struct s_elem_sphere
 	t_vector	pos;
 	double		diam;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_sphere;
 
 typedef struct s_elem_camera
@@ -100,8 +95,6 @@ typedef struct s_elem_light_a
 typedef struct s_object
 {
 	void		*data;
-	t_mat4		inverse;
-	t_mat4		transposed_inv;
 	double		(*intersection)(t_ray local_ray, void *data);
 	t_vector	(*get_normal)(t_vector point, void *data);
 }	t_object;

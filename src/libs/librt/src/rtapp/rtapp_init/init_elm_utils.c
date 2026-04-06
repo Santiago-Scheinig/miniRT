@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:42:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 19:04:56 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 20:04:45 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	init_ambient_light(char **argv, int i, t_rtapp *app)
 	app->ambient = new_ambient_light(argv);
 
 	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, app->ambient.ratio);
-	rtlog(RT_LOG, 0, "[line: %i] colour:\t\t%f", i, app->ambient.rgb);
+	rtlog(RT_LOG, 0, "[line: %i] colour:\t\t%i", i, app->ambient.rgb);
 
 	return (RT_SUCCESS);
 }
