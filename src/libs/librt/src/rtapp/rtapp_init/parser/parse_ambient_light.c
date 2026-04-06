@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:05:31 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:02:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	parse_ambient_light(char **split, int i)
 		return (RT_FAILURE);
 	limits.min = 0;
 	limits.max = 1;
-	if (parse_float(split[0], split[1], i, limits))
+	if (parse_double(split[0], split[1], i, limits))
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid ratio."));
 	if (parse_color(split[0], split[2], i))
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid color."));

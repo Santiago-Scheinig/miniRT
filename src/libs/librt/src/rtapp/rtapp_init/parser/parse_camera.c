@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:17 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:34:57 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:02:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parse_camera(char **split, int i)
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid normal."));
 	limits.min = 0;
 	limits.max = 180;
-	if (parse_float(split[0], split[3], i, limits))
+	if (parse_double(split[0], split[3], i, limits))
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid FOV."));
 	return (RT_SUCCESS);
 }

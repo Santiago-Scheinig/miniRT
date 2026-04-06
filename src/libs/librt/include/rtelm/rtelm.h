@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 16:44:44 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:00:04 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef enum e_elements
 typedef struct s_elem_light_p
 {
 	t_vector	pos;
-	float		ratio;
+	double		ratio;
 }	t_elem_light_p;
 
 # endif
@@ -47,15 +47,15 @@ typedef struct s_elem_cylinder
 {
 	t_vector	pos;
 	t_vector	normal;
-	float		diam;
-	float		height;
+	double		diam;
+	double		height;
 	int			rgb;
 }	t_elem_cylinder;
 
 typedef struct s_elem_sphere
 {
 	t_vector	pos;
-	float		diam;
+	double		diam;
 	int			rgb;
 }	t_elem_sphere;
 
@@ -70,7 +70,7 @@ typedef struct s_elem_camera
 
 typedef struct s_elem_light_a
 {
-	float		ratio;
+	double		ratio;
 	int			rgb;
 }	t_elem_light_a;
 

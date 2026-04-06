@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 17:14:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:04:57 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:01:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	parse_sphere(char **split, int i)
 	}
 	limits.min = 0;
 	limits.max = FLT_MAX;
-	if (parse_float(split[0], split[2], i, limits))
+	if (parse_double(split[0], split[2], i, limits))
 		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid radius."));
 	if (parse_color(split[0], split[3], i))
 		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid color."));

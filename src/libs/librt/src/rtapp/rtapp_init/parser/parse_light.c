@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:19 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 18:45:55 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:01:59 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	parse_light(char **split, int i)
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid coordinates."));
 	limits.min = -1;
 	limits.max = 1;
-	if (parse_float(split[0], split[2], i, limits))
+	if (parse_double(split[0], split[2], i, limits))
 		return (rtlog(RT_ERRLOG, 0, msg, split[0], i, "invalid brightness."));
 	return (RT_SUCCESS);
 }

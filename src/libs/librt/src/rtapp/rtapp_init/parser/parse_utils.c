@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 16:34:47 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:01:30 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	float_check(char *str, char **split, t_flim limits)
 	return (RT_SUCCESS);
 }
 
-int	parse_float(char *sp, char *str, int i, t_flim limits)
+int	parse_double(char *sp, char *str, int i, t_flim limits)
 {
 	const char	*errmsg = "Failed to initialize %s in line %i: %s";
 	char		**split;
@@ -57,13 +57,13 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 	int			ans;
 
 	ans = RT_SUCCESS;
-	if (parse_float(sp, split[0], line, limits))
+	if (parse_double(sp, split[0], line, limits))
 	{
 		ans = RT_FAILURE;
 	}
-	else if (parse_float(sp, split[1], line, limits))
+	else if (parse_double(sp, split[1], line, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[2], line, limits))
+	else if (parse_double(sp, split[2], line, limits))
 		ans = RT_FAILURE;
 	else if (split[3])
 		ans = RT_FAILURE;
@@ -103,11 +103,11 @@ int	parse_color(char *sp, char *str, int i)
 		rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno));
 		ans = RT_FAILURE;
 	}
-	if (parse_float(sp, split[0], i, limits))
+	if (parse_double(sp, split[0], i, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[1], i, limits))
+	else if (parse_double(sp, split[1], i, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[2], i, limits))
+	else if (parse_double(sp, split[2], i, limits))
 		ans = RT_FAILURE;
 	else if (split[3])
 		ans = RT_FAILURE;
