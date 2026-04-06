@@ -6,15 +6,15 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:09:57 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:36:50 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	float_check(char *str, char **split, t_flim limits)
+static int	double_check(char *str, char **split, t_flim limits)
 {
-	float	aux;
+	double	aux;
 	int		i;
 	int		j;
 
@@ -46,7 +46,7 @@ int	parse_double(char *sp, char *str, int i, t_flim limits)
 		return (rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno)));
 	if (ft_arglen(split) > 2)
 		ans = RT_FAILURE;
-	if (float_check(str, split, limits))
+	if (double_check(str, split, limits))
 		ans = RT_FAILURE;
 	ft_split_free(split);
 	return (ans);
@@ -58,9 +58,7 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 
 	ans = RT_SUCCESS;
 	if (parse_double(sp, split[0], line, limits))
-	{
 		ans = RT_FAILURE;
-	}
 	else if (parse_double(sp, split[1], line, limits))
 		ans = RT_FAILURE;
 	else if (parse_double(sp, split[2], line, limits))

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:42:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:48:00 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:39:16 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,12 @@ int init_camera(char **argv, int i, t_rtapp *app)
 {
 	const char	*errmsg = "Parser error for %s in line %i: %s";
 
+	rtlog(RT_LOG, 0, "[%i] Initializing %s element.", i);
 	if (app->camera.fov != -1)
 		return (rtlog(RT_ERRLOG, 0, errmsg, argv[0], i, "already defined."));
 	if (parse_camera(argv, i))
 		return (RT_FAILURE);
 	app->camera = new_camera(argv);
+	rtlog(RT_LOG, 0, "[%i] %s element successfully initialized.", i, argv[0]);
 	return (RT_SUCCESS);
 }

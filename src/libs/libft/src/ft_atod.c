@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:56:40 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:09:10 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:36:30 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ double	ft_atod(const char *nptr)
 		nbr = nptr[i] - 48;
 	else
 		return (nbr);
-	while (ft_isdigit(nptr[i]))
-		nbr = (nbr * 10) + (nptr[i++] - '0');
+	while (ft_isdigit(nptr[i++ + 1]))
+		nbr = (nbr * 10) + (nptr[i] - '0');
 	if (ft_isdecimal(nptr[i]))
 		ft_getprecision(&nptr[++i], &nbr);
 	return (nbr * sign);

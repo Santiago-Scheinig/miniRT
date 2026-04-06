@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 12:04:45 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:29:44 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,26 @@ t_elem_camera	new_camera(char **str)
 {
 	t_elem_camera	aux;
 	t_vector		aux_v;
+	char			*next;
 
-	(void) str;
-	aux_v.x = 0;
-	aux_v.y = 0;
-	aux_v.z = 0;
-	aux.fov = 0;
-	aux.normal = aux_v;
+	aux_v.x = ft_atod(str[1]);
+	next = ft_strchr(str[1], ',') + 1;
+	aux_v.y = ft_atod(next);
+	next = ft_strchr(next, ',') + 1;
+	aux_v.z = ft_atod(next);
 	aux.pos = aux_v;
+	aux_v.x = ft_atod(str[2]);
+	next = ft_strchr(str[2], ',') + 1;
+	aux_v.y = ft_atod(next);
+	next = ft_strchr(str[2], ',') + 1;
+	aux_v.z = ft_atod(next);
+	aux.normal = aux_v;
+	aux.fov = ft_atod(str[3]);
 	camera_base_init(&aux);
 	return (aux);
 }
 
+/*I might move this*/
 t_ray	get_pixel_ray(t_elem_camera *camera, int x, int y)
 {
 	t_ray		ray;
