@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:01:30 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:09:57 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	float_check(char *str, char **split, t_flim limits)
 			if (split[i][0] != '-' && !ft_isdigit(split[i][j]))
 					return (RT_FAILURE);
 	}
-	aux = atof(str);//need our own
+	aux = ft_atod(str);
 	if (aux > limits.max || aux < limits.min)
 		return (RT_FAILURE);
 	return (RT_SUCCESS);
