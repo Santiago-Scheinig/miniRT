@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:38 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:58:50 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:48:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,16 @@ static void	*get_initializer(char *specifier)
 
 static int	parse_element(char **split, int i, t_rtapp *app)
 {
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	int	(*initializer)(char **, int, t_rtapp *);
 	
 	initializer = get_initializer(split[0]);
 	if (!initializer)
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid element."));
-	rtlog(RT_LOG, 0, "[line: %i] parsing succesfull.", i);
-	rtlog(RT_LOG, 0, "[line: %i] initializing %s element.", i);
+	rtlog(RT_LOG, 0, "[line: %i][%s] initializing element.", i, split[0]);
 	if (initializer(split, i, app))
 		return (RT_FAILURE);
-	rtlog(RT_LOG, 0, "[line: %i] initialization successfull.", i);
+	rtlog(RT_LOG, 0, "[line: %i][%s] successfull.", i, split[0]);
 	return (RT_SUCCESS);
 }
 
@@ -56,7 +55,7 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	split = ft_split_base(aux, " \t");
 	if (!split || !split[0])
 		return (rtlog(RT_ERRLOG, 0, err, i, strerror(errno)));
-	rtlog(RT_LOG, 0, "[line: %i] parsing %s element.", i, split[0]);
+	rtlog(RT_LOG, 0, "[line: %i][%s] parsing element.", i, split[0]);
 	if (parse_element(split, i, app))
 	{
 		ft_split_free(split);

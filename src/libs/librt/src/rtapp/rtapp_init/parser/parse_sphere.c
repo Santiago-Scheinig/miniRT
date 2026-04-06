@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 17:14:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:59:21 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:45:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	validate_arg(char **split, int i)
 {
 	const char	*status;
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 
 	status = NULL;
 	if (!split[1])
@@ -36,7 +36,7 @@ static int	validate_arg(char **split, int i)
 
 int	parse_sphere(char **split, int i)
 {
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	t_flim		limits;
 
 	if (validate_arg(split, i))

@@ -6,13 +6,32 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 19:03:47 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:12:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-static void	camera_base_init(t_elem_camera *camera)
+static t_ray	get_pixel_ray(void *ptr, int x, int y)
+{
+	t_elem_camera	*camera;
+	t_ray			ray;
+	double			s;
+	double			t;
+	t_vector		pixel_dir;
+
+	camera = (t_elem_camera *) ptr;
+	s = (x + 0.5) / (double)SCREEN_WIDTH - 0.5;
+	t = 0.5 - (y + 0.5) / (double)SCREEN_HEIGHT;
+	pixel_dir = vector_sum_vector(camera->normal,
+			vector_mult_scalar(camera->right, s));
+	pixel_dir = vector_sum_vector(pixel_dir,
+			vector_mult_scalar(camera->up, t));
+	ray = ray_new(camera->pos, vector_normalize(pixel_dir));
+	return (ray);
+}
+
+static void	build_camera_base(t_elem_camera *camera)
 {
 	t_vector	guide;
 	t_vector	right_norm;
@@ -32,43 +51,29 @@ static void	camera_base_init(t_elem_camera *camera)
 			v_width * ((double)SCREEN_HEIGHT / (double)SCREEN_WIDTH));
 }
 
-t_elem_camera	new_camera(char **str)
+static void	build_camera_data(char **str, t_elem_camera *cam)
 {
-	t_elem_camera	aux;
-	t_vector		aux_v;
-	char			*next;
+	char	*next;
 
-	aux_v.x = ft_atod(str[1]);
+	cam->pos.x = ft_atod(str[1]);
 	next = ft_strchr(str[1], ',') + 1;
-	aux_v.y = ft_atod(next);
+	cam->pos.y = ft_atod(next);
 	next = ft_strchr(next, ',') + 1;
-	aux_v.z = ft_atod(next);
-	aux.pos = aux_v;
-	aux_v.x = ft_atod(str[2]);
+	cam->pos.z = ft_atod(next);
+	cam->normal.x = ft_atod(str[2]);
 	next = ft_strchr(str[2], ',') + 1;
-	aux_v.y = ft_atod(next);
-	next = ft_strchr(str[2], ',') + 1;
-	aux_v.z = ft_atod(next);
-	aux.normal = aux_v;
-	aux.fov = ft_atod(str[3]);
-	camera_base_init(&aux);
-	return (aux);
+	cam->normal.y = ft_atod(next);
+	next = ft_strchr(next, ',') + 1;
+	cam->normal.z = ft_atod(next);
+	cam->fov = ft_atod(str[3]);
+	cam->get_pixel_ray = &get_pixel_ray;	
 }
 
-/*I might move this*/
-t_ray	get_pixel_ray(t_elem_camera *camera, int x, int y)
+t_elem_camera	new_camera(char **str)
 {
-	t_ray		ray;
-	double		s;
-	double		t;
-	t_vector	pixel_dir;
+	t_elem_camera	new_camera;
 
-	s = (x + 0.5) / (double)SCREEN_WIDTH - 0.5;
-	t = 0.5 - (y + 0.5) / (double)SCREEN_HEIGHT;
-	pixel_dir = vector_sum_vector(camera->normal,
-			vector_mult_scalar(camera->right, s));
-	pixel_dir = vector_sum_vector(pixel_dir,
-			vector_mult_scalar(camera->up, t));
-	ray = ray_new(camera->pos, vector_normalize(pixel_dir));
-	return (ray);
+	build_camera_data(str, &new_camera);
+	build_camera_base(&new_camera);
+	return (new_camera);
 }

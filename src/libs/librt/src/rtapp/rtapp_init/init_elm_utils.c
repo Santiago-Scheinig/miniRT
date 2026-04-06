@@ -6,16 +6,32 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:42:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 20:04:45 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:45:42 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_init.h"
 #include "rtapp_parser.h"
 
+int	init_ambient_light(char **argv, int i, t_rtapp *app)
+{
+	const char	*err = "[line: %i][%s] initialization failed: %s";
+
+	if (app->ambient.ratio != -1)
+		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
+	if (parse_ambient_light(argv, i))
+		return (RT_FAILURE);
+	app->ambient = new_ambient_light(argv);
+
+/* 	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, app->ambient.ratio);
+	rtlog(RT_LOG, 0, "[line: %i] colour:\t\t%i", i, app->ambient.rgb); */
+
+	return (RT_SUCCESS);
+}
+
 int init_light(char **argv, int i, t_rtapp *app)
 {
-	const char		*err = "[line: %i] initialization of %s failed: %s";
+	const char		*err = "[line: %i][%s] initialization failed: %s";
 	t_elem_light_p	*new_light_p;
 	t_list			*new_node;
 
@@ -27,43 +43,32 @@ int init_light(char **argv, int i, t_rtapp *app)
 	new_node = ft_lstnew(new_light_p);
 	if (!new_node)
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
+	if (app->lights)
+		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
 	ft_lstadd_back(&(app->lights), new_node);
 
-	rtlog(RT_LOG, 0, "[line: %i] position:\t\t%f,%f,%f", i, new_light_p->pos.x, new_light_p->pos.y, new_light_p->pos.z);
-	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, new_light_p->ratio);
-
-	return (RT_SUCCESS);
-}
-
-int	init_ambient_light(char **argv, int i, t_rtapp *app)
-{
-	const char	*err = "[line: %i] initialization of %s failed: %s";
-
-	if (app->ambient.ratio != -1)
-		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
-	if (parse_ambient_light(argv, i))
-		return (RT_FAILURE);
-	app->ambient = new_ambient_light(argv);
-
-	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, app->ambient.ratio);
-	rtlog(RT_LOG, 0, "[line: %i] colour:\t\t%i", i, app->ambient.rgb);
+/* 	rtlog(RT_LOG, 0, "[line: %i] position:\t%f,%f,%f", i, new_light_p->pos.x, new_light_p->pos.y, new_light_p->pos.z);
+	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, new_light_p->ratio); */
 
 	return (RT_SUCCESS);
 }
 
 int init_camera(char **argv, int i, t_rtapp *app)
 {
-	const char	*err = "[line: %i] initialization of %s failed: %s";
+	const char	*err = "[line: %i][%s] initialization failed: %s";
 
 	if (app->camera.fov != -1)
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
 	if (parse_camera(argv, i))
 		return (RT_FAILURE);
 	app->camera = new_camera(argv);
+	if (!(app->camera.normal.x) && !(app->camera.normal.y)
+		&& !(app->camera.normal.z))
+		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "invalid normal."));
 
-	rtlog(RT_LOG, 0, "[line: %i] position:\t%f,%f,%f", i, app->camera.pos.x, app->camera.pos.y, app->camera.pos.z);
+/* 	rtlog(RT_LOG, 0, "[line: %i] position:\t%f,%f,%f", i, app->camera.pos.x, app->camera.pos.y, app->camera.pos.z);
 	rtlog(RT_LOG, 0, "[line: %i] normal:\t\t%f,%f,%f", i, app->camera.normal.x, app->camera.normal.y, app->camera.normal.z);
-	rtlog(RT_LOG, 0, "[line: %i] FOV:\t\t%i", i, app->camera.fov);
+	rtlog(RT_LOG, 0, "[line: %i] FOV:\t\t%i", i, app->camera.fov); */
 
 	return (RT_SUCCESS);
 }

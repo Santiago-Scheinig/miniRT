@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/03 13:42:03 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:28:24 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
-
-t_object	*new_sphere(char **str)
-{
-	(void) str;
-	return (NULL);
-}
 
 t_mat4	sphere_get_inverse_mat4(t_vector center, double diameter)
 {
@@ -56,4 +50,41 @@ t_vector	sphere_get_normal(t_vector local_point, void *data)
 {
 	(void) data;
 	return (local_point);
+}
+
+//static void build_sphere_matrixes();
+
+static void	build_sphere_data(char **str, t_elem_sphere *sphere, t_object *obj)
+{
+	char	*next;
+	
+	sphere->pos.x = ft_atod(str[1]);
+	next = ft_strchr(str[1], ',') + 1;
+	sphere->pos.y = ft_atod(next);
+	next = ft_strchr(str[1], ',') + 1;
+	sphere->pos.z = ft_atod(next);
+	sphere->diam = ft_atod(str[2]);
+	sphere->rgb = ft_atod(str[3]);
+	obj->data = sphere;
+}
+
+t_object	*new_sphere(char **str)
+{
+	t_elem_sphere	*new_sphere;
+	t_object		*new_object;
+
+	new_sphere = ft_calloc(1, sizeof(t_elem_sphere));
+	if (!new_sphere)
+		return (NULL);
+	new_object = ft_calloc(1, sizeof(t_object));
+	if (!new_object)
+	{
+		free(new_sphere);
+		return (NULL);
+	}
+	build_sphere_data(str, new_sphere, new_object);
+	//build_plane_matrixes()
+	//new_object->get_normal = ;
+	//new_object->intersection = ;
+	return (new_object);
 }

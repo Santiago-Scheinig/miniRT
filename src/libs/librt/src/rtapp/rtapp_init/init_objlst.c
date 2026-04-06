@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:43:56 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:00:23 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	init_objlst(t_list *lines, char *file, t_rtapp *app)
 	int			i;
 
 	rtlog(RT_LOG, 0, "< Compiling '%s' file >", file);
-	i = 0;
+	i = 1;
 	app->ambient.ratio = -1;
 	app->camera.fov = -1;
 	head = lines;

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 19:01:49 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:02:25 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 	if (type == RT_ERRLOG)
 		ft_printfd(fd, "ERROR\n");
 	print_hms_timestamp(pid, fd);
-	if (type == RT_LOG)
-		ft_printfd(fd, "[INFO]");
+	ft_printfd(fd, "[INFO]");
 	ft_printfd(fd, ": ");
 	vfprintf(stderr, fmt, args);
 	ft_printfd(fd, "\n");

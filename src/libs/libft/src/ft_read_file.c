@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/20 18:32:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 20:06:26 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:01:24 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,6 @@ int	ft_read_file(t_list **lines, int fd)
 	str = get_next_line(fd);
 	while (str)
 	{
-		if (str[0] == '\n')
-		{
-			free(str);
-			str = get_next_line(fd);
-			continue;
-		}
 		new = ft_lstnew(str);
 		if (!new)
 		{

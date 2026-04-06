@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:59:34 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:45:24 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	double_check(char *str, char **split, t_flim limits)
 
 int	parse_double(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	int			ans;
 
@@ -70,7 +70,7 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 
 int parse_vector(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*errmsg = "[line: %i] parser for %s failed: %s";
+	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	
 	split = ft_split(str, ',');
@@ -87,7 +87,7 @@ int parse_vector(char *sp, char *str, int i, t_flim limits)
 
 int	parse_color(char *sp, char *str, int i)
 {
-	const char	*errmsg = "[line: %i] parser for %s failed: %s";
+	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	t_flim		limits;
 	int			ans;
@@ -110,5 +110,5 @@ int	parse_color(char *sp, char *str, int i)
 	else if (split[3])
 		ans = RT_FAILURE;
 	ft_split_free(split);
-	return (RT_SUCCESS);
+	return (ans);
 }

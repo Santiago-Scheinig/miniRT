@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 20:05:47 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:37:31 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 		return (RT_FAILURE);
 	if (init_objlst(lines, argv[1], app))
 		return (RT_FAILURE);
+	//remove_duplicated_objects; //objects with the ALL same values are removed from the list;
 	return (RT_SUCCESS);
 }
 
@@ -38,6 +39,6 @@ int rtapp_kill(t_rtapp *app, t_rterr errcode)
 	if (app->objects)
 		ft_lstclear(&(app->objects), rtfree);
 	if (app->lights)
-		ft_lstclear(&(app->lights), rtfree);
+		ft_lstclear(&(app->lights), free);
 	exit(errcode);
 }

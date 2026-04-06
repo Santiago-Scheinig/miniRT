@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 20:13:19 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:58:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:41:58 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	validate_arg(char **split, int i)
 {
 	const char	*status;
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 
 	status = NULL;
 	if (!split[1])
@@ -25,13 +25,13 @@ static int	validate_arg(char **split, int i)
 	else if (split[3])
 		status = "light has excess arguments declaration.";
 	if (status)
-		return (rtlog(RT_ERRLOG, 0, err, split[0], i, status));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
 	return (RT_SUCCESS);
 }
 
 int	parse_light(char **split, int i)
 {
-	const char	*err = "[line: %i] parser for %s failed: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	t_flim		limits;
 
 	if (validate_arg(split, i))
