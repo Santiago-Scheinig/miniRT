@@ -94,28 +94,30 @@ all: $(NAME)
 
 #- Creates a directory named $(OBJDIR).												-#
 $(OBJDIR):
-	@echo "$(COLOUR_GREEN)Libft - Object compilation:\n"
+	@echo "$(COLOUR_BLUE)[i] Libft - Object compilation:"
 	@mkdir -p $@
 #
 #- Compiles each %(generic).c source into its respective %(generic).o				-#
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@echo "$(COLOUR_CIAN)\t-$@ created."
+	@printf "\r\033[2K$(COLOUR_GREEN)\t[⚙] $@ created."
 #
 #- Complies the $(NAME) library.													-#
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
-	@echo "$(COLOUR_GREEN)\n$(CNAME) - Library $@ linked.$(COLOUR_END)"
+	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
+
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
 	@rm -rf $(OBJDIR)
-	@echo "$(COLOUR_RED)$(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
+	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
 #
 #- Removes the final files made with this makefile, executing clean as well.		-#
 fclean: clean
 	@rm -f $(NAME)
-	@echo "$(COLOUR_RED)$(CNAME) - Files removed.\n$(COLOUR_END)"
+	@echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"
+
 #
 #- Restarts the Makefile. Erases everything to default, and executes again.			-#
 re: fclean all

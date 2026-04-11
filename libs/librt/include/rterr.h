@@ -1,37 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtapp.h                                            :+:      :+:    :+:   */
+/*   rterr.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 19:12:02 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/11 19:03:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTAPP_H
-# define RTAPP_H
-
+#ifndef RTERR_H
+# define RTERR_H
 # include "libft.h"
 # include "rtelm.h"
-# include "rterr.h"
-# include "rtmlx.h"
-# include "rtmth.h"
-# if BONUS
-#  include "rtapp_bonus.h"
-# endif
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/time.h>
+# include <sys/types.h>
 
-typedef struct s_rtapp
+typedef enum e_logtype
 {
-	t_list			*objects;
-	t_list			*lights;
-	t_elem_camera	camera;
-	t_elem_light_a	ambient;
-}	t_rtapp;
+	RT_LOG = 1,
+	RT_ERRLOG,
+}	t_logtype;
 
-int	rtapp_init(int argc, char **argv, t_rtapp *app);
+typedef enum e_rterr
+{
+	RT_SUCCESS,
+	RT_FAILURE,
+}	t_rterr;
 
-int rtapp_kill(t_rtapp *app, t_rterr errcode);
+typedef struct s_rtlog
+{
+	int	orig_outfd;
+	int	orig_errfd;
+}	t_rtlog;
+
+void	object_del(void *content);
 
 #endif

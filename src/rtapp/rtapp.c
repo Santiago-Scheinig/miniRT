@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:37:31 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:05:34 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ rtapp_run() */
 int rtapp_kill(t_rtapp *app, t_rterr errcode)
 {
 	if (app->objects)
-		ft_lstclear(&(app->objects), rtfree);
+		ft_lstclear(&(app->objects), object_del);
 	if (app->lights)
 		ft_lstclear(&(app->lights), free);
 	exit(errcode);
