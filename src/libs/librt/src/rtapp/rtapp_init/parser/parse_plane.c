@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 17:15:16 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:05:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:44:45 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,27 @@
 
 static int	validate_arg(char **split, int i)
 {
-	const char	*msg;
-	const char	*err = "Parser for %s failed in line %i: %s";
+	const char	*status;
+	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	msg = NULL;
+	status = NULL;
 	if (!split[1])
-		msg = "Plane vector coordinates undeclared.";
+		status = "plane vector coordinates undeclared.";
 	else if (!split[2])
-		msg = "Plane vector normal undeclared.";
+		status = "plane vector normal undeclared.";
 	else if (!split[3])
-		msg = "Plane color undeclared.";
+		status = "plane color undeclared.";
 	else if (split[4])
-		msg = "Plane has excess arguments declaration.";
-	if (msg)
-		return (rtlog(RT_ERRLOG, 0, err, split[0], i, msg));
+		status = "plane has excess arguments declaration.";
+	if (status)
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
 	return (RT_SUCCESS);
 }
 
 int	parse_plane(char **split, int i)
 {
-	const char	*errmsg = "Parser error for %s in line %i: %s";
-	t_flim			limits;
+	const char	*err = "[line: %i][%s] parser failed: %s";
+	t_flim		limits;
 
 	if (validate_arg(split, i))
 		return (RT_FAILURE);
@@ -42,14 +42,14 @@ int	parse_plane(char **split, int i)
 	limits.max = FLT_MAX;
 	if (parse_vector(split[0], split[1], i, limits))
 	{
-		rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid coordinates.");
+		rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates.");
 		return (RT_FAILURE); 
 	}
 	limits.min = -1;
 	limits.max = 1;
 	if (parse_vector(split[0], split[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid normal."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid normal."));
 	if (parse_color(split[0], split[3], i))
-		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid color."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }

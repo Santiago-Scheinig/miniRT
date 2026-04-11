@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 17:14:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:04:57 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:45:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 static int	validate_arg(char **split, int i)
 {
-	const char	*msg;
-	const char	*err = "Parser for %s failed in line %i: %s";
+	const char	*status;
+	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	msg = NULL;
+	status = NULL;
 	if (!split[1])
-		msg = "Sphere vector coordinates undeclared.";
+		status = "sphere vector coordinates undeclared.";
 	else if (!split[2])
-		msg = "Sphere diameter undeclared.";
+		status = "sphere diameter undeclared.";
 	else if (!split[3])
-		msg = "Sphere color undeclared.";
+		status = "sphere color undeclared.";
 	else if (split[4])
-		msg = "Sphere has excess arguments declaration.";
-	if (msg)
+		status = "sphere has excess arguments declaration.";
+	if (status)
 	{
-		rtlog(RT_ERRLOG, 0, err, split[0], i, msg);
+		rtlog(RT_ERRLOG, 0, err, split[0], i, status);
 		return (RT_FAILURE);
 	}
 	return (RT_SUCCESS);
@@ -36,7 +36,7 @@ static int	validate_arg(char **split, int i)
 
 int	parse_sphere(char **split, int i)
 {
-	const char	*errmsg = "Parser error for %s in line %i: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	t_flim		limits;
 
 	if (validate_arg(split, i))
@@ -45,14 +45,14 @@ int	parse_sphere(char **split, int i)
 	limits.max = FLT_MAX;
 	if (parse_vector(split[0], split[1], i, limits))
 	{
-		rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid coordinates.");
+		rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates.");
 		return (RT_FAILURE); 
 	}
 	limits.min = 0;
 	limits.max = FLT_MAX;
-	if (parse_float(split[0], split[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid radius."));
+	if (parse_double(split[0], split[2], i, limits))
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid radius."));
 	if (parse_color(split[0], split[3], i))
-		return (rtlog(RT_ERRLOG, 0, errmsg, split[0], i, "invalid color."));
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }

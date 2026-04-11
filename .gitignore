@@ -54,5 +54,6 @@ dkms.conf
 # debug information files
 *.dwo
 
+test.rt
 miniRT
 .vscode

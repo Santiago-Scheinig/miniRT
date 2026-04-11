@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:37:23 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 20:28:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,5 @@ void	rtfree(void *content)
 	aux = content;
 	if (aux->data)
 		free(aux->data);
+	free(aux);
 }

@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 18:18:02 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 19:12:02 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_H
 # define RTAPP_H
-# define SCREEN_WIDTH 1920
-# define SCREEN_HEIGHT 1080
 
 # include "libft.h"
 # include "rtelm.h"
@@ -30,7 +28,6 @@ typedef struct s_rtapp
 	t_list			*lights;
 	t_elem_camera	camera;
 	t_elem_light_a	ambient;
-	t_rtlog			logfd;
 }	t_rtapp;
 
 int	rtapp_init(int argc, char **argv, t_rtapp *app);

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:41:23 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 17:10:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,8 @@ int		ft_putendl_fd(char *s, int fd);
  * be a digit, if not or str doesn't exists, returns 0.
  */
 long	ft_atol(const char *nptr);
+
+double	ft_atod(const char *nptr);
 
 /**
  * Finds the first number on a STRING with a decimal base.

@@ -6,15 +6,15 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 19:56:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/06 21:45:24 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	float_check(char *str, char **split, t_flim limits)
+static int	double_check(char *str, char **split, t_flim limits)
 {
-	float	aux;
+	double	aux;
 	int		i;
 	int		j;
 
@@ -26,15 +26,15 @@ static int	float_check(char *str, char **split, t_flim limits)
 			if (split[i][0] != '-' && !ft_isdigit(split[i][j]))
 					return (RT_FAILURE);
 	}
-	aux = atof(str);//need our own
+	aux = ft_atod(str);
 	if (aux > limits.max || aux < limits.min)
 		return (RT_FAILURE);
 	return (RT_SUCCESS);
 }
 
-int	parse_float(char *sp, char *str, int i, t_flim limits)
+int	parse_double(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*err = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	int			ans;
 
@@ -43,10 +43,10 @@ int	parse_float(char *sp, char *str, int i, t_flim limits)
 		return (RT_FAILURE);
 	split = ft_split(str, '.');
 	if (!split)
-		return (rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno)));
+		return (rtlog(RT_ERRLOG, 0, err, i, sp, strerror(errno)));
 	if (ft_arglen(split) > 2)
 		ans = RT_FAILURE;
-	if (float_check(str, split, limits))
+	if (double_check(str, split, limits))
 		ans = RT_FAILURE;
 	ft_split_free(split);
 	return (ans);
@@ -57,53 +57,25 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 	int			ans;
 
 	ans = RT_SUCCESS;
-	if (parse_float(sp, split[0], line, limits))
-	{
+	if (parse_double(sp, split[0], line, limits))
 		ans = RT_FAILURE;
-	}
-	else if (parse_float(sp, split[1], line, limits))
+	else if (parse_double(sp, split[1], line, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[2], line, limits))
+	else if (parse_double(sp, split[2], line, limits))
 		ans = RT_FAILURE;
 	else if (split[3])
-		ans = RT_FAILURE;
-	return (ans);
-}
-
-static int	vector_check(char *sp, char **split, int line, t_flim limits)
-{
-	const char	*errmsg = "Parser error for %s in line %i: %s";
-	t_vector	v;
-	int			ans;
-
-	ans = RT_SUCCESS;
-	if (parse_float(sp, split[0], line, limits))
-		ans = RT_FAILURE;
-	else if (parse_float(sp, split[1], line, limits))
-		ans = RT_FAILURE;
-	else if (parse_float(sp, split[2], line, limits))
-		ans = RT_FAILURE;
-	else if (split[3])
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, sp, line, "invalid 3D vector.");
-		ans = RT_FAILURE;
-	}
-	v.x = atof(split[0]);//Need to change to ours
-	v.y = atof(split[1]);//Need to change to ours
-	v.z = atof(split[2]);//Need to change to ours
-	if (!v.x && !v.y && !v.z)
 		ans = RT_FAILURE;
 	return (ans);
 }
 
 int parse_vector(char *sp, char *str, int i, t_flim limits)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	
 	split = ft_split(str, ',');
 	if (!split)
-		return (rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno)));
+		return (rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno)));
 	if (vector_check(sp, split, i, limits))
 	{
 		ft_split_free(split);
@@ -115,7 +87,7 @@ int parse_vector(char *sp, char *str, int i, t_flim limits)
 
 int	parse_color(char *sp, char *str, int i)
 {
-	const char	*errmsg = "Failed to initialize %s in line %i: %s";
+	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
 	t_flim		limits;
 	int			ans;
@@ -126,17 +98,17 @@ int	parse_color(char *sp, char *str, int i)
 	split = ft_split(str, ',');
 	if (!split)
 	{
-		rtlog(RT_ERRLOG, 0, errmsg, sp, i, strerror(errno));
+		rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno));
 		ans = RT_FAILURE;
 	}
-	if (parse_float(sp, split[0], i, limits))
+	if (parse_double(sp, split[0], i, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[1], i, limits))
+	else if (parse_double(sp, split[1], i, limits))
 		ans = RT_FAILURE;
-	else if (parse_float(sp, split[2], i, limits))
+	else if (parse_double(sp, split[2], i, limits))
 		ans = RT_FAILURE;
 	else if (split[3])
 		ans = RT_FAILURE;
 	ft_split_free(split);
-	return (RT_SUCCESS);
+	return (ans);
 }

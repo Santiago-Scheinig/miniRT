@@ -3,34 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/04 18:31:32 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/06 20:53:00 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_H
 # define RTELM_H
-# include "rtapp.h"
+
+# include "rtmlx.h"
 # include "rtmth.h"
 # include "libft.h"
 # if BONUS
 #  include "rtelm_bonus.h"
 # else
 
-typedef enum e_elements
-{
-	INV = -1,
-	PL,
-	CY,
-	SP,
-}	t_elements;
-
 typedef struct s_elem_light_p
 {
 	t_vector	pos;
-	float		ratio;
+	double		ratio;
 }	t_elem_light_p;
 
 # endif
@@ -40,22 +33,25 @@ typedef struct s_elem_plane
 	t_vector	pos;
 	t_vector	normal;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_plane;
 
 typedef struct s_elem_cylinder
 {
 	t_vector	pos;
 	t_vector	normal;
-	float		diam;
-	float		height;
+	double		diam;
+	double		height;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_cylinder;
 
 typedef struct s_elem_sphere
 {
 	t_vector	pos;
-	float		diam;
+	double		diam;
 	int			rgb;
+	t_mat4		matrix[2];
 }	t_elem_sphere;
 
 typedef struct s_elem_camera
@@ -65,11 +61,12 @@ typedef struct s_elem_camera
 	int			fov;
 	t_vector	right;
 	t_vector	up;
+	t_ray		(*get_pixel_ray)(void *ptr, int x, int y);
 }	t_elem_camera;
 
 typedef struct s_elem_light_a
 {
-	float		ratio;
+	double		ratio;
 	int			rgb;
 }	t_elem_light_a;
 
@@ -99,8 +96,6 @@ typedef struct s_elem_light_a
 typedef struct s_object
 {
 	void		*data;
-	t_mat4		inverse;
-	t_mat4		transposed_inv;
 	double		(*intersection)(t_ray local_ray, void *data);
 	t_vector	(*get_normal)(t_vector point, void *data);
 }	t_object;
@@ -213,17 +208,5 @@ t_vector		sphere_get_normal(t_vector local_point, void *data);
  * transformed to global and then nomalized before use.
  */
 t_vector		cylinder_get_normal(t_vector local_point, void *data);
-
-/**
- * @brief Generates a ray from the camera
- * through a specific pixel on the screen.
- * @param camera The camera element containing the
- * position, normal, and field of view.
- * @param x The x-coordinate of the pixel on the screen.
- * @param y The y-coordinate of the pixel on the screen.
- * @return A global ray originating from the camera and passing
- * through the specified pixel.
- */
-t_ray			get_pixel_ray(t_elem_camera *camera, int x, int y);
 
 #endif
