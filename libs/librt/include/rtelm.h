@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 20:50:18 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 21:24:10 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ typedef struct s_elem_plane
 	t_vector	pos;
 	t_vector	normal;
 	int			rgb;
-	t_mat4		matrix[2];
 }	t_elem_plane;
 
 //We can save only diam and height which are the main information that defines
@@ -53,7 +52,6 @@ typedef struct s_elem_cylinder
 	double		diam;
 	double		height;
 	int			rgb;
-	t_mat4		matrix[2];
 }	t_elem_cylinder;
 
 //We can save only diam, pos is used to calculate the matrixes
@@ -62,7 +60,6 @@ typedef struct s_elem_sphere
 	t_vector	pos;
 	double		diam;
 	int			rgb;
-	t_mat4		matrix[2];
 }	t_elem_sphere;
 
 typedef struct s_elem_camera
