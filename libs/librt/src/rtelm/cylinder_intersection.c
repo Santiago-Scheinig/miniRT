@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_intersection.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 20:54:39 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 21:59:19 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/11 20:43:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,12 +83,11 @@ static double	get_sides_intersection(t_ray local_ray)
 	return (INFINITY);
 }
 
-double	cylinder_intersection(t_ray local_ray, void *data)
+double	cylinder_intersection(t_ray local_ray)
 {
 	double	sides_intersection;
 	double	ends_intersection;
 
-	(void)data;
 	sides_intersection = get_sides_intersection(local_ray);
 	ends_intersection = get_ends_intersection(local_ray);
 	if (sides_intersection < EPSILON && ends_intersection < EPSILON)

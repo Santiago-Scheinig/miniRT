@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:46:41 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:12:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int init_plane(char **argv, int i, t_rtapp *app)
 	new_node = ft_lstnew(aux);
 	if (!new_node)
 	{
-		rtfree(aux);
+		object_del(aux);
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
@@ -62,7 +62,7 @@ int init_cylinder(char **argv, int i, t_rtapp *app)
 	new_node = ft_lstnew(aux);
 	if (!new_node)
 	{
-		rtfree(aux);
+		object_del(aux);
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
@@ -91,7 +91,7 @@ int init_sphere(char **argv, int i, t_rtapp *app)
 	new_node = ft_lstnew(aux);
 	if (!new_node)
 	{
-		rtfree(aux);
+		object_del(aux);
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);

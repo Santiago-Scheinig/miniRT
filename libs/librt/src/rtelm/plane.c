@@ -6,46 +6,32 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:20:16 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 20:54:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-t_mat4	plane_get_inverse_mat4(t_vector point, t_vector normal)
-{
-	t_mat4	inv;
-	t_mat4	rot;
-	t_mat4	trans;
+t_mat4	plane_get_inverse_mat4(t_vector point, t_vector normal);
 
-	trans = mat4_translation(point.x, point.y, point.z);
-	rot = mat4_rotation(normal);
-	inv = mat4_inverse(mat4_mult_mat4(trans, rot));
-	return (inv);
-}
-
-double	plane_intersection(t_ray ray, void *data)
+static double	plane_intersection(t_ray local_ray)
 {
 	double	t;
 
-	(void) data;
-	if (fabs(ray.direction.y) < EPSILON)
+	if (fabs(local_ray.direction.y) < EPSILON)
 		return (INFINITY);
-	t = -ray.origin.y / ray.direction.y;
+	t = -local_ray.origin.y / local_ray.direction.y;
 	if (t < EPSILON)
 		return (INFINITY);
 	else
 		return (t);
 }
 
-t_vector	plane_get_normal(t_vector local_point, void *data)
+static t_vector	plane_normal(t_vector local_point)
 {
 	(void) local_point;
-	(void) data;
 	return (vector_new(0.0, 1.0, 0.0));
 }
-
-//static void	build_plane_matrixes();
 
 static void build_plane_data(char **str, t_elem_plane *plane, t_object *obj)
 {
@@ -80,8 +66,8 @@ t_object	*new_plane(char **str)
 		return (NULL);
 	}
 	build_plane_data(str, new_plane, new_object);
-	//build_plane_matrixes()
-	//new_object->get_normal = ;
-	//new_object->intersection = ;
+	build_matrixes(new_object, &plane_inverse_mat4);
+	new_object->c_normal = &plane_normal;
+	new_object->c_intersection = &plane_intersection;
 	return (new_object);
 }

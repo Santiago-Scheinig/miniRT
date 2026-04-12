@@ -1,45 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rterr.h                                            :+:      :+:    :+:   */
+/*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:52:18 by sscheini         ###   ########.fr       */
+/*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/11 19:10:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RTERR_H
-# define RTERR_H
+#ifndef RTAPP_H
+# define RTAPP_H
+
+# ifndef DEV
+#  define DEV 0
+# endif
 # include "libft.h"
 # include "rtelm.h"
-# include <errno.h>
-# include <fcntl.h>
-# include <sys/wait.h>
-# include <sys/time.h>
-# include <sys/types.h>
+# include "rterr.h"
+# include "rtmlx.h"
+# include "rtmth.h"
+# if BONUS
+#  include "rtapp_bonus.h"
+# endif
 
-typedef enum e_logtype
+
+typedef struct s_rtapp
 {
-	RT_LOG = 1,
-	RT_ERRLOG,
-}	t_logtype;
+	t_list			*objects;
+	t_list			*lights;
+	t_elem_camera	camera;
+	t_elem_light_a	ambient;
+}	t_rtapp;
 
-typedef enum e_rterr
-{
-	RT_SUCCESS,
-	RT_FAILURE,
-}	t_rterr;
+int	rtapp_init(int argc, char **argv, t_rtapp *app);
 
-typedef struct s_rtlog
-{
-	int	orig_outfd;
-	int	orig_errfd;
-}	t_rtlog;
+int rtapp_kill(t_rtapp *app, t_rterr errcode);
 
-int		rtlog(t_logtype type, pid_t pid, const char *fmt, ...);
-
-void	rtfree(void *content);
+int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...);
 
 #endif

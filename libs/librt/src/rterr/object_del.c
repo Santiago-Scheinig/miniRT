@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rtfree.c                                           :+:      :+:    :+:   */
+/*   object_del.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 20:28:13 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:03:25 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rterr.h"
 
-void	rtfree(void *content)
+void	object_del(void *content)
 {
 	t_object	*aux;
 

@@ -6,11 +6,11 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:02:25 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/11 19:11:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rterr.h"
+#include "rtapp.h"
 
 static void	print_hms_timestamp(pid_t pid, int fd)
 {
@@ -33,12 +33,12 @@ int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 	va_list			args;
 	int				fd;
 	
-/* 	if (!DEV && type != RT_ERRLOG)
-		return; */
 	if (type == RT_ERRLOG)
 		fd = STDERR_FILENO;
 	else
 		fd = STDOUT_FILENO;
+	if (!DEV && type != RT_ERRLOG)
+		return (fd - 1);
 	va_start(args, fmt);
 	if (type == RT_ERRLOG)
 		ft_printfd(fd, "ERROR\n");
