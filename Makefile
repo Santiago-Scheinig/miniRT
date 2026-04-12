@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/12 18:14:42 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/12 19:50:08 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,18 +17,18 @@ NAME = miniRT
 NAME_BONUS = miniRT_bonus
 
 #	Source files
-MAIN_SRC =	$(SOURCE_DIR)/main.c										\
-			$(SOURCE_DIR)/rtapp/rtapp.c									\
-			$(SOURCE_DIR)/rtapp/rtlog.c									\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_file.c					\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_elements.c				\
-			$(SOURCE_DIR)/rtapp/rtapp_init/g_init_dispatch.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_line.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_lights.c		\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_objects.c		\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_utils.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/g_parse_err_msgs.c	\
-			$(SOURCE_DIR)/rtapp/rtapp_render/tile_queue.c				\
+MAIN_SRC =	$(SOURCE_DIR)/main.c								\
+			$(SOURCE_DIR)/rtapp/rtapp.c							\
+			$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
+			$(SOURCE_DIR)/rtapp/init/init_file.c				\
+			$(SOURCE_DIR)/rtapp/init/init_elements.c			\
+			$(SOURCE_DIR)/rtapp/init/g_init_dispatch.c			\
+			$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
+			$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
+			$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
+			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
+			$(SOURCE_DIR)/rtapp/init/parser/g_parse_err_msgs.c	\
+			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
 
 BONUS_SRC = $(SOURCE_DIR)/main_bonus.c
 
@@ -120,10 +120,11 @@ start_msg:
 $(OBJECT_DIR) $(DEPEND_DIR):
 	@mkdir -p $@
 	@mkdir -p $@/rtapp
-	@mkdir -p $@/rtapp/rtapp_init
-	@mkdir -p $@/rtapp/rtapp_init/parser
-	@mkdir -p $@/rtapp/rtapp_render
-	@mkdir -p $@/rtapp/rtapp_run
+	@mkdir -p $@/rtapp/debug
+	@mkdir -p $@/rtapp/init
+	@mkdir -p $@/rtapp/init/parser
+	@mkdir -p $@/rtapp/render
+	@mkdir -p $@/rtapp/run
 
 # ================================ Library Building ================================== #
 

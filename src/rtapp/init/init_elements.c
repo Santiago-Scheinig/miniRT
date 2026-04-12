@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 18:11:27 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:53:25 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@ int	init_light_a(char **argv, int i, t_rtapp *app)
 	if (parse_la(argv, i))
 		return (RT_FAILURE);
 	app->ambient = build_la(argv);
-
-/* 	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, app->ambient.ratio);
-	rtlog(RT_LOG, 0, "[line: %i] colour:\t\t%i", i, app->ambient.rgb); */
-
 	return (RT_SUCCESS);
 }
 
@@ -46,10 +42,6 @@ int init_light_p(char **argv, int i, t_rtapp *app)
 	if (!new_node)
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	ft_lstadd_back(&(app->lights), new_node);
-
-/* 	rtlog(RT_LOG, 0, "[line: %i] position:\t%f,%f,%f", i, new_light_p->pos.x, new_light_p->pos.y, new_light_p->pos.z);
-	rtlog(RT_LOG, 0, "[line: %i] ratio:\t\t%f", i, new_light_p->ratio); */
-
 	return (RT_SUCCESS);
 }
 
@@ -63,11 +55,6 @@ int init_camera(char **argv, int i, t_rtapp *app)
 		return (RT_FAILURE);
 	if (build_camera(argv, &(app->camera)))
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "invalid normal."));
-
-/* 	rtlog(RT_LOG, 0, "[line: %i] position:\t%f,%f,%f", i, app->camera.pos.x, app->camera.pos.y, app->camera.pos.z);
-	rtlog(RT_LOG, 0, "[line: %i] normal:\t\t%f,%f,%f", i, app->camera.normal.x, app->camera.normal.y, app->camera.normal.z);
-	rtlog(RT_LOG, 0, "[line: %i] FOV:\t\t%i", i, app->camera.fov); */
-
 	return (RT_SUCCESS);
 }
 
@@ -93,7 +80,6 @@ static int	build_and_add(char **argv, int i, t_object_build builder, t_rtapp *ap
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	}
 	ft_lstadd_back(&(app->objects), new_node);
-	//print_obj_info(obj, builder.print_info);
 	return (RT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 19:11:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:50:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 	print_hms_timestamp(pid, fd);
 	ft_printfd(fd, "[INFO]");
 	ft_printfd(fd, ": ");
-	vfprintf(stderr, fmt, args);
+	ft_vprintfd(fd, fmt, args);
 	ft_printfd(fd, "\n");
 	va_end(args);
 	return (fd - 1);
