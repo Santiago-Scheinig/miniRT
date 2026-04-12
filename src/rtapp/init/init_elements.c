@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:53:25 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:45:14 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,18 @@ int init_camera(char **argv, int i, t_rtapp *app)
 	return (RT_SUCCESS);
 }
 
+/**
+ * Parses, builds and adds a geometric object to the app object list.
+ * @param argv The array of strings containing the object parameters.
+ * @param i The line number in the scene file, used for error logging.
+ * @param builder The T_OBJECT_BUILD containing the parse and build
+ * function pointers for this specific object type.
+ * @param app The T_RTAPP instance to add the object into.
+ * @return RT_SUCCESS on success, RT_FAILURE if parsing fails, allocation
+ * of the object or list node fails, or the normal vector is zero.
+ * @note On list node allocation failure, the object is freed before
+ * returning to avoid memory leaks.
+ */
 static int	build_and_add(char **argv, int i, t_object_build builder, t_rtapp *app)
 {
 	const char		*err = "[line: %i][%s] initialization failed: %s";

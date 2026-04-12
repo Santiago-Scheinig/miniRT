@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   info_cy.c                                          :+:      :+:    :+:   */
+/*   debug_objects.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 19:25:38 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:25:40 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:25:24 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void    info_cy(t_object *obj)
+/* void    info_cy(t_object *obj)
 {
     t_elem_cylinder *data;
 
@@ -22,4 +22,4 @@ void    info_cy(t_object *obj)
     rtlog(RT_LOG, 0, "       [%f %f %f %f]", ...row 1...);
     rtlog(RT_LOG, 0, "       [%f %f %f %f]", ...row 2...);
     rtlog(RT_LOG, 0, "       [%f %f %f %f]", ...row 3...);
-}
+} */

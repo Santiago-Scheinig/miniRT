@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:27 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 18:01:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:46:38 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ int	init_file_contents(t_list *lines, char *file, t_rtapp *app)
 	return (rtlog(RT_LOG, 0, "< Compilation successfull >", file));
 }
 
+/**
+ * Validates that a file path has a .rt extension.
+ * @param file The file path string to validate.
+ * @return RT_SUCCESS if the file has a .rt extension, RT_FAILURE if the
+ * extension is missing or does not match.
+ */
 static int	file_validate(char *file)
 {
 	const char	*err = "failed to open '%s': %s";

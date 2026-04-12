@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/06 16:56:40 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:36:30 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:57:43 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,12 @@ static	void	ft_getprecision(const char *nptr, double *nbr)
 }
 
 /**
- * Finds the first number on a STRING with a decimal base.
- * @param str The string where the base number is saved.
- * @param base The base in which the number must be found.
- * @return The decimal INT found on STR.
- * @note A number can, but is not forced to, start with any
- * amount of spaces and one sign; but the next character must a
- * be a digit, if not or str doesn't exists, returns 0.
+ * Converts a string to a double precision floating point number.
+ * @param nptr The string to convert to a double.
+ * @return The DOUBLE represented by NPTR.
+ * @note Leading whitespace and a sign character (+ or -) are handled.
+ * If nptr is NULL, does not start with a digit or sign, or has no valid
+ * digits, returns 0. Decimal precision is handled by ft_getprecision.
  */
 double	ft_atod(const char *nptr)
 {

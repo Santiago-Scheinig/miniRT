@@ -6,13 +6,23 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:25:05 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:02:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 #include "rtelm_private.h"
 
+/**
+ * Computes the inverse transformation matrix for a cylinder object.
+ * @param obj The cylinder object containing the T_ELEM_CYLINDER data.
+ * @param position The world space position of the cylinder's center.
+ * @param normal The orientation normal defining the cylinder's axis.
+ * @return The inverse of the cylinder's transformation matrix M = T * R * S.
+ * @note The canonical cylinder has radius 1 and height from -1 to 1.
+ * Scale is derived from diam / 2 on X and Z, and height / 2 on Y.
+ * Position and normal are consumed into the matrix and discarded after.
+ */
 static t_mat4	cy_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 {
 	t_elem_cylinder	*cy;
@@ -29,6 +39,15 @@ static t_mat4	cy_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 	return (inv);
 }
 
+/**
+ * Computes the object space normal of a cylinder at a given surface point.
+ * @param local_point The point on the cylinder surface in local object space.
+ * @return The outward facing normal vector at LOCAL_POINT. Returns (0,1,0)
+ * for the top cap, (0,-1,0) for the bottom cap, and a radial normal for
+ * the side surface.
+ * @note Cap detection uses EPSILON tolerance to handle floating point
+ * imprecision at the cap boundaries.
+ */
 static t_vector	cy_normal(t_vector local_point)
 {
 	if (local_point.y >= 1.0 - EPSILON)

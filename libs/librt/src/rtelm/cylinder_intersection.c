@@ -6,12 +6,21 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 20:54:39 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/12 17:45:48 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:01:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
+/**
+ * Computes the intersection distance of a ray with a cylinder cap.
+ * @param local_ray The ray in the cylinder's local object space.
+ * @param height The Y coordinate of the cap, either 1.0 (top) or -1.0
+ * (bottom) in local space.
+ * @return The distance T to the cap intersection, or INFINITY if the ray
+ * is parallel to the cap, hits behind the origin, or misses the cap radius.
+ * @note The canonical cylinder has radius 1 and height from -1 to 1.
+ */
 static double	get_cap_dist(t_ray local_ray, double height)
 {
 	double		t;
@@ -30,6 +39,12 @@ static double	get_cap_dist(t_ray local_ray, double height)
 		return (INFINITY);
 }
 
+/**
+ * Computes the closest intersection distance of a ray with either cap.
+ * @param local_ray The ray in the cylinder's local object space.
+ * @return The smallest valid intersection distance T with either the top
+ * or bottom cap, or INFINITY if neither cap is hit.
+ */
 static double	get_ends_intersection(t_ray local_ray)
 {
 	double			top_intersection;
@@ -47,6 +62,14 @@ static double	get_ends_intersection(t_ray local_ray)
 		return (INFINITY);
 }
 
+/**
+ * Computes the quadratic coefficients for a ray-cylinder side intersection.
+ * @param local_ray The ray in the cylinder's local object space.
+ * @return A T_ROOTS containing the solutions to the quadratic equation
+ * derived from the ray and the infinite cylinder equation x² + z² = 1.
+ * @note Only the X and Z components are used since the cylinder is
+ * infinite along the Y axis in local space.
+ */
 static t_roots	get_roots(t_ray local_ray)
 {
 	double	a;
@@ -64,6 +87,14 @@ static t_roots	get_roots(t_ray local_ray)
 	return (roots);
 }
 
+/**
+ * Computes the closest intersection distance of a ray with the cylinder sides.
+ * @param local_ray The ray in the cylinder's local object space.
+ * @return The smallest valid intersection distance T with the cylinder
+ * side surface, or INFINITY if no valid intersection exists.
+ * @note A valid intersection must be in front of the ray origin (T > EPSILON)
+ * and within the cylinder's height range (-1.0 to 1.0 in local space).
+ */
 static double	get_sides_intersection(t_ray local_ray)
 {
 	t_roots			roots;

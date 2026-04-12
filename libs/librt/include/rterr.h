@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 19:03:35 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:44:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,25 +19,25 @@
 # include <sys/wait.h>
 # include <sys/time.h>
 # include <sys/types.h>
+# if BONUS
+#  include "rterr_bonus,h"
+# endif
 
-typedef enum e_logtype
-{
-	RT_LOG = 1,
-	RT_ERRLOG,
-}	t_logtype;
+/*--------------------------------------------------------------------------*/
+/*----------------------------------MEMFREE---------------------------------*/
+/*--------------------------------------------------------------------------*/
 
-typedef enum e_rterr
-{
-	RT_SUCCESS,
-	RT_FAILURE,
-}	t_rterr;
-
-typedef struct s_rtlog
-{
-	int	orig_outfd;
-	int	orig_errfd;
-}	t_rtlog;
-
+/**
+ * Frees a T_OBJECT and its associated geometry data.
+ * @param content A void pointer to the T_OBJECT to free.
+ * @note Designed for use with ft_lstclear as its del function. Frees
+ * obj->data first if present, then the object itself. Safe to call
+ * with NULL data since planes set obj->data to NULL.
+ */
 void	object_del(void *content);
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------------END-----------------------------------*/
+/*--------------------------------------------------------------------------*/
 
 #endif

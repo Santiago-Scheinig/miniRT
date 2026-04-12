@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 17:10:13 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:44:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,12 @@ char	*ft_strjoin(char const *s1, char const *s2);
  */
 char	*ft_argjoin(char **argv, char c);
 
+/**
+ * Counts the number of strings in a NULL-terminated array of strings.
+ * @param arg The NULL-terminated array of strings to count.
+ * @return The number of strings in ARG, not counting the NULL terminator.
+ * @note If arg is empty, returns 0.
+ */
 int		ft_arglen(char **arg);
 
 /**
@@ -271,6 +277,14 @@ int		ft_putendl_fd(char *s, int fd);
  */
 long	ft_atol(const char *nptr);
 
+/**
+ * Converts a string to a double precision floating point number.
+ * @param nptr The string to convert to a double.
+ * @return The DOUBLE represented by NPTR.
+ * @note Leading whitespace and a sign character (+ or -) are handled.
+ * If nptr is NULL, does not start with a digit or sign, or has no valid
+ * digits, returns 0. Decimal precision is handled by ft_getprecision.
+ */
 double	ft_atod(const char *nptr);
 
 /**
@@ -504,5 +518,9 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
  * @return An int with the amount of nodes inside of the LIST.
  */
 int		ft_lstsize(t_list *lst);
+
+/*--------------------------------------------------------------------------*/
+/*------------------------------------END-----------------------------------*/
+/*--------------------------------------------------------------------------*/
 
 #endif

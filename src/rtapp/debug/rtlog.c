@@ -6,12 +6,19 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:50:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:21:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp.h"
 
+/**
+ * Prints a formatted timestamp and process ID to a file descriptor.
+ * @param pid The process ID to include in the timestamp.
+ * @param fd The file descriptor to print to.
+ * @note The timestamp format is [HH:MM:SS][PID] derived from the current
+ * system time. Used internally by rtlog to prefix all log messages.
+ */
 static void	print_hms_timestamp(pid_t pid, int fd)
 {
 	struct timeval	tv;

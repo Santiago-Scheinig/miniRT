@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mat4_inverse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 20:53:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/03/30 01:28:24 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:20:07 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 
+/**
+ * Calculates the determinant of a 3x3 matrix.
+ * @param m The T_MAT3 to calculate the determinant of.
+ * @return The determinant of M as a double.
+ * @note Uses the cofactor expansion along the first row.
+ */
 static double	mat3_determinant(t_mat3 m)
 {
 	return (m.m[0][0] * (m.m[1][1] * m.m[2][2] - m.m[1][2] * m.m[2][1])
@@ -20,6 +26,13 @@ static double	mat3_determinant(t_mat3 m)
 	);
 }
 
+/**
+ * Extracts a 3x3 submatrix from a 4x4 matrix by removing a row and column.
+ * @param mat The T_MAT4 to extract the submatrix from.
+ * @param row The index of the row to remove (0-3).
+ * @param col The index of the column to remove (0-3).
+ * @return The resulting T_MAT3 after removing ROW and COL from MAT.
+ */
 static t_mat3	mat4_get_submatrix(t_mat4 mat, int row, int col)
 {
 	t_mat3	res;
@@ -47,6 +60,16 @@ static t_mat3	mat4_get_submatrix(t_mat4 mat, int row, int col)
 	return (res);
 }
 
+/**
+ * Calculates the cofactor of a 4x4 matrix at a given row and column.
+ * @param mat The T_MAT4 to calculate the cofactor of.
+ * @param row The row index of the element (0-3).
+ * @param col The column index of the element (0-3).
+ * @return The cofactor at (ROW, COL) as a double, negated if the sum
+ * of ROW and COL is odd.
+ * @note The cofactor is the signed determinant of the submatrix obtained
+ * by removing ROW and COL from MAT.
+ */
 static double	mat4_cofactor(t_mat4 mat, int row, int col)
 {
 	t_mat3	submatrix;

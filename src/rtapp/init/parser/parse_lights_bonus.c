@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:44:55 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:39:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:27:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	parse_lp(char **split, int i)
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid brightness."));
 	limits.min = 0;
 	limits.max = 255;
-	if (parse_vector(split[0], split[2], i))
+	if (parse_vector(split[0], split[3], i))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }

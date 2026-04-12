@@ -3,15 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   quadratic.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 18:52:38 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 21:16:03 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:20:18 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmth.h"
 
+/**
+ * Calculates the discriminant of a quadratic equation ax² + bx + c = 0.
+ * @param a The coefficient of x².
+ * @param b The coefficient of x.
+ * @param c The constant term.
+ * @return The discriminant as a double, computed as b² - 4ac.
+ * @note A positive discriminant means two real solutions, zero means
+ * one repeated solution, and negative means no real solutions.
+ */
 static double	get_discriminant(double a, double b, double c)
 {
 	return ((b * b) - (4 * a * c));

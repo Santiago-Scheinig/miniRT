@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:43:23 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:45:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:38:37 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 int	rtapp_init(int argc, char **argv, t_rtapp *app)
 {
 	const char	*err = "initialization of miniRT app failed: %s";
-	t_list		*objlst;
+	t_list		*lines;
 
 	errno = 0;
 	if (argc != 2)
 		return (rtlog(RT_ERRLOG, 0, err, "invalid number of arguments."));
-	objlst = init_file(argv[1]);
-	if (!objlst)
+	lines = init_file(argv[1]);
+	if (!lines)
 		return (RT_FAILURE);
-	app->objects = objlst;
-	if (init_objlst(app->objects, argv[i]))
+	if (init_file_contents(lines, argv[1], app))
 		return (RT_FAILURE);
 	app->logfd.orig_outfd = -1;
 	app->logfd.orig_errfd = -1;

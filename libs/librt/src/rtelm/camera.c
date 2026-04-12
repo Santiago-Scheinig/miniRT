@@ -6,13 +6,24 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:09:22 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:00:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 #include "rtelm_private.h"
 
+/**
+ * Computes the world space ray for a given pixel coordinate.
+ * @param ptr A void pointer to the T_ELEM_CAMERA instance.
+ * @param x The horizontal pixel coordinate on the screen.
+ * @param y The vertical pixel coordinate on the screen.
+ * @return A T_RAY originating from the camera position pointing through
+ * the center of the pixel at (x, y) in world space.
+ * @note Pixel coordinates are offset by 0.5 to sample the pixel center.
+ * The ray direction is built from the camera's precomputed right and up
+ * vectors, then normalized before use.
+ */
 static t_ray	get_pixel_ray(void *ptr, int x, int y)
 {
 	t_elem_camera	*camera;
@@ -32,6 +43,14 @@ static t_ray	get_pixel_ray(void *ptr, int x, int y)
 	return (ray);
 }
 
+/**
+ * Precomputes the camera's right and up basis vectors scaled to the viewport.
+ * @param camera The camera to build the basis vectors for.
+ * @note The right and up vectors are derived from the camera's normal using
+ * cross products, then scaled by the viewport dimensions computed from the
+ * FOV and aspect ratio. If the camera points straight up or down, the guide
+ * vector switches from Y to X to avoid a degenerate cross product.
+ */
 static void	build_camera_data(t_elem_camera *camera)
 {
 	t_vector	guide;
