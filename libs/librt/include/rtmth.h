@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtmth.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/03 14:59:40 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:09:02 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@
 
 # include <math.h>
 
-typedef struct s_vector
+typedef union u_vector
 {
-	double	x;
-	double	y;
-	double	z;
+	struct {double x, y, z;};
+	struct {double r, g, b;};
 }	t_vector;
 
 typedef struct s_mat4

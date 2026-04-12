@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:45:56 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:10:42 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "rtmlx.h"
 # include "rtmth.h"
 # include "libft.h"
+# include <stdint.h>
 # if BONUS
 #  include "rtelm_bonus.h"
 # else
@@ -29,7 +30,7 @@ typedef struct s_elem_light_p
 //We can add more information here later for the bonus
 typedef struct s_material
 {
-	int rgb;
+	t_vector color;
 }	t_material;
 
 # endif
@@ -59,7 +60,7 @@ typedef struct s_elem_camera
 typedef struct s_elem_light_a
 {
 	double		ratio;
-	int			rgb;
+	t_vector	color;
 }	t_elem_light_a;
 
 typedef struct s_transform
@@ -103,7 +104,7 @@ typedef struct s_object
 	t_vector	(*c_normal)(t_vector point);
 }	t_object;
 
-int	build_camera(char **str, t_elem_camera *camera);
+int				build_camera(char **str, t_elem_camera *camera);
 
 t_elem_light_a	build_la(char **str);
 
@@ -117,10 +118,6 @@ int				build_sp(char **str, t_object *obj);
 
 t_object		*build_object(char **arr, int (*builder)(char **, t_object *));
 
-void			build_matrixes(t_object *obj,
-					t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
-					t_vector position, t_vector normal);
-
-t_vector		build_vector(char *str);
+uint32_t		translate_color(t_vector color);
 
 #endif

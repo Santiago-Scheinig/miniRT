@@ -6,11 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:31:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:09:22 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 static t_ray	get_pixel_ray(void *ptr, int x, int y)
 {

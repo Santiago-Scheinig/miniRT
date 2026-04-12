@@ -6,18 +6,19 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:47:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 15:48:17 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:10:30 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 t_elem_light_a	build_la(char **str)
 {
 	t_elem_light_a	new_la;
 
 	ambient->ratio = ft_atod(str[1]);
-	ambient->rgb = ft_atod(str[2]);//transform_color();
+	ambient->color = build_color(str[2]);
 	return (new_la);
 }
 
@@ -35,6 +36,6 @@ t_elem_light_p	*build_lp(char **str)
 	next = ft_strchr(next, ',') + 1;
 	light->pos.z = ft_atod(next);
 	light->ratio = ft_atod(str[2]);	
-	light->rgb = transform_color(ft_atod(str[3]));
+	light->color = build_color(str[3]);
 	return (new_lp);
 }

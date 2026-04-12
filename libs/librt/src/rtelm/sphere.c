@@ -6,11 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:32:49 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:11:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 static t_mat4	sp_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 {
@@ -65,7 +66,7 @@ int	build_sp(char **str, t_object *obj)
 	if (!data)
 		return (1);
 	data->diam = ft_atod(str[2]);
-	obj->material.rgb = ft_atod(str[3]);//transform_color();
+	obj->material.color = build_color(str[3]);
 	obj->data = data;
 	obj->c_intersection = &sp_intersection;
 	obj->c_normal = &sp_normal;

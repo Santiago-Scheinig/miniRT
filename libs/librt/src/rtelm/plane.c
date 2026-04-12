@@ -6,11 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:32:32 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:11:09 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 static t_mat4	pl_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 {
@@ -53,7 +54,7 @@ int	build_pl(char **str, t_object *obj)
 	normal = build_vector(str[2]);
 	if (!normal.x && !normal.y && !normal.z)
 		return (1);
-	obj->material.rgb = ft_atod(str[3]);//transform_color();
+	obj->material.color = build_color(str[3]);
 	obj->data = NULL;
 	obj->c_intersection = &pl_intersection;
 	obj->c_normal = &pl_normal;

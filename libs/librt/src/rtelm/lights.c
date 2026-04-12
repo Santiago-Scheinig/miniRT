@@ -6,18 +6,19 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:13:45 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:34:13 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:11:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 t_elem_light_a	build_la(char **str)
 {
 	t_elem_light_a	new_la;
 
 	new_la.ratio = ft_atod(str[1]);
-	new_la.rgb = ft_atod(str[2]);//transform_color();
+	new_la.color = build_color(str[2]);
 	return (new_la);
 }
 

@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   rtelm_private.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 18:24:10 by sscheini         ###   ########.fr       */
+/*   Created: 2026/04/12 19:04:14 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/12 19:06:51 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
+#include "rtelm.h"
 
-int	main(int argc, char **argv)
-{
-	t_rtapp	app;
+double		cy_intersection(t_ray local_ray);
 
-	memset(&app, 0, sizeof(t_rtapp));
-	if (rtapp_init(argc, argv, &app))
-		rtapp_kill(&app, RT_FAILURE);
-/* 	if (!rtapp_render(app))
-		return (rtapp_kill(&app, RT_FAILURE));
-	if (!rtapp_run(app.img))
-		return (rtapp_kill(&app, RT_FAILURE)); */
-	rtapp_kill(&app, RT_SUCCESS);
-	return (RT_SUCCESS);
-}
+t_vector	build_vector(char *str);
+
+t_vector	build_color(char *str);
+
+void		build_matrixes(t_object *obj,
+					t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
+					t_vector position, t_vector normal);

@@ -6,11 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 17:45:53 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 19:10:54 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
+#include "rtelm_private.h"
 
 static t_mat4	cy_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 {
@@ -27,8 +28,6 @@ static t_mat4	cy_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 	inv = mat4_inverse(mat4_mult_mat4(trans, mat4_mult_mat4(rot, scale)));
 	return (inv);
 }
-
-double	cy_intersection(t_ray local_ray);
 
 static t_vector	cy_normal(t_vector local_point)
 {
@@ -54,7 +53,7 @@ int	build_cy(char **str, t_object *obj)
 		return (1);
 	data->diam = ft_atod(str[3]);
 	data->height = ft_atod(str[4]);
-	obj->material.rgb = ft_atod(str[5]);//transform_color();
+	obj->material.color = build_color(str[5]);
 	obj->data = data;
 	obj->c_intersection = &cy_intersection;
 	obj->c_normal = &cy_normal;
