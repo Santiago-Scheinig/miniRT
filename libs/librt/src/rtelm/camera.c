@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:12:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:31:46 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static t_ray	get_pixel_ray(void *ptr, int x, int y)
 	return (ray);
 }
 
-static void	build_camera_base(t_elem_camera *camera)
+static void	build_camera_data(t_elem_camera *camera)
 {
 	t_vector	guide;
 	t_vector	right_norm;
@@ -51,29 +51,14 @@ static void	build_camera_base(t_elem_camera *camera)
 			v_width * ((double)SCREEN_HEIGHT / (double)SCREEN_WIDTH));
 }
 
-static void	build_camera_data(char **str, t_elem_camera *cam)
+int	build_camera(char **str, t_elem_camera *camera)
 {
-	char	*next;
-
-	cam->pos.x = ft_atod(str[1]);
-	next = ft_strchr(str[1], ',') + 1;
-	cam->pos.y = ft_atod(next);
-	next = ft_strchr(next, ',') + 1;
-	cam->pos.z = ft_atod(next);
-	cam->normal.x = ft_atod(str[2]);
-	next = ft_strchr(str[2], ',') + 1;
-	cam->normal.y = ft_atod(next);
-	next = ft_strchr(next, ',') + 1;
-	cam->normal.z = ft_atod(next);
-	cam->fov = ft_atod(str[3]);
-	cam->get_pixel_ray = &get_pixel_ray;	
-}
-
-t_elem_camera	new_camera(char **str)
-{
-	t_elem_camera	new_camera;
-
-	build_camera_data(str, &new_camera);
-	build_camera_base(&new_camera);
-	return (new_camera);
+	camera->pos = build_vector(str[1]);
+	camera->normal = build_vector(str[2]);
+	if (!camera->normal.x && !camera->normal.y && !camera->normal.z)
+		return (1);
+	camera->fov = ft_atod(str[3]);
+	camera->get_pixel_ray = &get_pixel_ray;	
+	build_camera_data(camera);
+	return (0);
 }

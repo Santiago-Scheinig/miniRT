@@ -1,13 +1,12 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
-SRC		=	$(SRCDIR)$(ELMDIR)plane.c									\
+SRC		=	$(SRCDIR)$(ELMDIR)camera.c									\
+			$(SRCDIR)$(ELMDIR)plane.c									\
 			$(SRCDIR)$(ELMDIR)sphere.c									\
 			$(SRCDIR)$(ELMDIR)cylinder.c								\
 			$(SRCDIR)$(ELMDIR)cylinder_intersection.c					\
-			$(SRCDIR)$(ELMDIR)ambient_light.c							\
-			$(SRCDIR)$(ELMDIR)camera.c									\
-			$(SRCDIR)$(ELMDIR)light.c									\
-			$(SRCDIR)$(ELMDIR)mat4_utils.c								\
+			$(SRCDIR)$(ELMDIR)lights.c									\
+			$(SRCDIR)$(ELMDIR)build_utils.c								\
 			$(SRCDIR)$(MTHDIR)matrix/mat4.c								\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c						\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c					\

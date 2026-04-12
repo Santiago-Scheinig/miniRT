@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:45:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:40:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	double_check(char *str, char **split, t_flim limits)
+static int	double_check(char *str, char **split, t_dlim limits)
 {
 	double	aux;
 	int		i;
@@ -32,7 +32,7 @@ static int	double_check(char *str, char **split, t_flim limits)
 	return (RT_SUCCESS);
 }
 
-int	parse_double(char *sp, char *str, int i, t_flim limits)
+int	parse_double(char *sp, char *str, int i, t_dlim limits)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 	char		**split;
@@ -52,7 +52,7 @@ int	parse_double(char *sp, char *str, int i, t_flim limits)
 	return (ans);
 }
 
-static int	vector_check(char *sp, char **split, int line, t_flim limits)
+static int	vector_check(char *sp, char **split, int line, t_dlim limits)
 {
 	int			ans;
 
@@ -68,7 +68,7 @@ static int	vector_check(char *sp, char **split, int line, t_flim limits)
 	return (ans);
 }
 
-int parse_vector(char *sp, char *str, int i, t_flim limits)
+int parse_vector(char *sp, char *str, int i, t_dlim limits)
 {
 	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
@@ -85,30 +85,16 @@ int parse_vector(char *sp, char *str, int i, t_flim limits)
 	return (RT_SUCCESS);
 }
 
-int	parse_color(char *sp, char *str, int i)
+int	parse_arg(char **arr, int i, const char **msgs, int expected)
 {
-	const char	*errmsg = "[line: %i][%s] parser failed: %s";
-	char		**split;
-	t_flim		limits;
-	int			ans;
-	
-	limits.min = 0;
-	limits.max = 255;
-	ans = RT_SUCCESS;
-	split = ft_split(str, ',');
-	if (!split)
-	{
-		rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno));
-		ans = RT_FAILURE;
-	}
-	if (parse_double(sp, split[0], i, limits))
-		ans = RT_FAILURE;
-	else if (parse_double(sp, split[1], i, limits))
-		ans = RT_FAILURE;
-	else if (parse_double(sp, split[2], i, limits))
-		ans = RT_FAILURE;
-	else if (split[3])
-		ans = RT_FAILURE;
-	ft_split_free(split);
-	return (ans);
+	const char	*err = "[line: %i][%s] parser failed: %s";
+	int			j;
+
+	j = -1;
+	while (++j < expected)
+		if (!arr[j + 1])
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[j]));
+	if (arr[expected + 1])
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[expected]));
+	return (RT_SUCCESS);
 }

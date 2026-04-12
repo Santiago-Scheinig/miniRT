@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 20:54:39 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/11 20:43:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:45:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static double	get_sides_intersection(t_ray local_ray)
 	return (INFINITY);
 }
 
-double	cylinder_intersection(t_ray local_ray)
+double	cy_intersection(t_ray local_ray)
 {
 	double	sides_intersection;
 	double	ends_intersection;

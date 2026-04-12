@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 21:24:10 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:45:56 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,41 +34,25 @@ typedef struct s_material
 
 # endif
 
-//We can erase everything, a plane object doesnt need to have data, 
-//only its matrixes, though we could save a flag. It is redundant;
-typedef struct s_elem_plane
-{
-	t_vector	pos;
-	t_vector	normal;
-	int			rgb;
-}	t_elem_plane;
-
-//We can save only diam and height which are the main information that defines
-//the object, both pos and normal are used to calculate the matrixes
 typedef struct s_elem_cylinder
 {
-	t_vector	pos;
-	t_vector	normal;
 	double		diam;
 	double		height;
-	int			rgb;
 }	t_elem_cylinder;
 
-//We can save only diam, pos is used to calculate the matrixes
 typedef struct s_elem_sphere
 {
-	t_vector	pos;
 	double		diam;
-	int			rgb;
 }	t_elem_sphere;
 
 typedef struct s_elem_camera
 {
 	t_vector	pos;
 	t_vector	normal;
-	int			fov;
-	t_vector	right;
 	t_vector	up;
+	t_vector	right;
+	int			fov;
+
 	t_ray		(*get_pixel_ray)(void *ptr, int x, int y);
 }	t_elem_camera;
 
@@ -109,31 +93,34 @@ typedef struct s_transform
  */
 typedef struct s_object
 {
+	//Object Data
 	t_transform	transform;
 	t_material	material;		
 	void		*data;
+	
+	//Object Member Funcitons
 	double		(*c_intersection)(t_ray local_ray);
 	t_vector	(*c_normal)(t_vector point);
 }	t_object;
 
-t_elem_camera	new_camera(char **str);
+int	build_camera(char **str, t_elem_camera *camera);
 
-t_elem_light_a	new_ambient_light(char **str);
+t_elem_light_a	build_la(char **str);
 
-t_elem_light_p	*new_light(char **str);
+t_elem_light_p	*build_lp(char **str);
 
-t_object		*new_plane(char **str);
+int				build_pl(char **str, t_object *obj);
 
-t_object		*new_cylinder(char **str);
+int				build_cy(char **str, t_object *obj);
 
-t_object		*new_sphere(char **str);
+int				build_sp(char **str, t_object *obj);
 
-t_mat4			plane_inverse_mat4(t_object *obj);
+t_object		*build_object(char **arr, int (*builder)(char **, t_object *));
 
-t_mat4			cylinder_inverse_mat4(t_object *obj);
+void			build_matrixes(t_object *obj,
+					t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
+					t_vector position, t_vector normal);
 
-t_mat4			sphere_inverse_mat4(t_object *obj);
-
-void			build_matrixes(t_object *new, t_mat4 (*inv_mtx)(t_object *));
+t_vector		build_vector(char *str);
 
 #endif

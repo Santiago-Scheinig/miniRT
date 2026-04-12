@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 19:05:34 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 16:29:46 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 	lines = init_file(argv[1]);
 	if (!lines)
 		return (RT_FAILURE);
-	if (init_objlst(lines, argv[1], app))
+	if (init_file_contents(lines, argv[1], app))
 		return (RT_FAILURE);
 	//remove_duplicated_objects; //objects with the ALL same values are removed from the list;
 	return (RT_SUCCESS);

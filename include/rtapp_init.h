@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 18:38:22 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 18:12:57 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,41 @@
 
 # include "rtapp.h"
 
-t_list		*init_file(char *file);
+typedef struct s_object_build
+{
+	int	(*parse)(char **arr, int i);
+	int (*build)(char **arr, t_object *obj);
+	int (*info)(t_object *obj);
+}	t_object_build;
+
+typedef struct s_dispatch
+{
+	const char	*specifier;
+	int			(*initializer)(char **, int, t_rtapp *);
+}	t_dispatch;
+
+typedef struct s_obj_dispatch
+{
+    const char      *specifier;
+    t_object_build  builder;
+}   t_obj_dispatch;
+
+extern const t_obj_dispatch g_obj_dispatch[];
+
+extern const t_dispatch g_dispatch[];
 
 int			init_log(t_rtapp *app);
 
-int			init_objlst(t_list *lines, char *file, t_rtapp *app);
+t_list		*init_file(char *file);
 
-int			init_plane(char **argv, int i, t_rtapp *app);
-
-int			init_cylinder(char **argv, int i, t_rtapp *app);
-
-int			init_sphere(char **argv, int i, t_rtapp *app);
-
-int			init_light(char **argv, int i, t_rtapp *app);
+int			init_file_contents(t_list *lines, char *file, t_rtapp *app);
 
 int			init_camera(char **argv, int i, t_rtapp *app);
 
-int			init_ambient_light(char **argv, int i, t_rtapp *app);
+int			init_light_a(char **argv, int i, t_rtapp *app);
+
+int			init_light_p(char **argv, int i, t_rtapp *app);
+
+int			init_object(char **argv, int i, t_rtapp *app);
 
 #endif

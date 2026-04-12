@@ -1,36 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   lights.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:13:45 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:17:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:34:13 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-static void	build_light_data(char **str, t_elem_light_p *light)
+t_elem_light_a	build_la(char **str)
 {
-	char	*next;
+	t_elem_light_a	new_la;
 
-	light->pos.x = ft_atod(str[1]);
-	next = ft_strchr(str[1], ',') + 1;
-	light->pos.y = ft_atod(next);
-	next = ft_strchr(next, ',') + 1;
-	light->pos.z = ft_atod(next);
-	light->ratio = ft_atod(str[2]);	
+	new_la.ratio = ft_atod(str[1]);
+	new_la.rgb = ft_atod(str[2]);//transform_color();
+	return (new_la);
 }
 
-t_elem_light_p	*new_light(char **str)
+t_elem_light_p	*build_lp(char **str)
 {
-	t_elem_light_p	*new_light;
+	t_elem_light_p	*new_lp;
+	char	*next;
 
-	new_light = ft_calloc(1, sizeof(t_elem_light_p));
-	if (!new_light)
+	new_lp = ft_calloc(1, sizeof(t_elem_light_p));
+	if (!new_lp)
 		return (NULL);
-	build_light_data(str, new_light);
-	return (new_light);
+	new_lp->pos.x = ft_atod(str[1]);
+	next = ft_strchr(str[1], ',') + 1;
+	new_lp->pos.y = ft_atod(next);
+	next = ft_strchr(next, ',') + 1;
+	new_lp->pos.z = ft_atod(next);
+	new_lp->ratio = ft_atod(str[2]);
+	return (new_lp);
 }

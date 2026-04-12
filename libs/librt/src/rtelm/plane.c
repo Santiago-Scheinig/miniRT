@@ -6,15 +6,26 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 20:54:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:32:32 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-t_mat4	plane_get_inverse_mat4(t_vector point, t_vector normal);
+static t_mat4	pl_inv_mat4(t_object *obj, t_vector position, t_vector normal)
+{
+	t_mat4			inv;
+	t_mat4			rot;
+	t_mat4			trans;
 
-static double	plane_intersection(t_ray local_ray)
+	(void) obj;
+	trans = mat4_translation(position.x, position.y, position.z);
+	rot = mat4_rotation(normal);
+	inv = mat4_inverse(mat4_mult_mat4(trans, rot));
+	return (inv);
+}
+
+static double	pl_intersection(t_ray local_ray)
 {
 	double	t;
 
@@ -27,47 +38,25 @@ static double	plane_intersection(t_ray local_ray)
 		return (t);
 }
 
-static t_vector	plane_normal(t_vector local_point)
+static t_vector	pl_normal(t_vector local_point)
 {
 	(void) local_point;
 	return (vector_new(0.0, 1.0, 0.0));
 }
 
-static void build_plane_data(char **str, t_elem_plane *plane, t_object *obj)
+int	build_pl(char **str, t_object *obj)
 {
-	char	*next;
+	t_vector	position;
+	t_vector	normal;
 
-	plane->pos.x = ft_atod(str[1]);
-	next = ft_strchr(str[1], ',') + 1;
-	plane->pos.y = ft_atod(next);
-	next = ft_strchr(next, ',') + 1;
-	plane->pos.z = ft_atod(next);
-	plane->normal.x = ft_atod(str[2]);
-	next = ft_strchr(str[2], ',') + 1;
-	plane->normal.y = ft_atod(next);
-	next = ft_strchr(next, ',') + 1;
-	plane->normal.z = ft_atod(next);
-	plane->rgb = ft_atod(str[3]);
-	obj->data = plane;
-}
-
-t_object	*new_plane(char **str)
-{
-	t_elem_plane	*new_plane;
-	t_object		*new_object;
-
-	new_plane = ft_calloc(1, sizeof(t_elem_plane));
-	if (!new_plane)
-		return (NULL);
-	new_object = ft_calloc(1, sizeof(t_object));
-	if (!new_object)
-	{
-		free(new_plane);
-		return (NULL);
-	}
-	build_plane_data(str, new_plane, new_object);
-	build_matrixes(new_object, &plane_inverse_mat4);
-	new_object->c_normal = &plane_normal;
-	new_object->c_intersection = &plane_intersection;
-	return (new_object);
+	position = build_vector(str[1]);
+	normal = build_vector(str[2]);
+	if (!normal.x && !normal.y && !normal.z)
+		return (1);
+	obj->material.rgb = ft_atod(str[3]);//transform_color();
+	obj->data = NULL;
+	obj->c_intersection = &pl_intersection;
+	obj->c_normal = &pl_normal;
+	build_matrixes(obj, &pl_inv_mat4, position, normal);
+	return (0);
 }

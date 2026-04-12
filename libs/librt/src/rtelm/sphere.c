@@ -6,13 +6,28 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/11 20:52:37 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 17:32:49 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 
-double	sphere_intersection(t_ray local_ray)
+static t_mat4	sp_inv_mat4(t_object *obj, t_vector position, t_vector normal)
+{
+	t_elem_sphere	*sp;
+	t_mat4			inv;
+	t_mat4			trans;
+	t_mat4			scale;
+
+	(void) normal;
+	sp = (t_elem_sphere *) obj->data;
+	trans = mat4_translation(position.x, position.y, position.z);
+	scale = mat4_scale(sp->diam / 2.0, sp->diam / 2.0, sp->diam / 2.0);
+	inv = mat4_inverse(mat4_mult_mat4(trans, scale));
+	return (inv);
+}
+
+static double	sp_intersection(t_ray local_ray)
 {
 	double	a;
 	double	b;
@@ -33,42 +48,27 @@ double	sphere_intersection(t_ray local_ray)
 		return (INFINITY);
 }
 
-t_vector	sphere_normal(t_vector local_point)
+static t_vector	sp_normal(t_vector local_point)
 {
 	return (local_point);
 }
 
-static void	build_sphere_data(char **str, t_elem_sphere *sphere, t_object *obj)
+int	build_sp(char **str, t_object *obj)
 {
-	char	*next;
+	t_elem_sphere	*data;
+	t_vector		position;
+	t_vector		normal;
 	
-	sphere->pos.x = ft_atod(str[1]);
-	next = ft_strchr(str[1], ',') + 1;
-	sphere->pos.y = ft_atod(next);
-	next = ft_strchr(str[1], ',') + 1;
-	sphere->pos.z = ft_atod(next);
-	sphere->diam = ft_atod(str[2]);
-	sphere->rgb = ft_atod(str[3]);
-	obj->data = sphere;
-}
-
-t_object	*new_sphere(char **str)
-{
-	t_elem_sphere	*new_sphere;
-	t_object		*new_object;
-
-	new_sphere = ft_calloc(1, sizeof(t_elem_sphere));
-	if (!new_sphere)
-		return (NULL);
-	new_object = ft_calloc(1, sizeof(t_object));
-	if (!new_object)
-	{
-		free(new_sphere);
-		return (NULL);
-	}
-	build_sphere_data(str, new_sphere, new_object);
-	build_matrixes(new_object, &sphere_inverse_mat4);
-	new_object->c_intersection = &sphere_intersection;
-	new_object->c_normal = &sphere_normal;
-	return (new_object);
+	position = build_vector(str[1]);
+	ft_memset(&normal, 0, sizeof(t_vector));
+	data = ft_calloc(1, sizeof(t_elem_sphere));
+	if (!data)
+		return (1);
+	data->diam = ft_atod(str[2]);
+	obj->material.rgb = ft_atod(str[3]);//transform_color();
+	obj->data = data;
+	obj->c_intersection = &sp_intersection;
+	obj->c_normal = &sp_normal;
+	build_matrixes(obj, &sp_inv_mat4, position, normal);
+	return (0);
 }

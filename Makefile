@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/11 20:33:02 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/12 18:14:42 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,21 +18,17 @@ NAME_BONUS = miniRT_bonus
 
 #	Source files
 MAIN_SRC =	$(SOURCE_DIR)/main.c										\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_ambient_light.c	\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_camera.c		\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_cylinder.c		\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_light.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_line.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_plane.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_sphere.c		\
-			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_utils.c			\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_elm_utils.c				\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_file.c						\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_obj_utils.c					\
-			$(SOURCE_DIR)/rtapp/rtapp_init/init_objlst.c						\
-			$(SOURCE_DIR)/rtapp/rtapp_render/tile_queue.c				\
 			$(SOURCE_DIR)/rtapp/rtapp.c									\
 			$(SOURCE_DIR)/rtapp/rtlog.c									\
+			$(SOURCE_DIR)/rtapp/rtapp_init/init_file.c					\
+			$(SOURCE_DIR)/rtapp/rtapp_init/init_elements.c				\
+			$(SOURCE_DIR)/rtapp/rtapp_init/g_init_dispatch.c			\
+			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_line.c			\
+			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_lights.c		\
+			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_objects.c		\
+			$(SOURCE_DIR)/rtapp/rtapp_init/parser/parse_utils.c			\
+			$(SOURCE_DIR)/rtapp/rtapp_init/parser/g_parse_err_msgs.c	\
+			$(SOURCE_DIR)/rtapp/rtapp_render/tile_queue.c				\
 
 BONUS_SRC = $(SOURCE_DIR)/main_bonus.c
 
@@ -155,7 +151,7 @@ $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
 # Order: compiler, object files, library paths, libraries, output
 $(NAME): start_msg $(LIBS) msg $(MAIN_OBJ)
 	@$(CC) $(CFLAGS) $(MAIN_OBJ) $(LDFLAGS) $(LINK_LIBS) -o $@
-	@printf "\r\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
+	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
 
 # Link bonus executable
 $(NAME_BONUS): libs_bonus msg_bonus $(BONUS_OBJ)

@@ -1,40 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_light.c                                      :+:      :+:    :+:   */
+/*   parse_lights_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/25 20:13:19 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/06 21:41:58 by sscheini         ###   ########.fr       */
+/*   Created: 2026/04/12 16:44:55 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/12 17:39:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	validate_arg(char **split, int i)
-{
-	const char	*status;
-	const char	*err = "[line: %i][%s] parser failed: %s";
-
-	status = NULL;
-	if (!split[1])
-		status = "light vector coordinates undeclared.";
-	else if (!split[2])
-		status = "light brightness undeclared.";
-	else if (split[3])
-		status = "light has excess arguments declaration.";
-	if (status)
-		return (rtlog(RT_ERRLOG, 0, err, i, split[0], status));
-	return (RT_SUCCESS);
-}
-
-int	parse_light(char **split, int i)
+int	parse_lp(char **split, int i)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_flim		limits;
+	t_dlim		limits;
 
-	if (validate_arg(split, i))
+	if (parse_arg(split, i, g_lp_msgs_bonus, 3))
 		return (RT_FAILURE);
 	limits.min = -FLT_MAX;
 	limits.max = FLT_MAX;
@@ -44,5 +27,27 @@ int	parse_light(char **split, int i)
 	limits.max = 1;
 	if (parse_double(split[0], split[2], i, limits))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid brightness."));
+	limits.min = 0;
+	limits.max = 255;
+	if (parse_vector(split[0], split[2], i))
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
+	return (RT_SUCCESS);
+}
+
+int	parse_la(char **split, int i)
+{
+	const char		*err = "[line: %i][%s] parser failed: %s";
+	t_dlim			limits;
+
+	if (parse_arg(split, i, g_la_msgs, 2))
+		return (RT_FAILURE);
+	limits.min = 0;
+	limits.max = 1;
+	if (parse_double(split[0], split[1], i, limits))
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid ratio."));
+	limits.min = 0;
+	limits.max = 255;
+	if (parse_vector(split[0], split[2], i))
+		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));
 	return (RT_SUCCESS);
 }
