@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:32:18 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:50:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int parse_vector(char *sp, char *str, int i, t_dlim limits)
 	return (RT_SUCCESS);
 }
 
-int	parse_arg(char **arr, int i, const char **msgs, int expected)
+int	parse_arg(char **arr, int i, const char *const msgs[], int expected)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 	int			j;

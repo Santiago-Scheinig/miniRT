@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:43:42 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:49:49 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int				parse_sp(char **split, int i);
  * @return RT_SUCCESS if ARR has exactly EXPECTED arguments, RT_FAILURE
  * with the appropriate message if any argument is missing or excess.
  */
-int				parse_arg(char **arr, int i, const char **msgs, int expected);
+int				parse_arg(char **arr, int i, const char *const msgs[], int expected);
 
 /**
  * Parses a single line of a scene file and initializes its element.

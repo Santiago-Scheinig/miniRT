@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:46:28 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/12 20:49:02 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,6 @@
 # define RTAPP_INIT_H
 
 # include "rtapp.h"
-
-/*--------------------------------------------------------------------------*/
-/*----------------------------------GLOBAL----------------------------------*/
-/*--------------------------------------------------------------------------*/
-
-/**
- * Dispatch table mapping object specifiers to their builder functions.
- * @note Replace the definition in g_init_dispatch.c with the bonus
- * version to add new geometric object types without modifying any logic.
- */
-extern const t_obj_dispatch g_obj_dispatch[];
-
-/**
- * Dispatch table mapping all scene element specifiers to their
- * initializer functions.
- * @note Replace the definition in g_init_dispatch.c with the bonus
- * version to support additional scene element types without modifying
- * any logic.
- */
-extern const t_dispatch g_dispatch[];
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -74,6 +54,26 @@ typedef struct s_obj_dispatch
     const char      *specifier; // Scene file object identifier.
     t_object_build  builder;    // Parse, build and info function group.
 }   t_obj_dispatch;
+
+/*--------------------------------------------------------------------------*/
+/*----------------------------------GLOBAL----------------------------------*/
+/*--------------------------------------------------------------------------*/
+
+/**
+ * Dispatch table mapping object specifiers to their builder functions.
+ * @note Replace the definition in g_init_dispatch.c with the bonus
+ * version to add new geometric object types without modifying any logic.
+ */
+extern const t_obj_dispatch g_obj_dispatch[];
+
+/**
+ * Dispatch table mapping all scene element specifiers to their
+ * initializer functions.
+ * @note Replace the definition in g_init_dispatch.c with the bonus
+ * version to support additional scene element types without modifying
+ * any logic.
+ */
+extern const t_dispatch g_dispatch[];
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------INITIALIZATION------------------------------*/
