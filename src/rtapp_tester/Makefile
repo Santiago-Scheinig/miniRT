@@ -1,65 +1,56 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2026/03/15 17:51:38 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/04 18:39:44 by aramos-r         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+CC = cc
 
-CC=cc
+# Lib paths
+LIBFTDIR = ../../libs/libft/
+LIBFT = $(LIBFTDIR)libft.a
 
-MATHMAINFILE=math_tester.c
-LIBRTDIR=../libs/librt/
-LIBRTFILE=$(LIBRTDIR)librt.a
+LIBRTDIR = ../../libs/librt/
+LIBRT = $(LIBRTDIR)librt.a
 
-MATHHEADERDIR=../libs/librt/include/
-MATHHEADERFILE=$(MATHHEADERDIR)rtmth.h
+# Headers
+MATHHEADERDIR = ../../libs/librt/include/
+LIBFTHEADERDIR = ../../libs/libft/include/
+REDERHEADERDIR = ../../include
 
-MATH_CFLAGS= -I$(MATHHEADERDIR)
+# ================== FLAGS ==================
+MATH_CFLAGS = -I$(MATHHEADERDIR)
+ELEMS_CFLAGS = -I$(MATHHEADERDIR) -I$(LIBFTHEADERDIR)
+RENDER_CFLAGS = -I$(MATHHEADERDIR) -I$(LIBFTHEADERDIR) -I$(REDERHEADERDIR)
 
-all: math elems
+# ================== TARGETS ==================
+.PHONY: all math elems render rtapp
 
-.PHONY: all math elems
+all: math elems render
 
-TESTNAME=mathtest
-math: $(MATHMAINFILE) $(MATHHEADERFILE) $(LIBRTFILE)
-	make -C ../../
-	@$(CC) $(MATH_CFLAGS) $(MATHMAINFILE) $(LIBRTFILE) -lm -o $(TESTNAME)
-	@./$(TESTNAME)
-	@rm $(TESTNAME)
-	@norminette ../libs/librt/src/rtmth | grep Error || true
+rtapp:
+	@make -C ../../
 
-ELEMSMAINFILE=elems_tester.c
-ELEMSHEADERDIR=../libs/librt/include/rtelm/
-ELEMSHEADERFILE=$(ELEMSHEADERDIR)rtelm.h
-LIBFTHEADERDIR=../libs/libft/include/
+# ================== MATH ==================
+MATHMAIN = math_tester.c
+MATH_BIN = mathtest
 
-ELEMS_CFLAGS= -I$(ELEMSHEADERDIR) -I$(MATHHEADERDIR) -I$(LIBFTHEADERDIR)
+math: rtapp $(MATHMAIN) $(LIBFT) $(LIBRT)
+	@$(CC) $(MATH_CFLAGS) $(MATHMAIN) $(LIBRT) $(LIBFT) -lm -o $(MATH_BIN)
+	@./$(MATH_BIN)
+	@rm -f $(MATH_BIN)
+#	@norminette ../../libs/librt/src/rtmth | grep Error || true
 
-TESTNAME=elemstest
-elems: $(ELEMSMAINFILE) $(ELEMSHEADERFILE) $(LIBRTFILE)
-	make -C ../../
-	@$(CC) $(ELEMS_CFLAGS) $(ELEMSMAINFILE) $(LIBRTFILE) -lm -o $(TESTNAME)
-	@./$(TESTNAME)
-	@rm $(TESTNAME)
-	@norminette ../libs/librt/src/rtelm | grep Error || true
+# ================== ELEMS ==================
+ELEMSMAIN = elems_tester.c
+ELEMS_BIN = elemstest
 
-RENDERMAINFILE=render_tester.c
-RENDERHEADERDIR=../libs/librt/include/rtapp/
-RENDERHEADERFILE=$(RENDERHEADERDIR)rtapp_render.h
-LIBFTHEADERDIR=../libs/libft/include/
+elems: rtapp $(ELEMSMAIN) $(LIBFT) $(LIBRT)
+	@$(CC) $(ELEMS_CFLAGS) $(ELEMSMAIN) $(LIBRT) $(LIBFT) -lm -o $(ELEMS_BIN)
+	@./$(ELEMS_BIN)
+	@rm -f $(ELEMS_BIN)
+#	@norminette ../../libs/librt/src/rtelm | grep Error || true
 
-RENDER_CFLAGS= -I$(RENDERHEADERDIR) -I$(MATHHEADERDIR) -I$(LIBFTHEADERDIR)
+# ================== RENDER ==================
+RENDERMAIN = render_tester.c
+RENDER_BIN = rendertest
 
-TESTNAME=rendertest
-render: $(RENDERMAINFILE) $(RENDERHEADERFILE) $(LIBRTFILE)
-	make -C ../../
-	@$(CC) $(RENDER_CFLAGS) $(RENDERMAINFILE) $(LIBRTFILE) -lm -o $(TESTNAME)
-	@./$(TESTNAME)
-	@rm $(TESTNAME)
-	@norminette ../libs/librt/src/rtapp/rtapp_render | grep Error || true
-
+render: rtapp $(RENDERMAIN) $(LIBFT) $(LIBRT)
+	@$(CC) $(RENDER_CFLAGS) $(RENDERMAIN) $(LIBRT) $(LIBFT) ../rtapp/render/tile_queue.c -lm -o $(RENDER_BIN)
+	@./$(RENDER_BIN)
+	@rm -f $(RENDER_BIN)
+#	@norminette ../rtapp/render | grep Error || true
