@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:49:41 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:13 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/19 20:45:20 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ char	**ft_split_base(char const *s, char *c_str)
 	char	**wrdstr;
 	int		w;
 	int		i;
-	int		j;
 
 	if (!s)
 		return (NULL);
@@ -111,7 +110,6 @@ char	**ft_split_base(char const *s, char *c_str)
 		return (NULL);
 	while (++i < w)
 	{
-		j = -1;
 		while (s[0] && is_invalid(s[0], c_str))
 			s++;
 		wrdstr[i] = ft_substr(s, 0, ft_wrdlen(s, c_str));
