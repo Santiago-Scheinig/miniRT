@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/12 20:43:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/19 20:36:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct s_tile
 	int y_start; // Starting y-coordinate of the tile, inclusive.
 	int x_end;   // Ending x-coordinate of the tile, exclusive.
 	int y_end;   // Ending y-coordinate of the tile, exclusive.
+	
+	uint32_t *(*get_pixel_ptr)(uint32_t *img, int x, int y); 
 }   t_tile;
 
 /**
