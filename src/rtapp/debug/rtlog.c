@@ -6,13 +6,10 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-<<<<<<<< HEAD:src/rtapp/debug/rtlog.c
-/*   Updated: 2026/04/12 20:21:48 by sscheini         ###   ########.fr       */
-========
-/*   Updated: 2026/04/11 19:11:52 by sscheini         ###   ########.fr       */
->>>>>>>> 13b4b0f529b05cd559281500996a0cb2a5389bba:src/rtapp/rtlog.c
+/*   Updated: 2026/04/19 21:09:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "rtapp.h"
 
