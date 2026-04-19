@@ -32,7 +32,7 @@ NAME	=	librt.a
 BONUS	=	#- The name of the bonus final library.									-#
 
 CC		=	cc
-CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I include/rtelm -I ../libft/include
+CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I ../libft/include -I libs/minilibx
 
 # --------------------------- Makefile Object Compilation -------------------------- #
 
@@ -53,7 +53,13 @@ COLOUR_END		=	\033[0m
 
 .PHONY: all msg clean fclean re
 
-all: $(NAME)
+all: minilibx $(NAME)
+
+minilibx:
+	@echo "$(COLOUR_BLUE)[i] MiniLibX - Object compilation:"
+	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] ..."
+	@make -C libs/minilibx
+	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
 
 #- Creates a directory named $(OBJDIR).												-#
 $(OBJDIR):
@@ -76,14 +82,21 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
+
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
 	@rm -rf $(OBJDIR)
 	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
+
+minilibx_fclean:
+	@echo "$(COLOUR_BLUE)[X] MiniLibX - Object cleaning complete.\n$(COLOUR_END)"
+	@make clean -C libs/minilibx
+	@echo "$(COLOUR_RED)[X] MiniLibX - Files removed.\n$(COLOUR_END)"
+
 #
 #- Removes the final files made with this makefile, executing clean as well.		-#
-fclean: clean
+fclean: minilibx_fclean clean
 	@rm -f $(NAME)
 	@echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"
 #

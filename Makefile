@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/12 19:50:08 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/19 17:42:49 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ OBJECT_DIR = obj
 DEPEND_DIR = dep
 
 # Include paths for headers
-INCLUDE_DIRS = -I include -I libs/libft/include -I libs/librt/include -I libs/librt/include/rtelm -I src/libs/minilibx/
+INCLUDE_DIRS = -I include -I libs/libft/include -I libs/librt/include
 
 # Library paths for linking
 LIBRARY_PATHS = $(addprefix -L, $(LIBS))
