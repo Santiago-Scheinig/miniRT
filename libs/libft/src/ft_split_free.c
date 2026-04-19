@@ -1,12 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   ft_split_free.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:41:06 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:47 by sscheini         ###   ########.fr       */
+/*   Created: 2025/03/20 19:58:41 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:36:14 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+/**
+ * Frees an ARRAY of STRINGS, usually allocated by ft_split().
+ * @param split The ARRAY of STRINGS to free.
+ */
+void	*ft_split_free(char **split)
+{
+	int	i;
+
+	i = -1;
+	if (split)
+	{
+		while (split[++i])
+			free(split[i]);
+		free(split);
+	}
+	return (NULL);
+}

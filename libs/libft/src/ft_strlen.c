@@ -1,12 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:41:06 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:47 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/10 17:50:20 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:36:22 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+/**
+ * Counts the amount of characters on a CONST STRING.
+ * @param s The CONST STRING to count characters from.
+ * @return An INT with the amount of characters counted.
+ * @note This function doesn't count the '\0' character.
+ */
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	if (!s)
+		return (0);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}

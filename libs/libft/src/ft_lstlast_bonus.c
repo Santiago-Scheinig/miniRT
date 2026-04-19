@@ -1,12 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   ft_lstlast_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:41:06 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:47 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/25 17:26:21 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:35:51 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+/**
+ * Searches for a pointer to the last LIST node to be found.
+ * @param lst The starting node.
+ * @return A pointer to the last LIST node.
+ * @note If the starting node doesn't exists, returns NULL.
+ */
+t_list	*ft_lstlast(t_list *lst)
+{
+	if (!lst)
+		return (NULL);
+	while (lst->next != NULL)
+		lst = lst->next;
+	return (lst);
+}

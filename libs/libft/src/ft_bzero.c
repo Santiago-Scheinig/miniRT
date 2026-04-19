@@ -1,12 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_bonus.c                                       :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/19 18:41:06 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:47 by sscheini         ###   ########.fr       */
+/*   Created: 2024/09/12 18:37:34 by sscheini          #+#    #+#             */
+/*   Updated: 2026/04/01 17:35:36 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
+
+/**
+ * Erases the data in the n bytes of the memory starting at the location
+ * pointed to by s, by writing zeros (bytes containing '\0') to that area.
+ * @param s The pointer location where to rewrite.
+ * @param n The amount of bytes to rewrite.
+ */
+void	ft_bzero(void *s, size_t n)
+{
+	if (n != 0)
+		ft_memset(s, '\0', n);
+}
