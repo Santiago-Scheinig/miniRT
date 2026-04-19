@@ -6,12 +6,14 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/19 21:12:00 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/19 21:19:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_RENDER_H
 # define RTAPP_RENDER_H
+# include <stdint.h>
+
 # define TILE_SIZE 16
 
 /*--------------------------------------------------------------------------*/
