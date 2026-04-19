@@ -110,13 +110,17 @@ $(NAME): $(OBJDIR) $(OBJ)
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
-	@rm -rf $(OBJDIR)
-	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
+	@if [ -d $(OBJDIR) ]; then \
+		rm -rf $(OBJDIR); \
+		printf "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete. \n$(COLOUR_END)\n"; \
+	fi
 #
 #- Removes the final files made with this makefile, executing clean as well.		-#
 fclean: clean
-	@rm -f $(NAME)
-	@echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"
+	@if [ -f $(NAME) ]; then \
+		rm -f $(NAME); \
+		echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"; \
+	fi
 
 #
 #- Restarts the Makefile. Erases everything to default, and executes again.			-#
