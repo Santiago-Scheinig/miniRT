@@ -82,7 +82,6 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
-
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
