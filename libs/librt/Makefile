@@ -1,38 +1,37 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
-SRC		=	$(SRCDIR)$(ELMDIR)camera.c									\
-			$(SRCDIR)$(ELMDIR)plane.c									\
-			$(SRCDIR)$(ELMDIR)sphere.c									\
-			$(SRCDIR)$(ELMDIR)cylinder.c								\
-			$(SRCDIR)$(ELMDIR)cylinder_intersection.c					\
-			$(SRCDIR)$(ELMDIR)lights.c									\
-			$(SRCDIR)$(ELMDIR)build_utils.c								\
-			$(SRCDIR)$(MTHDIR)matrix/mat4.c								\
-			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c						\
-			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c					\
-			$(SRCDIR)$(MTHDIR)equations/quadratic.c						\
-			$(SRCDIR)$(MTHDIR)raytracing/ray.c							\
-			$(SRCDIR)$(MTHDIR)raytracing/vector_mat4.c					\
-			$(SRCDIR)$(MTHDIR)vector/vector.c							\
-			$(SRCDIR)$(MTHDIR)vector/vector_vector.c					\
-			$(SRCDIR)$(MTHDIR)vector/vector_scalar.c					\
-			$(SRCDIR)$(ERRDIR)object_del.c								\
+SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
+			$(SRCDIR)$(ELMDIR)plane.c								\
+			$(SRCDIR)$(ELMDIR)sphere.c								\
+			$(SRCDIR)$(ELMDIR)cylinder.c							\
+			$(SRCDIR)$(ELMDIR)cylinder_intersection.c				\
+			$(SRCDIR)$(ELMDIR)lights.c								\
+			$(SRCDIR)$(ELMDIR)build_utils.c							\
+			$(SRCDIR)$(MTHDIR)matrix/mat4.c							\
+			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c					\
+			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c				\
+			$(SRCDIR)$(MTHDIR)equations/quadratic.c					\
+			$(SRCDIR)$(MTHDIR)raytracing/ray.c						\
+			$(SRCDIR)$(MTHDIR)raytracing/vector_mat4.c				\
+			$(SRCDIR)$(MTHDIR)vector/vector.c						\
+			$(SRCDIR)$(MTHDIR)vector/vector_vector.c				\
+			$(SRCDIR)$(MTHDIR)vector/vector_scalar.c				\
+			$(SRCDIR)$(ERRDIR)object_del.c							\
 
-BSRC	=	#- *_bonus.c															-#
+BSRC	=	#- *_bonus.c													-#
 
 SRCDIR	=	src/
 OBJDIR	=	obj/
-APPDIR	=	rtapp/
 ELMDIR	=	rtelm/
 ERRDIR	=	rterr/
 MLXDIR	=	rtmlx/
 MTHDIR	=	rtmth/
 
 NAME	=	librt.a
-BONUS	=	#- The name of the bonus final library.									-#
+BONUS	=	librt_bonus.a
 
 CC		=	cc
-CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I ../libft/include -I libs/minilibx
+CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I libs/libft/include -I libs/minilibx
 
 # --------------------------- Makefile Object Compilation -------------------------- #
 
@@ -42,7 +41,7 @@ BOBJ	=	$(BSRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
 # ------------------------------- Makefile Cosmetics ------------------------------- #
 
 CNAME			=	Librt
-CBONUS			=	#-Name of the final bonus program with first letter in caps.	-#
+CBONUS			=	#- Name of the bonus library with first letter in caps.		-#
 COLOUR_GREEN	=	\033[0;32m
 COLOUR_RED		=	\033[0;31m
 COLOUR_BLUE		=	\033[0;34m
@@ -51,53 +50,68 @@ COLOUR_END		=	\033[0m
 
 # --------------------------------- Makefile Body ---------------------------------- #
 
-.PHONY: all msg clean fclean re
+.PHONY: all clean fclean re libft minilibx minilibx_fclean
 
-all: minilibx $(NAME)
+all: libft minilibx $(NAME)
+
+libft:
+	@$(MAKE) -s -C libs/libft
 
 minilibx:
-	@echo "$(COLOUR_BLUE)[i] MiniLibX - Object compilation:"
-	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] ..."
-	@make -C libs/minilibx
-	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
+	@if [ ! -f libs/minilibx/libmlx_Linux.a ]; then \
+		printf "$(COLOUR_BLUE)[i] MiniLibX - Object compilation:\n\t$(COLOUR_GREEN)[⚙] " && \
+		(while true; do printf '.'; sleep 0.4; done) & \
+		SPIN_PID=$$!; \
+		cd libs/minilibx && ./configure > /dev/null 2>&1 && \
+		$(MAKE) -C libs/minilibx --no-print-directory > /dev/null 2>&1; \
+		kill $$SPIN_PID 2>/dev/null; \
+		wait $$SPIN_PID 2>/dev/null; \
+		printf "\033[2K\r\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n$(COLOUR_END)"; \
+	fi
 
-#- Creates a directory named $(OBJDIR).												-#
+#- Creates $(OBJDIR) and all required subdirectories.							-#
 $(OBJDIR):
-	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object compilation:"
-	@mkdir -p $@$(MTHDIR)equations/
+	@printf "$(COLOUR_BLUE)[i] $(CNAME) - Object compilation:\n"
 	@mkdir -p $@$(MTHDIR)matrix/
+	@mkdir -p $@$(MTHDIR)equations/
 	@mkdir -p $@$(MTHDIR)raytracing/
 	@mkdir -p $@$(MTHDIR)vector/
 	@mkdir -p $@$(ELMDIR)
 	@mkdir -p $@$(ERRDIR)
 	@mkdir -p $@$(MLXDIR)
 
-#
-#- Compiles each %(generic).c source into its respective %(generic).o				-#
+#- Compiles each %.c source into its respective %.o								-#
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
-#
-#- Complies the $(NAME) library.													-#
+
+#- Compiles the $(NAME) static library.											-#
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
-	@rm -rf $(OBJDIR)
-	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
+	@make clean -C libs/libft
+	@if [ -d $(OBJDIR) ]; then \
+		rm -rf $(OBJDIR); \
+		printf "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete. \n$(COLOUR_END)\n"; \
+	fi
 
+#- Cleans minilibx build artifacts.												-#
 minilibx_fclean:
-	@echo "$(COLOUR_BLUE)[X] MiniLibX - Object cleaning complete.\n$(COLOUR_END)"
-	@make clean -C libs/minilibx
-	@echo "$(COLOUR_RED)[X] MiniLibX - Files removed.\n$(COLOUR_END)"
+	@if [ -f libs/minilibx/libmlx_Linux.a ]; then \
+		$(MAKE) clean -C libs/minilibx --no-print-directory > /dev/null 2>&1; \
+		printf "$(COLOUR_RED)[X] MiniLibX - Files removed.\n\n"; \
+	fi
 
-#
-#- Removes the final files made with this makefile, executing clean as well.		-#
+#- Removes all generated files including the final library.						-#
 fclean: minilibx_fclean clean
-	@rm -f $(NAME)
-	@echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"
-#
-#- Restarts the Makefile. Erases everything to default, and executes again.			-#
+	@make fclean -C libs/libft
+	@if [ -f $(NAME) ] || [ -f $(BONUS) ]; then \
+		rm -f $(NAME) $(BONUS); \
+		echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"; \
+	fi
+
+#- Rebuilds everything from scratch.											-#
 re: fclean all

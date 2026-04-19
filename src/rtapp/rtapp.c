@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:08:44 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/19 21:12:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,25 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 	return (RT_SUCCESS);
 }
 
-/* rtapp_render()
 
-rtapp_run() */
+/**
+ * Runs the miniRT redering loop.
+ * @param app The initialized T_RTAPP instance.
+ * @return RT_SUCCESS on clean exit, RT_FAILURE on error.
+ * @todo Implement once tile rendering and parsing and img initalization
+ * are complete.
+ * @note Pseudocode plan: ?.
+ */
+//rtapp_render()
+
+/**
+ * Runs the miniRT window and event loop.
+ * @param app The initialized T_RTAPP instance.
+ * @return RT_SUCCESS on clean exit, RT_FAILURE on mlx error.
+ * @todo Implement once tile rendering and mlx integration are complete.
+ * @note Pseudocode plan: init mlx instance → start loop → kill on exit.
+ */
+//rtapp_run() */
 
 int rtapp_kill(t_rtapp *app, t_rterr errcode)
 {
