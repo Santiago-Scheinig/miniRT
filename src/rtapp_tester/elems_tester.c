@@ -3,18 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   elems_tester.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/04 12:42:37 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/14 18:26:27 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+ * NOTE: The previous version of this tester called internal static functions
+ * (pl_inv_mat4, sp_inv_mat4, cy_inv_mat4, plane_intersection, sphere_intersection,
+ * cylinder_intersection, plane_get_normal, sphere_get_normal, cylinder_get_normal,
+ * get_pixel_ray) that have since been made private (static) member functions of
+ * their respective object builders.
+ *
+ * This updated tester uses only the public API:
+ *   - build_pl / build_sp / build_cy / build_camera to construct objects
+ *   - obj->transform.inv  to verify the inverse matrix
+ *   - obj->c_intersection(local_ray) to test intersection
+ *   - obj->c_normal(local_point)     to test normal computation
+ *   - camera.get_pixel_ray(&camera, x, y) to test ray generation
+ *
+ * The t_elem_plane struct no longer exists: planes have no data pointer.
+ * Cylinder pos/normal are no longer stored in t_elem_cylinder; they are
+ * consumed into the transform matrix during build_cy.
+ */
+
 #include "rtelm.h"
 #include <stdio.h>
+#include <math.h>
 #ifndef M_PI
 # define M_PI 3.14159265358979323846
 #endif
+
+/* ---------- helpers --------------------------------------------------- */
 
 static void	print_header(void)
 {
@@ -23,7 +45,7 @@ static void	print_header(void)
 	printf("====================\e[0m\n");
 }
 
-static void	test_function( int (*f)(void), char* name )
+static void	test_function(int (*f)(void), char *name)
 {
 	if (f() == 0)
 		printf("\e[0;32m%s: OK\n\e[0m", name);
@@ -31,363 +53,319 @@ static void	test_function( int (*f)(void), char* name )
 		printf("\e[0;31m%s: FAIL\n\e[0m", name);
 }
 
-static int	aux_mat4_equal(t_mat4 m1, t_mat4 m2)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			if (fabs(m1.m[i][j] - m2.m[i][j]) > EPSILON)
-				return (0);
-		}
-	}
-	return (1);
-}
-
-static void	aux_print_mat4(t_mat4 mat)
-{
-	for (int i = 0; i < 4; i++)
-	{
-		for (int j = 0; j < 4; j++)
-		{
-			printf("%f ", mat.m[i][j]);
-		}
-		printf("\n");
-	}
-}
-
 static int	aux_vector_equal(t_vector v1, t_vector v2)
 {
-	return (fabs(v1.x - v2.x) < EPSILON && fabs(v1.y - v2.y) < EPSILON && fabs(v1.z - v2.z) < EPSILON);
+	return (fabs(v1.x - v2.x) < EPSILON
+		&& fabs(v1.y - v2.y) < EPSILON
+		&& fabs(v1.z - v2.z) < EPSILON);
 }
 
-static void	aux_print_vector(t_vector v)
+/* ---------- pl_inv_mat4 ------------------------------------------------
+ * Verified indirectly: build a plane, then transform a known world-space
+ * ray by obj->transform.inv and check it lands in canonical space.
+ * --------------------------------------------------------------------- */
+static int	test_plane_get_inverse_mat4(void)
 {
-	printf("(%f, %f, %f)\n", v.x, v.y, v.z);
-}
+	t_object	obj;
+	t_ray		world_ray;
+	t_ray		local_ray;
 
-static void	aux_print_ray(t_ray ray)
-{
-	printf("Origin: ");
-	aux_print_vector(ray.origin);
-	printf("Direction: ");
-	aux_print_vector(ray.direction);
-}
-
-static int  test_plane_get_inverse_mat4(void)
-{
-	// Test rayo con origen y direccion
-	t_elem_plane plane;
-	t_mat4      res;
-	t_vector    origen;
-	t_vector    origen_res;
-	t_vector    exp_orig;
-	t_vector    dir;
-	t_vector    dir_res;
-	t_vector    exp_dir;
-	
-	plane.normal = vector_new(1.0, 0.0, 0.0);
-	plane.pos = vector_new(0.0, 5.0, 0.0);
-	plane.rgb = 0xFFFFFF;
-	
-	res = plane_get_inverse_mat4(plane.pos, plane.normal);
-	
-	origen = vector_new(0.0, 5.0, 0.0);
-	dir = vector_new(1.0, 0.0, 0.0);
-	
-	origen_res = vector_mult_mat4_point(origen, res);
-	dir_res = vector_mult_mat4_dir(dir, res);
-	
-	exp_orig = vector_new(0.0, 0.0, 0.0);
-	exp_dir = vector_new(0.0, 1.0, 0.0);
-	
-	if (!aux_vector_equal(dir_res, exp_dir))
-		return (1);
-	if (!aux_vector_equal(origen_res, exp_orig))
+	/* plane at (0,5,0) facing X → normal (1,0,0) */
+	char *str1[] = {"pl", "0.0,5.0,0.0", "1.0,0.0,0.0", "255,255,255", NULL};
+	if (build_pl(str1, &obj))
 		return (1);
 
-	// Test rayo con origen coplanar
-	t_vector    origen_coplanar;
-	t_vector    origen_coplanar_res;
-	t_vector    exp_origen_coplanar;
-	t_mat4      mat;
-	t_vector    normal_mat;
-	t_vector    point_mat;
+	world_ray.origin    = vector_new(0.0, 5.0, 0.0);
+	world_ray.direction = vector_new(1.0, 0.0, 0.0);
+	local_ray = ray_transform(world_ray, obj.transform.inv);
 
-	normal_mat = vector_new(0.0, 1.0, 0.0);
-	point_mat = vector_new(0.0, 5.0, 0.0);
-	origen_coplanar = vector_new(0.0, 5.0, 1.0);
-	exp_origen_coplanar = vector_new(1.0, 0.0, 0.0);
-	mat = plane_get_inverse_mat4(point_mat, normal_mat);
+	/* origin should be at (0,0,0) in local space */
+	if (!aux_vector_equal(local_ray.origin, vector_new(0.0, 0.0, 0.0)))
+		return (1);
+	/* direction (1,0,0) aligned with normal → maps to (0,1,0) in local Y */
+	if (!aux_vector_equal(local_ray.direction, vector_new(0.0, 1.0, 0.0)))
+		return (1);
 
-	origen_coplanar_res = vector_mult_mat4_point(origen_coplanar, mat);
-	if (!aux_vector_equal(origen_coplanar_res, exp_origen_coplanar))
+	/* plane at (0,5,0) facing Y → test a coplanar origin offset in Z */
+	char *str2[] = {"pl", "0.0,5.0,0.0", "0.0,1.0,0.0", "255,255,255", NULL};
+	if (build_pl(str2, &obj))
+		return (1);
+
+	world_ray.origin    = vector_new(0.0, 5.0, 1.0);
+	world_ray.direction = vector_new(0.0, 1.0, 0.0);
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+
+	/* coplanar point (0,5,1) → local (1,0,0)  */
+	if (!aux_vector_equal(local_ray.origin, vector_new(1.0, 0.0, 0.0)))
 		return (1);
 	return (0);
 }
 
-static int test_sphere_get_inverse_mat4(void)
+/* ---------- sp_inv_mat4 ----------------------------------------------- */
+static int	test_sphere_get_inverse_mat4(void)
 {
-	t_vector    center;
-	double      diameter;
-	t_mat4      matrix;
-	t_vector    p1;
-	t_vector    p1_exp;
-	t_vector    p1_res;
-	t_vector    p2;
-	t_vector    p2_exp;
-	t_vector    p2_res;
-	t_vector    p3;
-	t_vector    p3_exp;
-	t_vector    p3_res;
-	t_vector    p4;
-	t_vector    p4_exp;
-	t_vector    p4_res;
+	t_object	obj;
+	t_vector	p;
+	t_vector	res;
 
-	center = vector_new(10.0, 0.0, 0.0);
-	diameter = 4.0;
-	matrix = sphere_get_inverse_mat4(center, diameter);
-
-	p1 = vector_new(10.0, 0.0, 0.0);
-	p1_exp = vector_new(0.0, 0.0, 0.0);
-	p1_res = vector_mult_mat4_point(p1, matrix);
-	if (!aux_vector_equal(p1_res, p1_exp))
+	/* sphere at (10,0,0) with diameter 4 */
+	char *str[] = {"sp", "10.0,0.0,0.0", "4.0", "255,255,255", NULL};
+	if (build_sp(str, &obj))
 		return (1);
 
-	p2 = vector_new(12.0, 0.0, 0.0);
-	p2_exp = vector_new(1.0, 0.0, 0.0);
-	p2_res = vector_mult_mat4_point(p2, matrix);
-	if (!aux_vector_equal(p2_res, p2_exp))
+	/* center maps to (0,0,0) */
+	p = vector_new(10.0, 0.0, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 0.0)))
 		return (1);
 
-	p3 = vector_new(10.0, -2.0, 0.0);
-	p3_exp = vector_new(0.0, -1.0, 0.0);
-	p3_res = vector_mult_mat4_point(p3, matrix);
-	if (!aux_vector_equal(p3_res, p3_exp))
+	/* surface point +2 on X maps to (1,0,0) */
+	p = vector_new(12.0, 0.0, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(1.0, 0.0, 0.0)))
 		return (1);
-	p4 = vector_new(10.0, 0.0, 2.0);
-	p4_exp = vector_new(0.0, 0.0, 1.0);
-	p4_res = vector_mult_mat4_point(p4, matrix);
-	if (!aux_vector_equal(p4_res, p4_exp))
+
+	/* surface point -2 on Y maps to (0,-1,0) */
+	p = vector_new(10.0, -2.0, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, -1.0, 0.0)))
+		return (1);
+
+	/* surface point +2 on Z maps to (0,0,1) */
+	p = vector_new(10.0, 0.0, 2.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 1.0)))
 		return (1);
 	return (0);
 }
 
-int test_cylinder_get_inverse_mat4(void)
+/* ---------- cy_inv_mat4 ----------------------------------------------- */
+static int	test_cylinder_get_inverse_mat4(void)
 {
-	t_vector    center;
-	double      diameter;
-	t_vector    normal;
-	double      height;
-	t_mat4      matrix;
-	t_vector    p1;
-	t_vector    p1_exp;
-	t_vector    p1_res;
-	t_vector    p2;
-	t_vector    p2_exp;
-	t_vector    p2_res;
-	t_vector    p3;
-	t_vector    p3_exp;
-	t_vector    p3_res;
+	t_object	obj;
+	t_vector	p;
+	t_vector	res;
 
-	center = vector_new(0.0, 10.0, 0.0);
-	diameter = 2.0;
-	normal = vector_new(0.0, 1.0, 0.0);
-	height = 5.0;
-
-	matrix = cylinder_get_inverse_mat4(center, diameter, normal, height);
-	
-	p1 = vector_new(0.0, 10.0, 0.0);
-	p1_exp = vector_new(0.0, 0.0, 0.0);
-	p1_res = vector_mult_mat4_point(p1, matrix);
-
-	if (!aux_vector_equal(p1_res, p1_exp))
+	/* cylinder at (0,10,0), normal (0,1,0), diam 2, height 5 */
+	char *str[] = {"cy", "0.0,10.0,0.0", "0.0,1.0,0.0",
+		"2.0", "5.0", "255,255,255", NULL};
+	if (build_cy(str, &obj))
 		return (1);
-	
-	p2 = vector_new(1.0, 10.0, 0.0);
-	p2_exp = vector_new(0.0, 0.0, -1.0);
-	p2_res = vector_mult_mat4_point(p2, matrix);
 
-	if (!aux_vector_equal(p2_res, p2_exp))
+	/* center (0,10,0) → (0,0,0) */
+	p = vector_new(0.0, 10.0, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 0.0)))
 		return (1);
-	
-	p3 = vector_new(0.0, 12.5, 0.0);
-	p3_exp = vector_new(0.0, 1.0, 0.0);
-	p3_res = vector_mult_mat4_point(p3, matrix);
-	if (!aux_vector_equal(p3_res, p3_exp))
+
+	/* (1,10,0) → (0,0,-1) — radius=1 in local XZ, rotated by mat4_rotation */
+	p = vector_new(1.0, 10.0, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, 0.0, -1.0)))
+		return (1);
+
+	/* top cap midpoint (0,12.5,0) → (0,1,0) */
+	p = vector_new(0.0, 12.5, 0.0);
+	res = vector_mult_mat4_point(p, obj.transform.inv);
+	if (!aux_vector_equal(res, vector_new(0.0, 1.0, 0.0)))
 		return (1);
 	return (0);
 }
 
-static int  test_plane_intersection(void)
+/* ---------- plane intersection ---------------------------------------- */
+static int	test_plane_intersection(void)
 {
-	t_elem_plane    plane;
-	t_ray           ray;
-	t_ray           local_ray;
-	double          res;
-	
-	plane.normal = vector_new(0.0, 1.0, 0.0);
-	plane.pos = vector_new(0.0, 5.0, 0.0);
-	plane.rgb = 0xFFFFFF;
+	t_object	obj;
+	t_ray		world_ray;
+	t_ray		local_ray;
+	double		res;
 
-	ray.origin = vector_new(0.0, 0.0, 0.0);
-	ray.direction = vector_new(0.0, 1.0, 1.0);
-	ray.direction = vector_normalize(ray.direction);
-	local_ray = ray_transform(ray, plane_get_inverse_mat4(plane.pos, plane.normal));
-	res = plane_intersection(local_ray, &plane);
+	/* plane at (0,5,0) facing Y */
+	char *str[] = {"pl", "0.0,5.0,0.0", "0.0,1.0,0.0", "255,255,255", NULL};
+	if (build_pl(str, &obj))
+		return (1);
+
+	world_ray.origin    = vector_new(0.0, 0.0, 0.0);
+	world_ray.direction = vector_normalize(vector_new(0.0, 1.0, 1.0));
+
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+	res = obj.c_intersection(local_ray);
+
 	if (fabs(res - sqrt(50.0)) > EPSILON)
 		return (1);
 	return (0);
 }
 
-static int  test_sphere_intersection(void)
+/* ---------- sphere intersection --------------------------------------- */
+static int	test_sphere_intersection(void)
 {
-	t_ray           ray;
-	t_ray           local_ray;
-	double          res;
-	t_vector        center;
-	double          diameter;
-	
-	ray.origin = vector_new(0.0, 0.0, 0.0);
-	ray.direction = vector_new(1.0, 0.0, 1.0);
-	ray.direction = vector_normalize(ray.direction);
-	center = vector_new(5.0, 0.0, 0.0);
-	diameter = 2.0;
-	local_ray = ray_transform(ray, sphere_get_inverse_mat4(center, diameter));
-	res = sphere_intersection(local_ray, NULL);
-	if (res - INFINITY > EPSILON)
+	t_object	obj;
+	t_ray		world_ray;
+	t_ray		local_ray;
+	double		res;
+
+	world_ray.origin    = vector_new(0.0, 0.0, 0.0);
+	world_ray.direction = vector_normalize(vector_new(1.0, 0.0, 1.0));
+
+	/* sphere at (5,0,0) diam 2 — ray misses */
+	char *str1[] = {"sp", "5.0,0.0,0.0", "2.0", "255,255,255", NULL};
+	if (build_sp(str1, &obj))
 		return (1);
-	center.z = 4.8;
-	local_ray = ray_transform(ray, sphere_get_inverse_mat4(center, diameter));
-	res = sphere_intersection(local_ray, NULL);
-	if (fabs(res - sqrt((4.2 * 4.2 ) + (4.2 * 4.2))) > EPSILON)
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+	res = obj.c_intersection(local_ray);
+	if (res != INFINITY)
+		return (1);
+
+	/* sphere shifted in Z so ray hits */
+	char *str2[] = {"sp", "5.0,0.0,4.8", "2.0", "255,255,255", NULL};
+	if (build_sp(str2, &obj))
+		return (1);
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+	res = obj.c_intersection(local_ray);
+	if (fabs(res - sqrt((4.2 * 4.2) + (4.2 * 4.2))) > EPSILON)
 		return (1);
 	return (0);
 }
 
-static int  test_cylinder_intersection(void)
+/* ---------- cylinder intersection ------------------------------------- */
+static int	test_cylinder_intersection(void)
 {
-	t_ray           ray;
-	t_ray           local_ray;
-	double          res;
-	t_vector        center;
-	double          diameter;
-	t_vector        normal;
-	double          height;
-	t_elem_cylinder    cylinder;
+	t_object	obj;
+	t_ray		world_ray;
+	t_ray		local_ray;
+	double		res;
 
-	ray.origin = vector_new(0.0, 0.0, 0.0);
-	ray.direction = vector_new(1.0, 0.0, 1.0);
-	ray.direction = vector_normalize(ray.direction);
+	world_ray.origin    = vector_new(0.0, 0.0, 0.0);
+	world_ray.direction = vector_normalize(vector_new(1.0, 0.0, 1.0));
 
-	cylinder.pos = vector_new(5.0, 0.0, -4.0);
-	cylinder.diam = 4.0;
-	cylinder.normal = vector_new(0.0, 0.0, 1.0);
-	cylinder.height = 5.0;
-
-	local_ray = ray_transform(ray, cylinder_get_inverse_mat4(cylinder.pos, cylinder.diam, cylinder.normal, cylinder.height));
-	res = cylinder_intersection(local_ray, (void *)&cylinder);
-
-	if (fabs(res - INFINITY) > EPSILON)
+	/* cylinder at (5,0,-4), normal (0,0,1), diam 4, height 5 — ray misses */
+	char *str1[] = {"cy", "5.0,0.0,-4.0", "0.0,0.0,1.0",
+		"4.0", "5.0", "255,255,255", NULL};
+	if (build_cy(str1, &obj))
+		return (1);
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+	res = obj.c_intersection(local_ray);
+	if (res != INFINITY)
 		return (1);
 
-	cylinder.pos.z = 5.5;
-
-	local_ray = ray_transform(ray, cylinder_get_inverse_mat4(cylinder.pos, cylinder.diam, cylinder.normal, cylinder.height));
-
-	res = cylinder_intersection(local_ray, (void *)&cylinder);
-	if (fabs(res - 4.242641) > EPSILON)
+	/* cylinder at (5,0,5.5) — ray hits */
+	char *str2[] = {"cy", "5.0,0.0,5.5", "0.0,0.0,1.0",
+		"4.0", "5.0", "255,255,255", NULL};
+	if (build_cy(str2, &obj))
 		return (1);
-
+	local_ray = ray_transform(world_ray, obj.transform.inv);
+	res = obj.c_intersection(local_ray);
+	if (fabs(res - 4.242641) > 0.0001)
+		return (1);
 	return (0);
 }
 
-static int  test_plane_get_normal(void)
+/* ---------- plane normal ---------------------------------------------- */
+static int	test_plane_get_normal(void)
 {
-	t_elem_plane    plane;
-	t_vector        local_point;
-	t_vector        normal;
+	t_object	obj;
+	t_vector	local_point;
+	t_vector	normal;
 
-	plane.normal = vector_new(0.0, 1.0, 0.0);
-	plane.pos = vector_new(0.0, 5.0, 0.0);
-	plane.rgb = 0xFFFFFF;
+	char *str[] = {"pl", "0.0,5.0,0.0", "0.0,1.0,0.0", "255,255,255", NULL};
+	if (build_pl(str, &obj))
+		return (1);
 
-	local_point = vector_new(1.0, 5.0, 1.0);
-	normal = plane_get_normal(local_point, &plane);
+	/* the canonical plane always returns (0,1,0) regardless of local point */
+	local_point = vector_new(1.0, 0.0, 1.0);
+	normal = obj.c_normal(local_point);
 	if (!aux_vector_equal(normal, vector_new(0.0, 1.0, 0.0)))
 		return (1);
 	return (0);
 }
 
-static int  test_sphere_get_normal(void)
+/* ---------- sphere normal --------------------------------------------- */
+static int	test_sphere_get_normal(void)
 {
-	t_vector        local_point;
-	t_vector        normal;
+	t_object	obj;
+	t_vector	local_point;
+	t_vector	normal;
 
+	char *str[] = {"sp", "0.0,0.0,0.0", "2.0", "255,255,255", NULL};
+	if (build_sp(str, &obj))
+		return (1);
+
+	/* for a unit sphere the normal equals the local surface point */
 	local_point = vector_new(1.0, 1.0, 1.0);
-	normal = sphere_get_normal(local_point, NULL);
+	normal = obj.c_normal(local_point);
 	if (!aux_vector_equal(normal, local_point))
 		return (1);
 	return (0);
 }
 
-static int  test_cylinder_get_normal(void)
+/* ---------- cylinder normal ------------------------------------------- */
+static int	test_cylinder_get_normal(void)
 {
-	t_vector        local_point;
-	t_vector        normal;
-	double          sqrt2;
+	t_object	obj;
+	t_vector	local_point;
+	t_vector	normal;
+	double		sqrt2;
 
-	// Test normal en tapa superior
+	char *str[] = {"cy", "0.0,0.0,0.0", "0.0,1.0,0.0",
+		"2.0", "2.0", "255,255,255", NULL};
+	if (build_cy(str, &obj))
+		return (1);
+
+	/* top cap */
 	local_point = vector_new(0.0, 1.0, 0.0);
-	normal = cylinder_get_normal(local_point, NULL);
+	normal = obj.c_normal(local_point);
 	if (!aux_vector_equal(normal, vector_new(0.0, 1.0, 0.0)))
 		return (1);
-	
-	// Test normal en tapa inferior
+
+	/* bottom cap */
 	local_point = vector_new(0.0, -1.0, 0.0);
-	normal = cylinder_get_normal(local_point, NULL);
+	normal = obj.c_normal(local_point);
 	if (!aux_vector_equal(normal, vector_new(0.0, -1.0, 0.0)))
 		return (1);
 
-	// Test normal en lateral
+	/* side surface */
 	sqrt2 = sqrt(0.5);
 	local_point = vector_new(sqrt2, 0.5, sqrt2);
-	normal = cylinder_get_normal(local_point, NULL);
+	normal = obj.c_normal(local_point);
 	if (!aux_vector_equal(normal, vector_new(sqrt2, 0.0, sqrt2)))
 		return (1);
-
 	return (0);
 }
 
-static int  test_get_pixel_ray(void)
+/* ---------- camera pixel ray ------------------------------------------ */
+static int	test_get_pixel_ray(void)
 {
 	t_elem_camera	camera;
 	t_ray			ray;
 	t_vector		exp;
 
-	camera.pos = vector_new(0.0, 0.0, 0.0);
-	camera.normal = vector_new(0.0, 0.0, -1.0);
-	camera.fov = 90;
-	camera.right = vector_new(2.0, 0.0, 0.0);
-	camera.up = vector_new(0.0, 2.0 * ((double)SCREEN_HEIGHT/(double)SCREEN_WIDTH), 0.0);
-	
-	// Arriba a la izquierda
-	ray = get_pixel_ray(&camera, 0.0, 0.0);
-	if (!aux_vector_equal(ray.origin, camera.pos) || fabs(vector_module(ray.direction) - 1.0) > EPSILON)
+	char *str[] = {"C", "0.0,0.0,0.0", "0.0,0.0,-1.0", "90", NULL};
+	if (build_camera(str, &camera))
+		return (1);
+
+	/* top-left pixel: direction should point left (+) and up (+y), forward (-z) */
+	ray = camera.get_pixel_ray(&camera, 0, 0);
+	if (!aux_vector_equal(ray.origin, camera.pos))
+		return (1);
+	if (fabs(vector_module(ray.direction) - 1.0) > EPSILON)
 		return (1);
 	if (ray.direction.x >= 0.0 || ray.direction.y <= 0.0 || ray.direction.z >= 0.0)
 		return (1);
 
-	// Abajo a la derecha
-	ray = get_pixel_ray(&camera, SCREEN_WIDTH - 1.0, SCREEN_HEIGHT - 1.0);
-	if (!aux_vector_equal(ray.origin, camera.pos) || fabs(vector_module(ray.direction) - 1.0) > EPSILON)
+	/* bottom-right pixel */
+	ray = camera.get_pixel_ray(&camera, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 1);
+	if (!aux_vector_equal(ray.origin, camera.pos))
+		return (1);
+	if (fabs(vector_module(ray.direction) - 1.0) > EPSILON)
 		return (1);
 	if (ray.direction.x <= 0.0 || ray.direction.y >= 0.0 || ray.direction.z >= 0.0)
 		return (1);
 
-	// Centro
-	ray = get_pixel_ray(&camera, SCREEN_WIDTH / 2.0, SCREEN_HEIGHT / 2.0);
-	if (!aux_vector_equal(ray.origin, camera.pos) || fabs(vector_module(ray.direction) - 1.0) > EPSILON)
+	/* center pixel */
+	ray = camera.get_pixel_ray(&camera, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	if (!aux_vector_equal(ray.origin, camera.pos))
+		return (1);
+	if (fabs(vector_module(ray.direction) - 1.0) > EPSILON)
 		return (1);
 	exp = vector_new(0.00052, -0.00052, -1.0);
 	if (!aux_vector_equal(ray.direction, exp))
@@ -395,7 +373,8 @@ static int  test_get_pixel_ray(void)
 	return (0);
 }
 
-int main(void)
+/* ---------- main ------------------------------------------------------ */
+int	main(void)
 {
 	int (*tests[])(void) = {
 		test_plane_get_inverse_mat4,
@@ -409,7 +388,7 @@ int main(void)
 		test_cylinder_get_normal,
 		test_get_pixel_ray
 	};
-	char* test_names[] = {
+	char *test_names[] = {
 		"test_plane_get_inverse_mat4",
 		"test_sphere_get_inverse_mat4",
 		"test_cylinder_get_inverse_mat4",
@@ -422,7 +401,7 @@ int main(void)
 		"test_get_pixel_ray"
 	};
 	print_header();
-	for (int i = 0; i < sizeof(tests) / sizeof(tests[0]); i++)
+	for (int i = 0; i < (int)(sizeof(tests) / sizeof(tests[0])); i++)
 		test_function(tests[i], test_names[i]);
 	return (0);
 }
