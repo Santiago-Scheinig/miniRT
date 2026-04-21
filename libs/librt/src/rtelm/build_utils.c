@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:17:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:12:26 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:23:12 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@ t_vector	build_color(char *str)
 	color.g = ft_atoi(next) / 255.0;
 	color.b = ft_atoi(ft_strchr(next, ',') + 1) / 255.0; 
 	return (color);
-}
-
-uint32_t	translate_color(t_vector color)
-{
-	color.r = fmax(0.0, fmin(1.0, color.r));
-	color.g = fmax(0.0, fmin(1.0, color.g));
-	color.b = fmax(0.0, fmin(1.0, color.b));
-	return (((uint32_t)(color.r * 255) << 16)
-			| ((uint32_t)(color.g * 255) << 8)
-			| ((uint32_t)(color.b * 255)));	
 }
 
 t_vector	build_vector(char *str)

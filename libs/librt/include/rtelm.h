@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:44:10 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:23:39 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include "rtmlx.h"
 # include "rtmth.h"
 # include "libft.h"
-# include <stdint.h>
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -193,19 +192,6 @@ int				build_sp(char **str, t_object *obj);
  * NULL both on allocation failure and if the builder reports an error.
  */
 t_object		*build_object(char **arr, int (*builder)(char **, t_object *));
-
-/*--------------------------------------------------------------------------*/
-/*--------------------------------UTILITIES---------------------------------*/
-/*--------------------------------------------------------------------------*/
-
-/**
- * Converts a normalized color vector to a packed uint32_t pixel value.
- * @param color The T_VECTOR with r, g, b components in the 0.0-1.0 range.
- * @return A UINT32_T packed as 0x00RRGGBB ready for mlx buffer writing.
- * @note Components are clamped to 0.0-1.0 before conversion to prevent
- * overflow from lighting calculations that exceed the valid range.
- */
-uint32_t		translate_color(t_vector color);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

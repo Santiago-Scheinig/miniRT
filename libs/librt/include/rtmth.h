@@ -6,13 +6,14 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:44:22 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/20 18:24:05 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
 # include <math.h>
+# include <stdint.h>
 
 # define EPSILON 0.00001
 # ifndef M_PI
@@ -351,6 +352,17 @@ t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
  * @note If the equation has a repeated root, sol1 and sol2 are equal.
  */
 t_roots		solve_quadratic(double a, double b, double c);
+
+/**
+ * Converts a normalized color vector to a packed uint32_t pixel value.
+ * @param color The T_VECTOR with r, g, b components in the 0.0-1.0 range.
+ * @return A UINT32_T packed as 0x00RRGGBB ready for mlx buffer writing.
+ * @note Components are clamped to 0.0-1.0 before conversion to prevent
+ * overflow from lighting calculations that exceed the valid range.
+ */
+uint32_t	translate_color(t_vector color);
+
+t_vector	color_hadamard(t_vector ca, t_vector cb);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
