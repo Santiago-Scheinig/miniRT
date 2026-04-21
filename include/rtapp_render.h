@@ -6,16 +6,13 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 17:58:11 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 18:14:34 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_RENDER_H
 # define RTAPP_RENDER_H
-# include <stdint.h>
-# include "rtmth.h"
-# include "rtelm.h"
-
+# include "rtapp.h"
 # define TILE_SIZE 16
 
 /*--------------------------------------------------------------------------*/

@@ -11,6 +11,7 @@ SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c					\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c				\
 			$(SRCDIR)$(MTHDIR)equations/quadratic.c					\
+			$(SRCDIR)$(MTHDIR)equations/colors.c					\
 			$(SRCDIR)$(MTHDIR)raytracing/ray.c						\
 			$(SRCDIR)$(MTHDIR)raytracing/vector_mat4.c				\
 			$(SRCDIR)$(MTHDIR)vector/vector.c						\
