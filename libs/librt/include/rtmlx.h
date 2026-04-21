@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:25:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 18:46:32 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:05:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 # define RTMLX_H
 # include "mlx.h"
 # include "libft.h"
-# ifndef SCREEM_WIDTH
+# include <stdint.h>
+# ifndef SCREEN_WIDTH
 # 	define SCREEN_WIDTH 1920
 # endif
-# ifndef SCREEM_HEIGHT
+# ifndef SCREEN_HEIGHT
 #  define SCREEN_HEIGHT 1080
 # endif
 
@@ -32,15 +33,7 @@ typedef struct s_mlx
     int     endian;   // byte order
 }   t_mlx;
 
-/**
- * @file rtmlx.h  
- * @brief MiniLibX abstraction layer for librt window and image management.
- * @todo Declare mlx_set_hooks() mlx_replace_image() mlx_window_run()
- * mlx_window_kill() as tools for future apps to use at window execution.
- * @note Currently holds only screen dimension constants. To be extended
- * with window lifecycle and pixel buffer functions as the render
- * pipeline is implemented.
- */
+int	window_run(uint32_t *image);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

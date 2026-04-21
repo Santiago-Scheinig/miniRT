@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 19:01:10 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 18:44:00 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 18:54:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	window_run(uint32_t *image)
 	mlx->instance = mlx_init();
 	if (!mlx->instance)
 		return (del_mlx(mlx, 1));
-	mlx->win = mlx_new_window(mlx->instance, SCREEN_WIDTH, SCREEN_HEIGHT, w);
+	mlx->win = mlx_new_window(mlx->instance, SCREEN_WIDTH, SCREEN_HEIGHT, (char *) w);
 	if (!mlx->win)
 		return (del_mlx(mlx, 1));
 	mlx->img = mlx_new_image(mlx->instance, SCREEN_WIDTH, SCREEN_HEIGHT);
