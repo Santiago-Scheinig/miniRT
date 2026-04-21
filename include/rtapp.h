@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:04:36 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:23:34 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
  */
 typedef struct s_rtapp
 {
+	uint32_t		*img; // Render buffer for the current frame, allocated after parsing.
 	t_list			*objects; // Linked list of T_OBJECT scene elements.
 	t_list			*lights;  // Linked list of T_ELEM_LIGHT_P point lights.
 	t_elem_camera	camera;   // Unique camera instance for the scene.
@@ -75,6 +76,8 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app);
  * error if either dup2 restoration fails but continues cleanup regardless.
  */
 int rtapp_kill(t_rtapp *app, t_rterr errcode);
+
+int rtapp_render(t_rtapp *app);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

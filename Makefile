@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/19 21:11:56 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/21 20:02:47 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ MAIN_SRC =	$(SOURCE_DIR)/main.c								\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
 			$(SOURCE_DIR)/rtapp/init/parser/g_parse_err_msgs.c	\
 			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
+			$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
+			$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
 
 BONUS_SRC   = $(SOURCE_DIR)/main_bonus.c
 
@@ -45,6 +47,7 @@ DEPEND_DIR  = dep
 INCLUDE_DIRS    = -I include						\
 				  -I libs/librt/include				\
 				  -I libs/librt/libs/libft/include	\
+				  -I libs/librt/libs/minilibx		\
 
 LIBRARY_PATHS   = -L libs/librt					\
 				  -L libs/librt/libs/libft		\
@@ -53,8 +56,10 @@ LIBRARY_PATHS   = -L libs/librt					\
 # ================================ Compiler Settings ============================ #
 
 DEV ?= 0
+SCREEN_WIDTH = 1920
+SCREEN_HEIGHT = 1080
 
-CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV)
+CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV) -D SCREEN_HEIGHT=$(SCREEN_HEIGHT) -D SCREEN_WIDTH=$(SCREEN_WIDTH)
 DEPFLAGS    = -MMD -MP
 CPPFLAGS    = $(INCLUDE_DIRS)
 LDFLAGS     = $(LIBRARY_PATHS)

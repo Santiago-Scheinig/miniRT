@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 18:43:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 20:00:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,20 @@
  */
 int	main(int argc, char **argv)
 {
+	const char	*err = "main: application initialization failed: %s";
 	t_rtapp	app;
 
-	memset(&app, 0, sizeof(t_rtapp));
+	ft_memset(&app, 0, sizeof(t_rtapp));
+	app.img = ft_calloc(SCREEN_HEIGHT * SCREEN_WIDTH, sizeof(uint32_t));
+	if (!app.img)
+		return (rtlog(RT_ERRLOG, 0, err, strerror(errno)), RT_FAILURE);
+	
 	if (rtapp_init(argc, argv, &app))
 		rtapp_kill(&app, RT_FAILURE);
-/* 	if (!rtapp_render(app))
+	if (rtapp_render(&app))
 		return (rtapp_kill(&app, RT_FAILURE));
-	if (!rtapp_run(app.img))
-		return (rtapp_kill(&app, RT_FAILURE)); */
+	if (window_run(app.img))
+		return (rtapp_kill(&app, RT_FAILURE));
 	rtapp_kill(&app, RT_SUCCESS);
 	return (RT_SUCCESS);
 }

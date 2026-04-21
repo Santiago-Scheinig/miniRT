@@ -6,12 +6,13 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:12:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 20:00:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp.h"
 #include "rtapp_init.h"
+#include "rtapp_render.h"
 
 int	rtapp_init(int argc, char **argv, t_rtapp *app)
 {
@@ -38,16 +39,42 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
  * are complete.
  * @note Pseudocode plan: ?.
  */
-//rtapp_render()
+int rtapp_render(t_rtapp *app)
+{
+	t_tile_queue	queue;
+	t_tile			tile;
+	uint32_t		*pixel;
+	t_vector		color;
+	t_hit			hit;
+	t_ray			ray;
+	int x;
+	int y;
 
-/**
- * Runs the miniRT window and event loop.
- * @param app The initialized T_RTAPP instance.
- * @return RT_SUCCESS on clean exit, RT_FAILURE on mlx error.
- * @todo Implement once tile rendering and mlx integration are complete.
- * @note Pseudocode plan: init mlx instance → start loop → kill on exit.
- */
-//rtapp_run() */
+	queue = new_tile_queue();
+	while (get_next_tile(&queue, &tile))
+	{
+		x = tile.x_start;
+		y = tile.y_start;
+		while (y < tile.y_end)
+		{
+			while (x < tile.x_end)
+			{
+				pixel = tile.get_pixel_ptr(app->img, x, y);
+				ray = app->camera.get_pixel_ray(&app->camera, x, y);
+				hit = get_hit_from_ray(ray, app->objects);
+				if (hit.obj)
+					color = get_color_at_hit(hit, app->objects, app);
+				else
+					color = vector_new(0, 0, 0);
+				*pixel = translate_color(color);
+				x++;
+			}
+			x = tile.x_start;
+			y++;
+		}
+	}
+	return (RT_SUCCESS);
+}
 
 int rtapp_kill(t_rtapp *app, t_rterr errcode)
 {
@@ -55,5 +82,7 @@ int rtapp_kill(t_rtapp *app, t_rterr errcode)
 		ft_lstclear(&(app->objects), object_del);
 	if (app->lights)
 		ft_lstclear(&(app->lights), free);
+	if (app->img)
+		free(app->img);
 	exit(errcode);
 }
