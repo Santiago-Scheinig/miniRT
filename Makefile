@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
+#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/21 19:22:54 by aramos-r         ###   ########.fr        #
+#    Updated: 2026/04/21 20:02:47 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ LIBRARY_PATHS   = -L libs/librt					\
 # ================================ Compiler Settings ============================ #
 
 DEV ?= 0
-SCREEN_WIDTH = 1980
+SCREEN_WIDTH = 1920
 SCREEN_HEIGHT = 1080
 
 CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV) -D SCREEN_HEIGHT=$(SCREEN_HEIGHT) -D SCREEN_WIDTH=$(SCREEN_WIDTH)

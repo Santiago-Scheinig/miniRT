@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:31:16 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 20:00:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ int	main(int argc, char **argv)
 		rtapp_kill(&app, RT_FAILURE);
 	if (rtapp_render(&app))
 		return (rtapp_kill(&app, RT_FAILURE));
-	// rtlog(RT_ERRLOG, 0, "rendering complete, entering window loop.");
-	// int i = 0;
-	// while (i++ < SCREEN_HEIGHT * SCREEN_WIDTH)
-	// {
-	// 	rtlog(RT_ERRLOG, 0, "pixel %d: %u", i, app.img[i]);
-	// }
 	if (window_run(app.img))
 		return (rtapp_kill(&app, RT_FAILURE));
 	rtapp_kill(&app, RT_SUCCESS);

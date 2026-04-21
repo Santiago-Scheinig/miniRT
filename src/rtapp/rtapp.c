@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:44:52 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 20:00:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,6 @@ int rtapp_render(t_rtapp *app)
 	int x;
 	int y;
 
-	int counter = 0;
-	int total = (SCREEN_WIDTH) * (SCREEN_HEIGHT);
 	queue = new_tile_queue();
 	while (get_next_tile(&queue, &tile))
 	{
@@ -61,17 +59,11 @@ int rtapp_render(t_rtapp *app)
 		{
 			while (x < tile.x_end)
 			{
-				printf("pixel (%d, %d)\n", counter++, total);
 				pixel = tile.get_pixel_ptr(app->img, x, y);
 				ray = app->camera.get_pixel_ray(&app->camera, x, y);
 				hit = get_hit_from_ray(ray, app->objects);
 				if (hit.obj)
-				{
 					color = get_color_at_hit(hit, app->objects, app);
-					// printf("hit at (%f, %f, %f) with normal (%f, %f, %f)\n",
-					// 	hit.pos.x, hit.pos.y, hit.pos.z,
-					// 	hit.surf_normal.x, hit.surf_normal.y, hit.surf_normal.z);
-				}
 				else
 					color = vector_new(0, 0, 0);
 				*pixel = translate_color(color);
