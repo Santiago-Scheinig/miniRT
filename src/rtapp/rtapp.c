@@ -6,12 +6,13 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 17:11:12 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:44:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp.h"
 #include "rtapp_init.h"
+#include "rtapp_render.h"
 
 int	rtapp_init(int argc, char **argv, t_rtapp *app)
 {
@@ -38,16 +39,50 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
  * are complete.
  * @note Pseudocode plan: ?.
  */
-//rtapp_render()
+int rtapp_render(t_rtapp *app)
+{
+	t_tile_queue	queue;
+	t_tile			tile;
+	uint32_t		*pixel;
+	t_vector		color;
+	t_hit			hit;
+	t_ray			ray;
+	int x;
+	int y;
 
-/**
- * Runs the miniRT window and event loop.
- * @param app The initialized T_RTAPP instance.
- * @return RT_SUCCESS on clean exit, RT_FAILURE on mlx error.
- * @todo Implement once tile rendering and mlx integration are complete.
- * @note Pseudocode plan: init mlx instance → start loop → kill on exit.
- */
-//rtapp_run() */
+	int counter = 0;
+	int total = (SCREEN_WIDTH) * (SCREEN_HEIGHT);
+	queue = new_tile_queue();
+	while (get_next_tile(&queue, &tile))
+	{
+		x = tile.x_start;
+		y = tile.y_start;
+		while (y < tile.y_end)
+		{
+			while (x < tile.x_end)
+			{
+				printf("pixel (%d, %d)\n", counter++, total);
+				pixel = tile.get_pixel_ptr(app->img, x, y);
+				ray = app->camera.get_pixel_ray(&app->camera, x, y);
+				hit = get_hit_from_ray(ray, app->objects);
+				if (hit.obj)
+				{
+					color = get_color_at_hit(hit, app->objects, app);
+					// printf("hit at (%f, %f, %f) with normal (%f, %f, %f)\n",
+					// 	hit.pos.x, hit.pos.y, hit.pos.z,
+					// 	hit.surf_normal.x, hit.surf_normal.y, hit.surf_normal.z);
+				}
+				else
+					color = vector_new(0, 0, 0);
+				*pixel = translate_color(color);
+				x++;
+			}
+			x = tile.x_start;
+			y++;
+		}
+	}
+	return (RT_SUCCESS);
+}
 
 int rtapp_kill(t_rtapp *app, t_rterr errcode)
 {

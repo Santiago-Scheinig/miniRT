@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 18:52:20 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:23:34 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app);
  * error if either dup2 restoration fails but continues cleanup regardless.
  */
 int rtapp_kill(t_rtapp *app, t_rterr errcode);
+
+int rtapp_render(t_rtapp *app);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

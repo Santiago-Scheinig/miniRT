@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 19:07:12 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:21:45 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,15 @@ t_hit			get_hit_from_ray(t_ray ray, t_list *objs);
  * @brief Computes the color at a ray-object intersection point using the
  * Phong reflection model, accounting for all light sources in the scene.
  * @param hit The T_HIT containing the intersection information for shading.
- * @param objects The array of T_OBJECTs in the scene for shadow ray testing.
- * @param lights The array of T_ELEM_LIGHT_P point lights in the scene.
- * @param alight The T_ELEM_LIGHT_A ambient light in the scene.
+ * @param objects The list of T_OBJECTs in the scene for shadow ray testing.
+ * @param app The T_RTAPP containing the scene's ambient light and point lights.
  * @return A T_VECTOR representing the final RGB color at the hit point, with
  * each component normalized to the 0.0-1.0 range.
  */
 t_vector		get_color_at_hit(
 					t_hit hit,
-					t_object *objs,
-					t_elem_light_p *lights,
-					t_elem_light_a *alight
+					t_list *objs,
+					t_rtapp *app
 				);
 
 /*--------------------------------------------------------------------------*/

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/21 19:04:36 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/21 19:22:54 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,8 @@ MAIN_SRC =	$(SOURCE_DIR)/main.c								\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
 			$(SOURCE_DIR)/rtapp/init/parser/g_parse_err_msgs.c	\
 			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
+			$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
+			$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
 
 BONUS_SRC   = $(SOURCE_DIR)/main_bonus.c
 
