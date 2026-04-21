@@ -1,7 +1,7 @@
 CC = cc
 
 # Lib paths
-LIBFTDIR = ../../libs/libft/
+LIBFTDIR = ../../libs/librt/libs/libft/
 LIBFT = $(LIBFTDIR)libft.a
 
 LIBRTDIR = ../../libs/librt/
@@ -9,7 +9,7 @@ LIBRT = $(LIBRTDIR)librt.a
 
 # Headers
 MATHHEADERDIR = ../../libs/librt/include/
-LIBFTHEADERDIR = ../../libs/libft/include/
+LIBFTHEADERDIR = ../../libs/librt/libs/libft/include/
 REDERHEADERDIR = ../../include
 
 # ================== FLAGS ==================

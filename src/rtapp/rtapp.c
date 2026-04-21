@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 18:44:38 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 17:11:12 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ int rtapp_kill(t_rtapp *app, t_rterr errcode)
 		ft_lstclear(&(app->objects), object_del);
 	if (app->lights)
 		ft_lstclear(&(app->lights), free);
+	if (app->img)
+		free(app->img);
 	exit(errcode);
 }
