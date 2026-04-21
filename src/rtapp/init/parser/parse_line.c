@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:28:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 19:01:27 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	const char	*err = "[line: %i] parser failed: %s";
 	char		*aux;
 	char		**arr;
+	int			j;
 
+	j = -1;
 	aux = (char *) line->content;
-	if (aux[0] == '\n')
+	while(aux[++j])
+	{
+		if (aux[j] != ' ' && aux[j] != '\t' && aux[j] != '\n')
+			break;		
 		return (RT_SUCCESS);
+	}
 	arr = ft_split_base(aux, " \t\n");
 	if (!arr || !arr[0])
 		return (rtlog(RT_ERRLOG, 0, err, i, strerror(errno)));

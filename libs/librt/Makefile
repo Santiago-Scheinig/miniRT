@@ -17,6 +17,7 @@ SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
 			$(SRCDIR)$(MTHDIR)vector/vector.c						\
 			$(SRCDIR)$(MTHDIR)vector/vector_vector.c				\
 			$(SRCDIR)$(MTHDIR)vector/vector_scalar.c				\
+			$(SRCDIR)$(MLXDIR)window.c								\
 			$(SRCDIR)$(ERRDIR)object_del.c							\
 
 BSRC	=	#- *_bonus.c													-#
