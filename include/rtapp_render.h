@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_render.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/19 21:19:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 15:39:12 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_RENDER_H
 # define RTAPP_RENDER_H
 # include <stdint.h>
+# include "rtmth.h"
+# include "rtelm.h"
 
 # define TILE_SIZE 16
 
@@ -47,6 +49,23 @@ typedef struct s_tile_queue
 	int	current_y; // Y coordinate of the next tile to be rendered.
 }   t_tile_queue;
 
+/**
+ * @brief Represents a ray-object intersection hit, containing all necessary
+ * information for shading calculations.
+ * @param obj A reference to the object that was hit by the ray.
+ * @param pos The world-space position where the ray intersects the object.
+ * @param distance The distance from the ray origin to the hit position.
+ * @param surface_normal The surface normal at the hit position, used for
+ * lighting calculations.
+ */
+typedef struct s_hit
+{
+	t_object	*obj;
+	t_vector	pos;
+	double		distance;
+	t_vector	surface_normal;
+}	t_hit;
+
 /*--------------------------------------------------------------------------*/
 /*--------------------------------UTILITIES---------------------------------*/
 /*--------------------------------------------------------------------------*/
@@ -68,6 +87,8 @@ t_tile_queue	new_tile_queue(void);
  * left to right, then top to bottom across the screen.
  */
 int				get_next_tile(t_tile_queue *queue, t_tile *tile);
+
+t_hit			get_hit_from_ray()
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
