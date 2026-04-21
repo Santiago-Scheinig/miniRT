@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/20 18:15:16 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/20 18:24:44 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/21 18:11:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ uint32_t	translate_color(t_vector color)
 
 t_vector	color_hadamard(t_vector ca, t_vector cb)
 {
-	return ((t_vector)( ca.r * cb.r,
-						ca.g * cb.g,
-						ca.b * cb.b ));
+	t_vector c_final;
+
+	c_final.r = ca.r * cb.r;
+	c_final.g = ca.g * cb.g;
+	c_final.b = ca.b * cb.b;
+	return (c_final);
 }
