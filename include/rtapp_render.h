@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 15:42:47 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 17:29:02 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef struct s_tile_queue
  * @param obj A reference to the object that was hit by the ray.
  * @param pos The world-space position where the ray intersects the object.
  * @param distance The distance from the ray origin to the hit position.
- * @param surface_normal The surface normal at the hit position, used for
+ * @param surf_normal The surface normal at the hit position, used for
  * lighting calculations.
  */
 typedef struct s_hit
@@ -63,7 +63,7 @@ typedef struct s_hit
 	t_object	*obj;
 	t_vector	pos;
 	double		distance;
-	t_vector	surface_normal;
+	t_vector	surf_normal;
 }	t_hit;
 
 /*--------------------------------------------------------------------------*/
