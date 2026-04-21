@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 18:14:34 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/21 18:27:11 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,12 @@ int				get_next_tile(t_tile_queue *queue, t_tile *tile);
 /**
  * @brief Casts a ray into the scene and finds the closest intersection hit.
  * @param ray The T_RAY to cast into the scene.
- * @param objects An array of T_OBJECTs representing the scene geometry.
+ * @param objs An array of T_OBJECTs representing the scene geometry.
  * @return A T_HIT containing the closest intersection information. If no
  * intersection occurs, the T_HIT will have obj set to NULL and distance set
  * to INFINITY.
  */
-t_hit			get_hit_from_ray(t_ray ray, t_object *objects);
+t_hit			get_hit_from_ray(t_ray ray, t_list *objs);
 
 /**
  * @brief Computes the color at a ray-object intersection point using the
