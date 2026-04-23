@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 19:01:10 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 18:54:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 17:42:05 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,12 @@ static int	del_mlx(t_mlx *mlx, int exit_no)
     return (exit_no);
 }
 
-int	window_run(uint32_t *image)
+int	window_run(uint32_t *image, char *filename)
 {
-	const char	*w = "miniRT";
+	char	*w;
 	t_mlx		*mlx;
 
+	w = ft_strjoin("miniRT - ", filename);
 	mlx = ft_calloc(1, sizeof(t_mlx));
 	if (!mlx)
 		return (1);
@@ -58,6 +59,7 @@ int	window_run(uint32_t *image)
 	if (!mlx->instance)
 		return (del_mlx(mlx, 1));
 	mlx->win = mlx_new_window(mlx->instance, SCREEN_WIDTH, SCREEN_HEIGHT, (char *) w);
+	free(w);
 	if (!mlx->win)
 		return (del_mlx(mlx, 1));
 	mlx->img = mlx_new_image(mlx->instance, SCREEN_WIDTH, SCREEN_HEIGHT);

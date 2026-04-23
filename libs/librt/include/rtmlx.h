@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:25:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:05:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 17:42:25 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_mlx
     int     endian;   // byte order
 }   t_mlx;
 
-int	window_run(uint32_t *image);
+int	window_run(uint32_t *image, char *filename);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
