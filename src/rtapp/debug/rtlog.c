@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   rtlog.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:44:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:09:48 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:33:35 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "rtapp.h"
 
@@ -40,7 +39,7 @@ int	rtlog(t_logtype type, pid_t pid, const char *fmt, ...)
 {
 	va_list			args;
 	int				fd;
-	
+
 	if (type == RT_ERRLOG)
 		fd = STDERR_FILENO;
 	else

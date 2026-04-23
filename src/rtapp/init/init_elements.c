@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_elements.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 16:45:37 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:24:30 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	init_light_a(char **argv, int i, t_rtapp *app)
 	return (RT_SUCCESS);
 }
 
-int init_light_p(char **argv, int i, t_rtapp *app)
+int	init_light_p(char **argv, int i, t_rtapp *app)
 {
 	const char		*err = "[line: %i][%s] initialization failed: %s";
 	t_elem_light_p	*new_light_p;
@@ -45,7 +45,7 @@ int init_light_p(char **argv, int i, t_rtapp *app)
 	return (RT_SUCCESS);
 }
 
-int init_camera(char **argv, int i, t_rtapp *app)
+int	init_camera(char **argv, int i, t_rtapp *app)
 {
 	const char	*err = "[line: %i][%s] initialization failed: %s";
 
@@ -70,12 +70,17 @@ int init_camera(char **argv, int i, t_rtapp *app)
  * @note On list node allocation failure, the object is freed before
  * returning to avoid memory leaks.
  */
-static int	build_and_add(char **argv, int i, t_object_build builder, t_rtapp *app)
+static int	build_and_add(
+				char **argv,
+				int i,
+				t_object_build builder,
+				t_rtapp *app
+				)
 {
 	const char		*err = "[line: %i][%s] initialization failed: %s";
 	t_object		*obj;
 	t_list			*new_node;
-	
+
 	if (builder.parse(argv, i))
 		return (RT_FAILURE);
 	obj = build_object(argv, builder.build);
@@ -84,7 +89,7 @@ static int	build_and_add(char **argv, int i, t_object_build builder, t_rtapp *ap
 		if (errno)
 			return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "invalid normal."));
-	}			
+	}
 	new_node = ft_lstnew(obj);
 	if (!new_node)
 	{
@@ -97,16 +102,16 @@ static int	build_and_add(char **argv, int i, t_object_build builder, t_rtapp *ap
 
 int	init_object(char **arr, int i, t_rtapp *app)
 {
-    const char  *err = "[line: %i][%s] initialization failed: %s";
-    int         j;
+	const char	*err = "[line: %i][%s] initialization failed: %s";
+	int			j;
 
-    j = 0;
-    while (g_obj_dispatch[j].specifier)
-    {
-        if (!ft_strncmp(arr[0], g_obj_dispatch[j].specifier,
-                ft_strlen(g_obj_dispatch[j].specifier) + 1))
-            return (build_and_add(arr, i, g_obj_dispatch[j].builder, app));
-        j++;
-    }
-    return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
+	j = 0;
+	while (g_obj_dispatch[j].specifier)
+	{
+		if (!ft_strncmp(arr[0], g_obj_dispatch[j].specifier,
+				ft_strlen(g_obj_dispatch[j].specifier) + 1))
+			return (build_and_add(arr, i, g_obj_dispatch[j].builder, app));
+		j++;
+	}
+	return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_lights_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:44:55 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:27:18 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:22:13 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

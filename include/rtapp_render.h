@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/23 19:57:42 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:32:21 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,12 @@ typedef struct s_hit
  * @return A T_TILE_QUEUE with current_x and current_y set to 0.
  */
 t_tile_queue	new_tile_queue(void);
+
+/**
+ * Creates a new T_HIT with default values indicating no hit.
+ * @return A T_HIT with obj set to NULL and distance set to INFINITY.
+ */
+t_hit	new_hit(void);
 
 /**
  * Fills the next tile from the queue and advances the queue position.
