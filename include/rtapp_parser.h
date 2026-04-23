@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:04:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:51:00 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
  * to missing argument errors in declaration order, and the last entry
  * is the excess arguments error. Used by parse_arg to validate input.
  */
-extern const char	*const g_la_msgs[]; // Ambient light parser messages.
-extern const char	*const g_lp_msgs[]; // Point light parser messages.
-extern const char	*const g_ca_msgs[]; // Camera parser messages.
-extern const char	*const g_pl_msgs[]; // Plane parser messages.
-extern const char	*const g_cy_msgs[]; // Cylinder parser messages.
-extern const char	*const g_sp_msgs[]; // Sphere parser messages.
+extern const char *const	g_la_msgs[];	// Ambient light parser messages.
+extern const char *const	g_lp_msgs[];	// Point light parser messages.
+extern const char *const	g_ca_msgs[];	// Camera parser messages.
+extern const char *const	g_pl_msgs[];	// Plane parser messages.
+extern const char *const	g_cy_msgs[];	// Cylinder parser messages.
+extern const char *const	g_sp_msgs[];	// Sphere parser messages.
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -133,7 +133,12 @@ int				parse_sp(char **split, int i);
  * @return RT_SUCCESS if ARR has exactly EXPECTED arguments, RT_FAILURE
  * with the appropriate message if any argument is missing or excess.
  */
-int				parse_arg(char **arr, int i, const char *const msgs[], int expected);
+int				parse_arg(
+					char **arr,
+					int i,
+					const char *const msgs[],
+					int expected
+					);
 
 /**
  * Parses a single line of a scene file and initializes its element.
