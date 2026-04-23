@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_base.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:49:41 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 20:45:20 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:04:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	is_invalid(char	c, char	*c_str)
+static int	is_invalid(char c, char *c_str)
 {
 	int	i;
 	int	ans;
@@ -34,20 +34,21 @@ static int	is_invalid(char	c, char	*c_str)
  * @param c The character which divides each word.
  * @return An INT with the amount of words counted.
  */
-static int ft_wrdcount(char const *s, char *c_str)
+static int	ft_wrdcount(char const *s, char *c_str)
 {
-    int count = 0;
+	int	count;
 
-    while (*s)
-    {
-        while (*s && is_invalid(*s, c_str))
-            s++;
-        if (*s)
-            count++;
-        while (*s && !is_invalid(*s, c_str))
-            s++;
-    }
-    return count;
+	count = 0;
+	while (*s)
+	{
+		while (*s && is_invalid(*s, c_str))
+			s++;
+		if (*s)
+			count++;
+		while (*s && !is_invalid(*s, c_str))
+			s++;
+	}
+	return (count);
 }
 
 /**
@@ -57,13 +58,14 @@ static int ft_wrdcount(char const *s, char *c_str)
  * @param c The character which divides each word.
  * @return An INT with the lenght of the word.
  */
-static int ft_wrdlen(char const *s, char *c_str)
+static int	ft_wrdlen(char const *s, char *c_str)
 {
-    int i = 0;
+	int	i;
 
-    while (s[i] && !is_invalid(s[i], c_str))
-        i++;
-    return i;
+	i = 0;
+	while (s[i] && !is_invalid(s[i], c_str))
+		i++;
+	return (i);
 }
 
 /**
