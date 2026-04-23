@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arglen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 17:34:13 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 19:57:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:08:37 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-	int	ft_arglen(char **arg)
-	{
-		int	i;
+int	ft_arglen(char **arg)
+{
+	int	i;
 
-		i = 0;
-		while (arg[i])
-			i++;
-		return (i);
-	}
+	i = 0;
+	while (arg[i])
+		i++;
+	return (i);
+}
