@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtmlx.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:25:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 17:42:25 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:46:08 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include "libft.h"
 # include <stdint.h>
 # ifndef SCREEN_WIDTH
-# 	define SCREEN_WIDTH 1920
+#  define SCREEN_WIDTH 1920
 # endif
 # ifndef SCREEN_HEIGHT
 #  define SCREEN_HEIGHT 1080
@@ -24,14 +24,14 @@
 
 typedef struct s_mlx
 {
-    void    *instance;     // connection handle
-    void    *win;     // window handle
-    void    *img;     // image handle
-    char    *addr;    // pixel buffer address
-    int     bpp;      // bits per pixel
-    int     line_len; // bytes per row
-    int     endian;   // byte order
-}   t_mlx;
+	void	*instance;	// connection handle
+	void	*win;		// window handle
+	void	*img;		// image handle
+	char	*addr;		// pixel buffer address
+	int		bpp;		// bits per pixel
+	int		line_len;	// bytes per row
+	int		endian;		// byte order
+}	t_mlx;
 
 int	window_run(uint32_t *image, char *filename);
 

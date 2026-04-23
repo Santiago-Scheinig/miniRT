@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:06:56 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:44:03 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
  */
 typedef struct s_elem_light_p
 {
-	t_vector	pos;   // World space position of the point light.
-	double		ratio; // Brightness intensity in the 0.0-1.0 range.
+	t_vector	pos;	// World space position of the point light.
+	double		ratio;	// Brightness intensity in the 0.0-1.0 range.
 }	t_elem_light_p;
 
 /**
@@ -38,7 +38,7 @@ typedef struct s_elem_light_p
  */
 typedef struct s_material
 {
-	t_vector color; // Normalized RGB color in the 0.0-1.0 range.
+	t_vector	color;	// Normalized RGB color in the 0.0-1.0 range.
 }	t_material;
 # endif
 
@@ -47,8 +47,8 @@ typedef struct s_material
  */
 typedef struct s_elem_light_a
 {
-	double		ratio; // Brightness intensity in the 0.0-1.0 range.
-	t_vector	color; // Normalized RGB color in the 0.0-1.0 range.
+	double		ratio;	// Brightness intensity in the 0.0-1.0 range.
+	t_vector	color;	// Normalized RGB color in the 0.0-1.0 range.
 }	t_elem_light_a;
 
 /**
@@ -56,12 +56,12 @@ typedef struct s_elem_light_a
  */
 typedef struct s_elem_camera
 {
-	t_vector	pos;    // World space position of the camera.
-	t_vector	normal; // Forward facing direction of the camera.
-	t_vector	up;     // Up basis vector scaled to viewport height.
-	t_vector	right;  // Right basis vector scaled to viewport width.
-	int			fov;    // Horizontal field of view angle in degrees.
-	t_ray		(*get_pixel_ray)(void *ptr, int x, int y); // Ray generator.
+	t_vector	pos;	// World space position of the camera.
+	t_vector	normal;	// Forward facing direction of the camera.
+	t_vector	up;		// Up basis vector scaled to viewport height.
+	t_vector	right;	// Right basis vector scaled to viewport width.
+	int			fov;	// Horizontal field of view angle in degrees.
+	t_ray		(*get_pixel_ray)(void *ptr, int x, int y);	// Ray generator.
 }	t_elem_camera;
 
 /**
@@ -71,8 +71,8 @@ typedef struct s_elem_camera
  */
 typedef struct s_transform
 {
-	t_mat4	inv;           // Inverse transformation matrix M⁻¹.
-	t_mat4	inv_transpose; // Transposed inverse (M⁻¹)ᵀ for normals.
+	t_mat4	inv;			// Inverse transformation matrix M⁻¹.
+	t_mat4	inv_transpose;	// Transposed inverse (M⁻¹)ᵀ for normals.
 }	t_transform;
 
 /**
@@ -82,11 +82,11 @@ typedef struct s_transform
  */
 typedef struct s_object
 {
-	t_transform	transform;  // Inverse and inverse transpose matrices.
-	t_material	material;   // Surface material containing the color.
-	void		*data;      // Object-specific geometry data.
-	double		(*c_intersection)(t_ray local_ray); // Local intersection.
-	t_vector	(*c_normal)(t_vector point);        // Local surface normal.
+	t_transform	transform;	// Inverse and inverse transpose matrices.
+	t_material	material;	// Surface material containing the color.
+	void		*data;		// Object-specific geometry data.
+	double		(*c_intersection)(t_ray local_ray);	// Local intersection.
+	t_vector	(*c_normal)(t_vector point);		// Local surface normal.
 }	t_object;
 
 /**
@@ -95,8 +95,8 @@ typedef struct s_object
  */
 typedef struct s_elem_cylinder
 {
-	double		diam;   // Diameter in world space units.
-	double		height; // Height in world space units.
+	double		diam;	// Diameter in world space units.
+	double		height;	// Height in world space units.
 }	t_elem_cylinder;
 
 /**
