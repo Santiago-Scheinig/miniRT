@@ -31,8 +31,8 @@ int init_light_p(char **argv, int i, t_rtapp *app)
 	t_elem_light_p	*new_light_p;
 	t_list			*new_node;
 
-	if (app->lights)
-		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
+/* 	if (app->lights)
+		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined.")); */
 	if (parse_lp(argv, i))
 		return (RT_FAILURE);
 	new_light_p = build_lp(argv);
