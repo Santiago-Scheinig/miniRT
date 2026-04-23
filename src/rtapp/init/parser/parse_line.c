@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:01:27 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 16:47:01 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	aux = (char *) line->content;
 	while(aux[++j])
 	{
+		if (aux[0] == '#')
+			return (RT_SUCCESS);
 		if (aux[j] != ' ' && aux[j] != '\t' && aux[j] != '\n')
 			break;		
 		return (RT_SUCCESS);
