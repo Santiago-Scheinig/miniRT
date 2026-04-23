@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:13:45 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:26:04 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:15:00 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ t_elem_light_a	build_la(char **str)
 	t_elem_light_a	new_la;
 
 	new_la.ratio = ft_atod(str[1]);
-	if (!new_la.ratio)
-		new_la.ratio = 0.1;
 	new_la.color = build_color(str[2]);
 	return (new_la);
 }
