@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtmth.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/21 19:06:23 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:13:29 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,18 @@
  */
 typedef union u_vector
 {
-	struct {double x, y, z;}; // Spatial coordinate access.
-	struct {double r, g, b;}; // Normalized color access in 0.0-1.0 range.
+	struct
+	{
+		double	x;
+		double	y;
+		double	z;
+	}; // Spatial coordinate access.
+	struct
+	{
+		double	r;
+		double	g;
+		double	b;
+	}; // Normalized color access in 0.0-1.0 range.
 }	t_vector;
 
 /**
@@ -69,9 +79,9 @@ typedef struct s_mat3
  */
 typedef struct s_roots
 {
-	int		has_solutions; // 1 if real solutions exist, 0 otherwise.
-	double	sol1;          // Smallest solution of the equation.
-	double	sol2;          // Largest solution of the equation.
+	int		has_solutions;	// 1 if real solutions exist, 0 otherwise.
+	double	sol1;	// Smallest solution of the equation.
+	double	sol2;	// Largest solution of the equation.
 }	t_roots;
 
 /**
@@ -81,7 +91,7 @@ typedef struct s_roots
  */
 typedef struct s_ray
 {
-	t_vector	origin;    // Starting point of the ray in world space.
+	t_vector	origin;	// Starting point of the ray in world space.
 	t_vector	direction; // Normalized direction vector of the ray.
 }	t_ray;
 

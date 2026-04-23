@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:50:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:10:34 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,24 @@ static int	double_check(char *str, char **split, t_dlim limits)
 {
 	double	aux;
 	int		i;
-	int		j;
 
-	i = -1;
-	while (split[++i])
+	if (!split || !split[0])
+		return (RT_FAILURE);
+	i = 0;
+	if (split[0][0] == '-')
+		i = 1;
+	while (split[0][i])
 	{
-		j = -1;
-		while (split[i][++j])
-			if (split[i][0] != '-' && !ft_isdigit(split[i][j]))
-					return (RT_FAILURE);
+		if (!ft_isdigit(split[0][i]))
+			return (RT_FAILURE);
+		i++;
+	}
+	if (split[1])
+	{
+		if (ft_strlen(split[1]) > 1)
+			return (RT_FAILURE);
+		if (!ft_isdigit(split[1][0]))
+			return (RT_FAILURE);
 	}
 	aux = ft_atod(str);
 	if (aux > limits.max || aux < limits.min)
