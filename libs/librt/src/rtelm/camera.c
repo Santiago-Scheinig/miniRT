@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:00:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:49:51 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	build_camera(char **str, t_elem_camera *camera)
 	if (!camera->normal.x && !camera->normal.y && !camera->normal.z)
 		return (1);
 	camera->fov = ft_atod(str[3]);
-	camera->get_pixel_ray = &get_pixel_ray;	
+	camera->get_pixel_ray = &get_pixel_ray;
 	build_camera_data(camera);
 	return (0);
 }

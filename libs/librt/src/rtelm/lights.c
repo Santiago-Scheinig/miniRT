@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lights.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:13:45 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:04:16 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:51:06 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_elem_light_a	build_la(char **str)
 t_elem_light_p	*build_lp(char **str)
 {
 	t_elem_light_p	*new_lp;
-	char	*next;
+	char			*next;
 
 	new_lp = ft_calloc(1, sizeof(t_elem_light_p));
 	if (!new_lp)

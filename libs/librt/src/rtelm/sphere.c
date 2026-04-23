@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:07:21 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:51:40 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	build_sp(char **str, t_object *obj)
 	t_elem_sphere	*data;
 	t_vector		position;
 	t_vector		normal;
-	
+
 	position = build_vector(str[1]);
 	ft_memset(&normal, 0, sizeof(t_vector));
 	data = ft_calloc(1, sizeof(t_elem_sphere));
