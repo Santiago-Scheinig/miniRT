@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 19:21:45 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/23 19:57:42 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,12 @@
  */
 typedef struct s_tile
 {
-	int x_start; // Starting x-coordinate of the tile, inclusive.
-	int y_start; // Starting y-coordinate of the tile, inclusive.
-	int x_end;   // Ending x-coordinate of the tile, exclusive.
-	int y_end;   // Ending y-coordinate of the tile, exclusive.
-	
-	uint32_t *(*get_pixel_ptr)(uint32_t *img, int x, int y); 
-}   t_tile;
+	int			x_start;	// Starting x-coordinate of the tile, inclusive.
+	int			y_start;	// Starting y-coordinate of the tile, inclusive.
+	int			x_end;		// Ending x-coordinate of the tile, exclusive.
+	int			y_end;		// Ending y-coordinate of the tile, exclusive.
+	uint32_t	*(*get_pixel_ptr)(uint32_t *img, int x, int y);
+}	t_tile;
 
 /**
  * Tracks the next tile to be dispatched in the render queue.
@@ -44,7 +43,7 @@ typedef struct s_tile_queue
 {
 	int	current_x; // X coordinate of the next tile to be rendered.
 	int	current_y; // Y coordinate of the next tile to be rendered.
-}   t_tile_queue;
+}	t_tile_queue;
 
 /**
  * @brief Represents a ray-object intersection hit, containing all necessary
@@ -108,7 +107,7 @@ t_vector		get_color_at_hit(
 					t_hit hit,
 					t_list *objs,
 					t_rtapp *app
-				);
+					);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
