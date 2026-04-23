@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 17:40:41 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:44:48 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 int	main(int argc, char **argv)
 {
 	const char	*err = "main: application initialization failed: %s";
-	t_rtapp	app;
+	t_rtapp		app;
 
 	ft_memset(&app, 0, sizeof(t_rtapp));
 	app.img = ft_calloc(SCREEN_HEIGHT * SCREEN_WIDTH, sizeof(uint32_t));
