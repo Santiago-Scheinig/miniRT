@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:41:16 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 11:40:53 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ static void	process_tile(t_tile *tile, t_rtapp *app)
 	}
 }
 
+static void	render_worker_routine(void *arg)
+{
+	int		has_tiles_left;
+	t_rtapp	*app;
+	t_tile	tile;
+
+	app = (t_rtapp *)arg;
+	has_tiles_left = TRUE;
+	while (has_tiles_left)
+	{
+		has_tiles_left = get_next_tile(&app->tile_queue, &tile);
+		if (has_tiles_left)
+			process_tile(&tile, app);
+	}
+}
+
 /**
  * Runs the miniRT redering loop.
  * @param app The initialized T_RTAPP instance.
@@ -68,18 +84,8 @@ static void	process_tile(t_tile *tile, t_rtapp *app)
  */
 int	rtapp_render(t_rtapp *app)
 {
-	t_tile_queue	queue;
-	t_tile			tile;
-	int				has_tiles_left;
-
-	queue = new_tile_queue();
-	has_tiles_left = TRUE;
-	while (has_tiles_left)
-	{
-		has_tiles_left = get_next_tile(&queue, &tile);
-		if (has_tiles_left)
-			process_tile(&tile, app);
-	}
+	app->tile_queue = new_tile_queue();
+	render_worker_routine(app);
 	return (RT_SUCCESS);
 }
 

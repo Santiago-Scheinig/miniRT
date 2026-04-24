@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:55:51 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 11:35:24 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,32 @@
 /*--------------------------------------------------------------------------*/
 
 /**
+ * Represents a rectangular tile section of the render buffer.
+ * @note Tiles divide the screen into smaller sections for efficient
+ * rendering, enabling multi-threaded processing where each thread
+ * works on an independent tile without overlap.
+ */
+typedef struct s_tile
+{
+	int			x_start;	// Starting x-coordinate of the tile, inclusive.
+	int			y_start;	// Starting y-coordinate of the tile, inclusive.
+	int			x_end;		// Ending x-coordinate of the tile, exclusive.
+	int			y_end;		// Ending y-coordinate of the tile, exclusive.
+	uint32_t	*(*get_pixel_ptr)(uint32_t *img, int x, int y);
+}	t_tile;
+
+/**
+ * Tracks the next tile to be dispatched in the render queue.
+ * @note In multi-threaded rendering, threads read and advance this
+ * queue atomically to claim the next unrendered tile without overlap.
+ */
+typedef struct s_tile_queue
+{
+	int	current_x; // X coordinate of the next tile to be rendered.
+	int	current_y; // Y coordinate of the next tile to be rendered.
+}	t_tile_queue;
+
+/**
  * Represents the full state of the miniRT application.
  * @note objects and lights are NULL until parsed from the scene file.
  * camera.get_pixel_ray being NULL indicates the camera is uninitialized.
@@ -44,6 +70,7 @@ typedef struct s_rtapp
 	t_list			*lights;	// Linked list of T_ELEM_LIGHT_P point lights.
 	t_elem_camera	camera;		// Unique camera instance for the scene.
 	t_elem_light_a	ambient;	// Unique ambient light instance for the scene.
+	t_tile_queue	tile_queue;	// Queue of tiles to render.
 }	t_rtapp;
 
 /*--------------------------------------------------------------------------*/
