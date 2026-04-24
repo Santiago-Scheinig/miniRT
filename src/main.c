@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/24 12:31:05 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:27:38 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	main(int argc, char **argv)
 {
 	const char	*err = "main: application initialization failed: %s";
 	t_rtapp		app;
+
 	struct timespec	start, end, total_start, total_end; // TODO: delete before submission
 	double			elapsed; // TODO: delete before submission
 
@@ -39,7 +40,6 @@ int	main(int argc, char **argv)
 		return (rtlog(RT_ERRLOG, 0, err, strerror(errno)), RT_FAILURE);
 
 	// Init
-	printf("Starting Rtapp init...\n"); // TODO: delete before submission
 	clock_gettime(CLOCK_MONOTONIC, &start); // TODO: delete before submission
 
 	if (rtapp_init(argc, argv, &app))
@@ -47,10 +47,9 @@ int	main(int argc, char **argv)
 
 	clock_gettime(CLOCK_MONOTONIC, &end); // TODO: delete before submission
 	elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9; // TODO: delete before submission
-	printf("Rtapp init finished in %.3f seconds\n\n", elapsed); // TODO: delete before submission
-	
+	printf("%.3f,", elapsed); // TODO: delete before submission
+
 	// Render
-	printf("Starting render...\n"); // TODO: delete before submission
 	clock_gettime(CLOCK_MONOTONIC, &start); // TODO: delete before submission
 
 	if (rtapp_render(&app))
@@ -58,11 +57,11 @@ int	main(int argc, char **argv)
 
 	clock_gettime(CLOCK_MONOTONIC, &end); // TODO: delete before submission
 	elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9; // TODO: delete before submission
-	printf("Render finished in %.3f seconds\n\n", elapsed); // TODO: delete before submission
+	printf("%.3f,", elapsed); // TODO: delete before submission
 
 	clock_gettime(CLOCK_MONOTONIC, &total_end); // TODO: delete before submission
 	elapsed = (total_end.tv_sec - total_start.tv_sec) + (total_end.tv_nsec - total_start.tv_nsec) / 1e9; // TODO: delete before submission
-	printf("Total execution time: %.3f seconds\n\n-----------------------\n\n", elapsed); // TODO: delete before submission
+	printf("%.3f\n", elapsed); // TODO: delete before submission
 
 	// Run window
 	if (window_run(app.img, argv[1]))
