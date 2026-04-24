@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/04 17:56:49 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/23 20:45:47 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 11:35:35 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,32 +18,6 @@
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
 /*--------------------------------------------------------------------------*/
-
-/**
- * Represents a rectangular tile section of the render buffer.
- * @note Tiles divide the screen into smaller sections for efficient
- * rendering, enabling multi-threaded processing where each thread
- * works on an independent tile without overlap.
- */
-typedef struct s_tile
-{
-	int			x_start;	// Starting x-coordinate of the tile, inclusive.
-	int			y_start;	// Starting y-coordinate of the tile, inclusive.
-	int			x_end;		// Ending x-coordinate of the tile, exclusive.
-	int			y_end;		// Ending y-coordinate of the tile, exclusive.
-	uint32_t	*(*get_pixel_ptr)(uint32_t *img, int x, int y);
-}	t_tile;
-
-/**
- * Tracks the next tile to be dispatched in the render queue.
- * @note In multi-threaded rendering, threads read and advance this
- * queue atomically to claim the next unrendered tile without overlap.
- */
-typedef struct s_tile_queue
-{
-	int	current_x; // X coordinate of the next tile to be rendered.
-	int	current_y; // Y coordinate of the next tile to be rendered.
-}	t_tile_queue;
 
 /**
  * @brief Represents a ray-object intersection hit, containing all necessary

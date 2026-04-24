@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   elems_tester.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 13:58:29 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/14 18:26:27 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	test_plane_get_inverse_mat4(void)
 
 	world_ray.origin    = vector_new(0.0, 5.0, 0.0);
 	world_ray.direction = vector_new(1.0, 0.0, 0.0);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 
 	/* origin should be at (0,0,0) in local space */
 	if (!aux_vector_equal(local_ray.origin, vector_new(0.0, 0.0, 0.0)))
@@ -93,7 +93,7 @@ static int	test_plane_get_inverse_mat4(void)
 
 	world_ray.origin    = vector_new(0.0, 5.0, 1.0);
 	world_ray.direction = vector_new(0.0, 1.0, 0.0);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 
 	/* coplanar point (0,5,1) → local (1,0,0)  */
 	if (!aux_vector_equal(local_ray.origin, vector_new(1.0, 0.0, 0.0)))
@@ -115,25 +115,25 @@ static int	test_sphere_get_inverse_mat4(void)
 
 	/* center maps to (0,0,0) */
 	p = vector_new(10.0, 0.0, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 0.0)))
 		return (1);
 
 	/* surface point +2 on X maps to (1,0,0) */
 	p = vector_new(12.0, 0.0, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(1.0, 0.0, 0.0)))
 		return (1);
 
 	/* surface point -2 on Y maps to (0,-1,0) */
 	p = vector_new(10.0, -2.0, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, -1.0, 0.0)))
 		return (1);
 
 	/* surface point +2 on Z maps to (0,0,1) */
 	p = vector_new(10.0, 0.0, 2.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 1.0)))
 		return (1);
 	return (0);
@@ -154,19 +154,19 @@ static int	test_cylinder_get_inverse_mat4(void)
 
 	/* center (0,10,0) → (0,0,0) */
 	p = vector_new(0.0, 10.0, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, 0.0, 0.0)))
 		return (1);
 
 	/* (1,10,0) → (0,0,-1) — radius=1 in local XZ, rotated by mat4_rotation */
 	p = vector_new(1.0, 10.0, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, 0.0, -1.0)))
 		return (1);
 
 	/* top cap midpoint (0,12.5,0) → (0,1,0) */
 	p = vector_new(0.0, 12.5, 0.0);
-	res = vector_mult_mat4_point(p, obj.transform.inv);
+	res = vector_mult_mat4_point(p, &obj.transform.inv);
 	if (!aux_vector_equal(res, vector_new(0.0, 1.0, 0.0)))
 		return (1);
 	return (0);
@@ -188,7 +188,7 @@ static int	test_plane_intersection(void)
 	world_ray.origin    = vector_new(0.0, 0.0, 0.0);
 	world_ray.direction = vector_normalize(vector_new(0.0, 1.0, 1.0));
 
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 	res = obj.c_intersection(local_ray);
 
 	if (fabs(res - sqrt(50.0)) > EPSILON)
@@ -211,7 +211,7 @@ static int	test_sphere_intersection(void)
 	char *str1[] = {"sp", "5.0,0.0,0.0", "2.0", "255,255,255", NULL};
 	if (build_sp(str1, &obj))
 		return (1);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 	res = obj.c_intersection(local_ray);
 	if (res != INFINITY)
 		return (1);
@@ -220,7 +220,7 @@ static int	test_sphere_intersection(void)
 	char *str2[] = {"sp", "5.0,0.0,4.8", "2.0", "255,255,255", NULL};
 	if (build_sp(str2, &obj))
 		return (1);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 	res = obj.c_intersection(local_ray);
 	if (fabs(res - sqrt((4.2 * 4.2) + (4.2 * 4.2))) > EPSILON)
 		return (1);
@@ -243,7 +243,7 @@ static int	test_cylinder_intersection(void)
 		"4.0", "5.0", "255,255,255", NULL};
 	if (build_cy(str1, &obj))
 		return (1);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 	res = obj.c_intersection(local_ray);
 	if (res != INFINITY)
 		return (1);
@@ -253,7 +253,7 @@ static int	test_cylinder_intersection(void)
 		"4.0", "5.0", "255,255,255", NULL};
 	if (build_cy(str2, &obj))
 		return (1);
-	local_ray = ray_transform(world_ray, obj.transform.inv);
+	local_ray = ray_transform(world_ray, &obj.transform.inv);
 	res = obj.c_intersection(local_ray);
 	if (fabs(res - 4.242641) > 0.0001)
 		return (1);
