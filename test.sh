@@ -1,7 +1,6 @@
 #!/bin/bash
 
 RESOLUTION=$1
-OP_FILE=$2
 VALGRIND=0
 
 make fclean
@@ -27,14 +26,12 @@ fi
 
 eval $RES
 make clean
-echo "File,InitTime,RenderTime,TotalTime" > $OP_FILE
 for f in tests/*.rt tests/*/*.rt; do
 	echo "Running $f"
 	if [ "$VALGRIND" -eq 1 ]; then
 		valgrind --leak-check=full --error-exitcode=1 ./miniRT "$f" >> $OP_FILE || echo "❌ crash or error: $f"
 	else
-		echo -n "$f," >> $OP_FILE
-		./miniRT "$f" >> $OP_FILE || echo "❌ crash or error: $f"
+		./miniRT "$f" || echo "❌ crash or error: $f"
 	fi
 done
 make fclean
