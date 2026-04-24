@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 16:54:48 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 20:22:31 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -293,7 +293,7 @@ static int	test_mat4_transpose(void)
 			og.m[i][j] = i * 4 + j + 1;
 		}
 	}
-	transposed = mat4_transposed(og);
+	transposed = mat4_transposed(&og);
 	if (transposed.m[0][0] != 1.0
 		|| transposed.m[0][1] != 5.0
 		|| transposed.m[0][2] != 9.0
@@ -322,14 +322,14 @@ static int	test_mat4_determinant(void)
 	m.m[1][0] = 5.0; m.m[1][1] = 6.0; m.m[1][2] = 7.0; m.m[1][3] = 8.0;
 	m.m[2][0] = 9.0; m.m[2][1] = 10.0; m.m[2][2] = 11.0; m.m[2][3] = 12.0;
 	m.m[3][0] = 13.0; m.m[3][1] = 14.0; m.m[3][2] = 15.0; m.m[3][3] = 16.0;
-	double res = mat4_determinant(m);
+	double res = mat4_determinant(&m);
 	if (res != 0.0)
 		return (1);
 	m.m[0][0] = 5.0; m.m[0][1] = 7.0; m.m[0][2] = 9.0; m.m[0][3] = 0.0;
 	m.m[1][0] = 4.0; m.m[1][1] = 9.0; m.m[1][2] = 6.0; m.m[1][3] = 7.0;
 	m.m[2][0] = 1.0; m.m[2][1] = 6.0; m.m[2][2] = 3.0; m.m[2][3] = 5.0;
 	m.m[3][0] = 8.0; m.m[3][1] = 6.0; m.m[3][2] = 7.0; m.m[3][3] = 8.0;
-	res = mat4_determinant(m);
+	res = mat4_determinant(&m);
 	if (res != 196.0)
 		return (1);
 	return (0);
@@ -342,14 +342,14 @@ static int	test_mat4_inverse(void)
 	m.m[1][0] = 5.0; m.m[1][1] = 6.0; m.m[1][2] = 7.0; m.m[1][3] = 8.0;
 	m.m[2][0] = 9.0; m.m[2][1] = 10.0; m.m[2][2] = 11.0; m.m[2][3] = 12.0;
 	m.m[3][0] = 13.0; m.m[3][1] = 14.0; m.m[3][2] = 15.0; m.m[3][3] = 16.0;
-	t_mat4 inverse = mat4_inverse(m);
+	t_mat4 inverse = mat4_inverse(&m);
 	if (!aux_mat4_equal(inverse, mat4_new_identity()))
 		return (1);
 	m.m[0][0] = 5.0; m.m[0][1] = 7.0; m.m[0][2] = 9.0; m.m[0][3] = 0.0;
 	m.m[1][0] = 4.0; m.m[1][1] = 9.0; m.m[1][2] = 6.0; m.m[1][3] = 7.0;
 	m.m[2][0] = 1.0; m.m[2][1] = 6.0; m.m[2][2] = 3.0; m.m[2][3] = 5.0;
 	m.m[3][0] = 8.0; m.m[3][1] = 6.0; m.m[3][2] = 7.0; m.m[3][3] = 8.0;
-	inverse = mat4_inverse(m);
+	inverse = mat4_inverse(&m);
 	t_mat4 exp;
 	exp.m[0][0] = -39.0/196; exp.m[0][1] = 239.0/196; exp.m[0][2] = -277.0/196; exp.m[0][3] = -9.0/49;
 	exp.m[1][0] = -29.0/196; exp.m[1][1] = 233.0/196; exp.m[1][2] = -211.0/196; exp.m[1][3] = -18.0/49;
@@ -367,7 +367,11 @@ static int	test_mat4_mult_mat4(void)
 	m1.m[1][0] = 5.0; m1.m[1][1] = 6.0; m1.m[1][2] = 7.0; m1.m[1][3] = 8.0;
 	m1.m[2][0] = 9.0; m1.m[2][1] = 10.0; m1.m[2][2] = 11.0; m1.m[2][3] = 12.0;
 	m1.m[3][0] = 13.0; m1.m[3][1] = 14.0; m1.m[3][2] = 15.0; m1.m[3][3] = 16.0;
-	t_mat4 res = mat4_mult_mat4(m1, mat4_new_identity());
+	t_mat4 identity;
+	t_mat4 res;
+
+	identity = mat4_new_identity();
+	res = mat4_mult_mat4(&m1, &identity);
 	if (!aux_mat4_equal(res, m1))
 		return (1);
 	t_mat4 m2;
@@ -375,7 +379,7 @@ static int	test_mat4_mult_mat4(void)
 	m2.m[1][0] = 4.0; m2.m[1][1] = 9.0; m2.m[1][2] = 6.0; m2.m[1][3] = 7.0;
 	m2.m[2][0] = 1.0; m2.m[2][1] = 6.0; m2.m[2][2] = 3.0; m2.m[2][3] = 5.0;
 	m2.m[3][0] = 8.0; m2.m[3][1] = 6.0; m2.m[3][2] = 7.0; m2.m[3][3] = 8.0;
-	res = mat4_mult_mat4(m1, m2);
+	res = mat4_mult_mat4(&m1, &m2);
 	t_mat4 exp;
 	exp.m[0][0] = 48.0; exp.m[0][1] = 67.0; exp.m[0][2] = 58.0; exp.m[0][3] = 61.0;
 	exp.m[1][0] = 120.0; exp.m[1][1] = 179.0; exp.m[1][2] = 158.0; exp.m[1][3] = 141.0;
@@ -509,12 +513,12 @@ static int	test_vector_mult_mat4_point(void)
 {
 	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
 	t_vector v = vector_new(1.0, 1.0, 1.0);
-	t_vector res = vector_mult_mat4_point(v, m);
+	t_vector res = vector_mult_mat4_point(v, &m);
 	t_vector exp = vector_new(2.0, 3.0, 4.0);
 	if (!aux_vector_equal(res, exp))
 		return (1);
 	m = mat4_rotation_x(M_PI / 2);
-	res = vector_mult_mat4_point(v, m);
+	res = vector_mult_mat4_point(v, &m);
 	exp = vector_new(1.0, -1.0, 1.0);
 	if (!aux_vector_equal(res, exp))
 		return (1);
@@ -525,12 +529,12 @@ static int	test_vector_mult_mat4_dir(void)
 {
 	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
 	t_vector v = vector_new(1.0, 1.0, 1.0);
-	t_vector res = vector_mult_mat4_dir(v, m);
+	t_vector res = vector_mult_mat4_dir(v, &m);
 	t_vector exp = vector_new(1.0, 1.0, 1.0);
 	if (!aux_vector_equal(res, exp))
 		return (1);
 	m = mat4_rotation_x(M_PI / 2);
-	res = vector_mult_mat4_dir(v, m);
+	res = vector_mult_mat4_dir(v, &m);
 	exp = vector_new(1.0, -1.0, 1.0);
 	if (!aux_vector_equal(res, exp))
 		return (1);
@@ -543,14 +547,14 @@ static int	test_ray_transform(void)
 	ray.origin = vector_new(1.0, 2.0, 3.0);
 	ray.direction = vector_new(2.0, 3.0, 6.0);
 	t_mat4 m = mat4_translation(1.0, 2.0, 3.0);
-	t_ray res = ray_transform(ray, m);
+	t_ray res = ray_transform(ray, &m);
 	t_ray exp;
 	exp.origin = vector_new(2.0, 4.0, 6.0);
 	exp.direction = vector_new(2.0, 3.0, 6.0);
 	if (!aux_vector_equal(res.origin, exp.origin) || !aux_vector_equal(res.direction, exp.direction))
 		return (1);
 	m = mat4_rotation_x(M_PI / 2);
-	res = ray_transform(ray, m);
+	res = ray_transform(ray, &m);
 	exp.origin = vector_new(1.0, -3.0, 2.0);
 	exp.direction = vector_new(2.0, -6.0, 3.0);
 	if (!aux_vector_equal(res.origin, exp.origin) || !aux_vector_equal(res.direction, exp.direction))
@@ -563,7 +567,7 @@ static int test_mat4_rotation(void)
 	// 1. Casos Deterministas Precalculados (Cálculo Manual)
 	t_vector	normal = vector_new(0.0, 1.0, 0.0);
 	t_mat4		res = mat4_rotation(normal);
-	t_vector	mult = vector_mult_mat4_dir(normal, res);
+	t_vector	mult = vector_mult_mat4_dir(normal, &res);
 	if (!aux_vector_equal(mult, normal))
 		return (1);
 	t_mat4		exp = aux_mat4_from_vector_column(vector_new(0.0, 0.0, 1.0), vector_new(0.0, 1.0, 0.0), vector_new(-1.0, 0.0, 0.0));

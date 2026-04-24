@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:17:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:50:33 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	build_matrixes(
 			)
 {
 	obj->transform.inv = inv_mtx(obj, position, normal);
-	obj->transform.inv_transpose = mat4_transposed(obj->transform.inv);
+	obj->transform.inv_transpose = mat4_transposed(&obj->transform.inv);
 }
 
 t_object	*build_object(char **arr, int (*builder)(char **, t_object *))

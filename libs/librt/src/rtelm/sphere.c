@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 19:58:15 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:51:40 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static t_mat4	sp_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 	sp = (t_elem_sphere *) obj->data;
 	trans = mat4_translation(position.x, position.y, position.z);
 	scale = mat4_scale(sp->diam / 2.0, sp->diam / 2.0, sp->diam / 2.0);
-	inv = mat4_inverse(mat4_mult_mat4(trans, scale));
+	inv = mat4_mult_mat4(&trans, &scale);
+	inv = mat4_inverse(&inv);
 	return (inv);
 }
 

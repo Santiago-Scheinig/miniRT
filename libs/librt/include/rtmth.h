@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:47:48 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,14 +200,14 @@ t_mat4		mat4_new_identity(void);
  * @param mat The matrix to transpose.
  * @return The transposed T_MAT4.
  */
-t_mat4		mat4_transposed(t_mat4 mat);
+t_mat4		mat4_transposed(const t_mat4 *mat);
 
 /**
  * Calculates the determinant of a 4x4 matrix.
  * @param mat The matrix for which to calculate the determinant.
  * @return The determinant of MAT as a double.
  */
-double		mat4_determinant(t_mat4 mat);
+double		mat4_determinant(const t_mat4 *mat);
 
 /**
  * Creates the inverse of a 4x4 matrix.
@@ -215,7 +215,7 @@ double		mat4_determinant(t_mat4 mat);
  * @return The inverted T_MAT4, or the identity matrix if MAT is not
  * invertible (determinant is 0).
  */
-t_mat4		mat4_inverse(t_mat4 mat);
+t_mat4		mat4_inverse(const t_mat4 *mat);
 
 /**
  * Multiplies two 4x4 matrices together.
@@ -225,7 +225,7 @@ t_mat4		mat4_inverse(t_mat4 mat);
  * @note Matrix multiplication is not commutative — mat4_mult_mat4(m1, m2)
  * may not equal mat4_mult_mat4(m2, m1).
  */
-t_mat4		mat4_mult_mat4(t_mat4 m1, t_mat4 m2);
+t_mat4		mat4_mult_mat4(const t_mat4 *m1, const t_mat4 *m2);
 
 /**
  * Creates a translation matrix for the given translation values.
@@ -328,7 +328,7 @@ t_vector	ray_point_at(t_ray ray, double t);
  * @param transform The T_MAT4 transformation matrix to apply.
  * @return The transformed T_RAY with both origin and direction updated.
  */
-t_ray		ray_transform(t_ray ray, t_mat4 transform);
+t_ray		ray_transform(t_ray ray, const t_mat4 *transform);
 
 /*--------------------------------------------------------------------------*/
 /*---------------------------------UTILITIES--------------------------------*/
@@ -341,7 +341,7 @@ t_ray		ray_transform(t_ray ray, t_mat4 transform);
  * @return The transformed T_VECTOR including translation effects.
  * @note Use this for transforming positions in homogeneous coordinates.
  */
-t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
+t_vector	vector_mult_mat4_point(t_vector v, const t_mat4 *m);
 
 /**
  * Multiplies a 4x4 matrix by a vector treated as a direction (w = 0).
@@ -350,7 +350,7 @@ t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
  * @return The transformed T_VECTOR unaffected by translation.
  * @note Use this for transforming normals and ray directions.
  */
-t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
+t_vector	vector_mult_mat4_dir(t_vector v, const t_mat4 *m);
 
 /**
  * Solves a quadratic equation of the form ax² + bx + c = 0.

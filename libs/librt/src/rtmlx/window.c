@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 19:01:10 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:53:21 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 13:31:44 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,6 @@ int	window_run(uint32_t *image, char *filename)
 	ft_memcpy(mlx->addr, image, SCREEN_WIDTH * SCREEN_HEIGHT * sizeof(uint32_t));
 	mlx_put_image_to_window(mlx->instance, mlx->win, mlx->img, 0, 0);
 	set_hooks(mlx);
-	mlx_loop(mlx->instance);
+	// mlx_loop(mlx->instance);
 	return (del_mlx(mlx, 0));
 }
