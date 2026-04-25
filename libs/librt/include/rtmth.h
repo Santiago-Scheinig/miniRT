@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 18:42:53 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/25 18:45:42 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ typedef struct s_mat3
 typedef struct s_roots
 {
 	int		has_solutions;	// 1 if real solutions exist, 0 otherwise.
-	double	sol1;			// Smallest solution of the equation.
-	double	sol2;			// Largest solution of the equation.
+	double	sol1;	// Smallest solution of the equation.
+	double	sol2;	// Largest solution of the equation.
 }	t_roots;
 
 /**
@@ -91,8 +91,8 @@ typedef struct s_roots
  */
 typedef struct s_ray
 {
-	t_vector	origin;		// Starting point of the ray in world space.
-	t_vector	direction;	// Normalized direction vector of the ray.
+	t_vector	origin;	// Starting point of the ray in world space.
+	t_vector	direction; // Normalized direction vector of the ray.
 }	t_ray;
 
 /*--------------------------------------------------------------------------*/
