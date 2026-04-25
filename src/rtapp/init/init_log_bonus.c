@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_log_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:51:07 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:25:11 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 17:06:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,9 @@ int	init_log(t_rtapp *app)
 {
 	int	log_fd;
 	int	errlog_fd;
-	//int	mode;
 
-/* 	if (LOG_APP)
-		mode = O_APPEND;
-	if (LOG_TRC)
-		mode = O_TRUNC; 
 	if (!DEV)
-		return (RT_SUCCESS); */
+		return (RT_SUCCESS);
 	app->logfd.orig_outfd = STDOUT_FILENO;
 	app->logfd.orig_errfd = STDERR_FILENO;
 	rtlog(RT_LOG, 0, "< Initializing log files >");

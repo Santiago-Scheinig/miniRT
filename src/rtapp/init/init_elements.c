@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_elements.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:24:30 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 17:28:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_init.h"
 #include "rtapp_parser.h"
+#include "g_init_dispatch.h"
 
 int	init_light_a(char **argv, int i, t_rtapp *app)
 {
@@ -31,8 +32,8 @@ int	init_light_p(char **argv, int i, t_rtapp *app)
 	t_elem_light_p	*new_light_p;
 	t_list			*new_node;
 
-/* 	if (app->lights)
-		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined.")); */
+	if (app->lights)
+		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], "already defined."));
 	if (parse_lp(argv, i))
 		return (RT_FAILURE);
 	new_light_p = build_lp(argv);

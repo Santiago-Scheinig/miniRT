@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_parser.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:51:00 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 17:26:41 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,8 @@
 # define RTAPP_PARSER_H
 
 # include "rtapp.h"
+# include "g_parse_err_msgs.h"
 # include <float.h>
-
-/*--------------------------------------------------------------------------*/
-/*----------------------------------GLOBAL----------------------------------*/
-/*--------------------------------------------------------------------------*/
-
-/**
- * Error message arrays for argument validation of each scene element.
- * @note Each array follows the convention: entries 0 to n-1 correspond
- * to missing argument errors in declaration order, and the last entry
- * is the excess arguments error. Used by parse_arg to validate input.
- */
-extern const char *const	g_la_msgs[];	// Ambient light parser messages.
-extern const char *const	g_lp_msgs[];	// Point light parser messages.
-extern const char *const	g_ca_msgs[];	// Camera parser messages.
-extern const char *const	g_pl_msgs[];	// Plane parser messages.
-extern const char *const	g_cy_msgs[];	// Cylinder parser messages.
-extern const char *const	g_sp_msgs[];	// Sphere parser messages.
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
