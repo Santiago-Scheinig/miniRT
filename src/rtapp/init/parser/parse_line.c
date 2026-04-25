@@ -3,15 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:20:10 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 17:27:04 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_init.h"
 #include "rtapp_parser.h"
+#include "g_init_dispatch.h"
+
+static int	is_empty_or_comment_line(char *line)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[0] == '#')
+			return (TRUE);
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			break ;
+		return (TRUE);
+	}
+	return (FALSE);
+}
 
 /**
  * Looks up and calls the initializer for a scene element by its specifier.
@@ -52,14 +69,8 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 
 	j = -1;
 	aux = (char *) line->content;
-	while (aux[++j])
-	{
-		if (aux[0] == '#')
-			return (RT_SUCCESS);
-		if (aux[j] != ' ' && aux[j] != '\t' && aux[j] != '\n')
-			break ;
+	if (is_empty_or_comment_line(aux))
 		return (RT_SUCCESS);
-	}
 	arr = ft_split_base(aux, " \t\n");
 	if (!arr || !arr[0])
 		return (rtlog(RT_ERRLOG, 0, err, i, strerror(errno)));

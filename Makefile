@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/23 15:43:33 by sscheini         ###   ########.fr        #
+#    Updated: 2026/04/25 17:21:49 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,10 @@ MAIN_SRC =	$(SOURCE_DIR)/main.c								\
 			$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
 			$(SOURCE_DIR)/rtapp/init/init_file.c				\
 			$(SOURCE_DIR)/rtapp/init/init_elements.c			\
-			$(SOURCE_DIR)/rtapp/init/g_init_dispatch.c			\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
 			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/g_parse_err_msgs.c	\
 			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
 			$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
 			$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
@@ -56,10 +54,10 @@ LIBRARY_PATHS   = -L libs/librt					\
 # ================================ Compiler Settings ============================ #
 
 DEV ?= 0
-SCREEN_WIDTH = 3840
-SCREEN_HEIGHT = 2160
+W_WIDTH ?= 1920
+W_HEIGHT ?= 1080
 
-CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV) -D SCREEN_HEIGHT=$(SCREEN_HEIGHT) -D SCREEN_WIDTH=$(SCREEN_WIDTH)
+CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV) -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
 DEPFLAGS    = -MMD -MP
 CPPFLAGS    = $(INCLUDE_DIRS)
 LDFLAGS     = $(LIBRARY_PATHS)

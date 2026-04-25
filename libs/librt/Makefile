@@ -33,10 +33,10 @@ NAME	=	librt.a
 BONUS	=	librt_bonus.a
 
 CC		=	cc
-CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I libs/libft/include -I libs/minilibx -D SCREEN_HEIGHT=$(SCREEN_HEIGHT) -D SCREEN_WIDTH=$(SCREEN_WIDTH)
+CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I libs/libft/include -I libs/minilibx -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
 
-SCREEN_WIDTH ?= 1920
-SCREEN_HEIGHT ?= 1080
+W_WIDTH ?= 1920
+W_HEIGHT ?= 1080
 
 # --------------------------- Makefile Object Compilation -------------------------- #
 

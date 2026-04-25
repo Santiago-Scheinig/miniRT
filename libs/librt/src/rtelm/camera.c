@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:49:51 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 17:20:40 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static t_ray	get_pixel_ray(void *ptr, int x, int y)
 	t_vector		pixel_dir;
 
 	camera = (t_elem_camera *) ptr;
-	s = (x + 0.5) / (double)SCREEN_WIDTH - 0.5;
-	t = 0.5 - (y + 0.5) / (double)SCREEN_HEIGHT;
+	s = (x + 0.5) / (double)W_WIDTH - 0.5;
+	t = 0.5 - (y + 0.5) / (double)W_HEIGHT;
 	pixel_dir = vector_sum_vector(camera->normal,
 			vector_mult_scalar(camera->right, s));
 	pixel_dir = vector_sum_vector(pixel_dir,
@@ -68,7 +68,7 @@ static void	build_camera_data(t_elem_camera *camera)
 	up_norm = vector_normalize(up_norm);
 	camera->right = vector_mult_scalar(right_norm, v_width);
 	camera->up = vector_mult_scalar(up_norm,
-			v_width * ((double)SCREEN_HEIGHT / (double)SCREEN_WIDTH));
+			v_width * ((double)W_HEIGHT / (double)W_WIDTH));
 }
 
 int	build_camera(char **str, t_elem_camera *camera)
