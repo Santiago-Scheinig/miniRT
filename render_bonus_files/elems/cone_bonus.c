@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/25 18:17:08 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/25 18:32:53 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ double	cn_intersection(t_ray local_ray)
 
 	sides_t = get_cone_sides_intersection(local_ray);
 	cap_t = get_cone_cap_dist(local_ray);
-	
 	if (sides_t < cap_t)
 		return (sides_t);
 	return (cap_t);
