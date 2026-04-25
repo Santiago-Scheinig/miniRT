@@ -1,0 +1,61 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   render_bonus.h                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/25 17:19:44 by aramos-r          #+#    #+#             */
+/*   Updated: 2026/04/25 18:30:00 by aramos-r         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef RENDER_BONUS_H
+# define RENDER_BONUS_H
+# include "rtapp.h"
+
+typedef struct s_elem_cone
+{
+	t_vector	origin;
+	t_vector	normal;
+	double		diam;
+	double		height;
+}	t_elem_cone;
+
+/**
+ * @brief Computes the inverse transformation matrix for a cone.
+ * @param obj Pointer to the cone object containing the cone data.
+ * @param pos The position vector (center) of the cone in world space.
+ * @param normal The normalized axis vector of the cone.
+ * @return The inverse transformation matrix that converts world space
+ *         coordinates to the cone's local object space (canonical form).
+ * @note Constructs a 4x4 transformation matrix that combines translation,
+ *       rotation, and scaling to position the cone in world space, then
+ *       inverts it to enable ray-cone intersection calculations in local
+ *       coordinates.
+ */
+t_mat4		cn_inv_mat4(t_object *obj, t_vector pos, t_vector normal);
+
+/**
+ * @brief Computes the surface normal at a point on the cone.
+ * @param local_point A point in the cone's local object space.
+ * @return The normalized surface normal vector at the given point.
+ * @note For points on the top cap (Y >= 1.0), returns the cap normal
+ *       (0, 1, 0). For points on the cone's sides, computes the normal
+ *       vector based on the cone's implicit equation and normalizes it.
+ */
+t_vector	cn_normal(t_vector local_point);
+
+/**
+ * @brief Computes the ray-cone intersection distance.
+ * @param local_ray A ray in the cone's local object space.
+ * @return The distance T along the ray to the closest intersection point.
+ *         Returns INFINITY if no intersection exists.
+ * @note The cone is treated as a finite object with bounds
+ *       0.0 <= Y <= 1.0. The function checks both the cone's side
+ *       surface and its top cap, returning the smallest positive
+ *       distance for correct depth ordering.
+ */
+double		cn_intersection(t_ray local_ray);
+
+#endif
