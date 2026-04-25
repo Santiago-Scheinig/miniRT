@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/30 19:24:09 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/02 21:39:54 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_vector	ray_point_at(t_ray ray, double t)
 	return (point);
 }
 
-t_ray	ray_transform(t_ray ray, t_mat4 transform)
+t_ray	ray_transform(t_ray ray, const t_mat4 *transform)
 {
 	t_ray	transformed;
 

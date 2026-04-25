@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:17:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/20 18:23:12 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ t_vector	build_color(char *str)
 {
 	t_vector	color;
 	char		*next;
-	
+
 	next = ft_strchr(str, ',') + 1;
 	color.r = ft_atoi(str) / 255.0;
 	color.g = ft_atoi(next) / 255.0;
-	color.b = ft_atoi(ft_strchr(next, ',') + 1) / 255.0; 
+	color.b = ft_atoi(ft_strchr(next, ',') + 1) / 255.0;
 	return (color);
 }
 
@@ -37,17 +37,19 @@ t_vector	build_vector(char *str)
 	return (v);
 }
 
-void		build_matrixes(t_object *obj,
-					t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
-					t_vector position, t_vector normal)
+void	build_matrixes(
+			t_object *obj,
+			t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
+			t_vector position, t_vector normal
+			)
 {
 	obj->transform.inv = inv_mtx(obj, position, normal);
-	obj->transform.inv_transpose = mat4_transposed(obj->transform.inv);
+	obj->transform.inv_transpose = mat4_transposed(&obj->transform.inv);
 }
 
 t_object	*build_object(char **arr, int (*builder)(char **, t_object *))
 {
-	t_object *obj;
+	t_object	*obj;
 
 	obj = ft_calloc(1, sizeof(t_object));
 	if (!obj)

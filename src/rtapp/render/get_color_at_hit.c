@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/21 18:09:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/21 19:21:48 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:32:42 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ static int	is_in_shadow(t_hit hit, t_elem_light_p *light, t_list *objs)
 
 	to_light = vector_sub_vector(light->pos, hit.pos);
 	shadow_ray = ray_new(vector_sum_vector(
-			hit.pos,
-			vector_mult_scalar(hit.surf_normal, EPSILON)),
-		vector_normalize(to_light));
+				hit.pos,
+				vector_mult_scalar(hit.surf_normal, EPSILON)),
+			vector_normalize(to_light));
 	shadow_hit = get_hit_from_ray(shadow_ray, objs);
 	return (shadow_hit.obj && shadow_hit.distance < vector_module(to_light));
 }

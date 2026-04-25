@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:50:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:21:49 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	double_check(char *str, char **split, t_dlim limits)
 		j = -1;
 		while (split[i][++j])
 			if (split[i][0] != '-' && !ft_isdigit(split[i][j]))
-					return (RT_FAILURE);
+				return (RT_FAILURE);
 	}
 	aux = ft_atod(str);
 	if (aux > limits.max || aux < limits.min)
@@ -86,11 +86,11 @@ static int	vector_check(char *sp, char **split, int line, t_dlim limits)
 	return (ans);
 }
 
-int parse_vector(char *sp, char *str, int i, t_dlim limits)
+int	parse_vector(char *sp, char *str, int i, t_dlim limits)
 {
 	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
-	
+
 	split = ft_split(str, ',');
 	if (!split)
 		return (rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno)));

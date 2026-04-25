@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:43:23 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:38:37 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:33:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 
 rtapp_run() */
 
-int rtapp_kill(t_rtapp *app)
+int	rtapp_kill(t_rtapp *app)
 {
 	const char	*err = "termination of miniRT app failed: %s";
 

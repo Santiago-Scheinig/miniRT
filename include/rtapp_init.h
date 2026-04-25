@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_init.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 19:10:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:04:18 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:00:14 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@
  */
 typedef struct s_object_build
 {
-	int	(*parse)(char **arr, int i);       // Validates raw string arguments.
-	int (*build)(char **arr, t_object *obj); // Allocates and fills the object.
-	int (*info)(t_object *obj);              // Prints debug info, NULL in release.
+	int	(*parse)(char **arr, int i); // Validates raw string arguments.
+	int	(*build)(char **arr, t_object *obj); // Allocates and fills the object.
+	int	(*info)(t_object *obj); // Prints debug info, NULL in release.
 }	t_object_build;
 
 /**
@@ -39,8 +39,8 @@ typedef struct s_object_build
  */
 typedef struct s_dispatch
 {
-	const char	*specifier;                          // Scene file element identifier.
-	int			(*initializer)(char **, int, t_rtapp *); // Element initializer function.
+	const char	*specifier;	// Scene file element identifier.
+	int			(*initializer)(char **, int, t_rtapp *); // Elem init function.
 }	t_dispatch;
 
 /**
@@ -51,9 +51,9 @@ typedef struct s_dispatch
  */
 typedef struct s_obj_dispatch
 {
-    const char      *specifier; // Scene file object identifier.
-    t_object_build  builder;    // Parse, build and info function group.
-}   t_obj_dispatch;
+	const char		*specifier; // Scene file object identifier.
+	t_object_build	builder;	// Parse, build and info function group.
+}	t_obj_dispatch;
 
 /*--------------------------------------------------------------------------*/
 /*----------------------------------GLOBAL----------------------------------*/
@@ -64,7 +64,7 @@ typedef struct s_obj_dispatch
  * @note Replace the definition in g_init_dispatch.c with the bonus
  * version to add new geometric object types without modifying any logic.
  */
-extern const t_obj_dispatch g_obj_dispatch[];
+extern const t_obj_dispatch	g_obj_dispatch[];
 
 /**
  * Dispatch table mapping all scene element specifiers to their
@@ -73,7 +73,7 @@ extern const t_obj_dispatch g_obj_dispatch[];
  * version to support additional scene element types without modifying
  * any logic.
  */
-extern const t_dispatch g_dispatch[];
+extern const t_dispatch		g_dispatch[];
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------INITIALIZATION------------------------------*/

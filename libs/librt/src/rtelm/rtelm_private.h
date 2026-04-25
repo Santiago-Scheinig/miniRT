@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm_private.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 19:04:14 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:01:43 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:50:57 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ t_vector	build_color(char *str);
  * to be stored after this call. The inv_transpose is used for correct
  * normal transformation during lighting calculations.
  */
-void		build_matrixes(t_object *obj,
-					t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
-					t_vector position, t_vector normal);
+void		build_matrixes(
+				t_object *obj,
+				t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
+				t_vector position, t_vector normal
+				);

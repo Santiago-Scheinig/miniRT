@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:27 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:46:38 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:22:33 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ int	init_file_contents(t_list *lines, char *file, t_rtapp *app)
 static int	file_validate(char *file)
 {
 	const char	*err = "failed to open '%s': %s";
-	char	*aux;
-	
+	char		*aux;
+
 	aux = ft_strrchr(file, '.');
 	if (!aux)
 		return (rtlog(RT_ERRLOG, 0, err, file, "invalid .rt file"));
@@ -64,8 +64,8 @@ static int	file_validate(char *file)
 t_list	*init_file(char *file)
 {
 	const char	*err = "failed to open '%s': %s";
-	t_list	*lines;
-	int		fd;
+	t_list		*lines;
+	int			fd;
 
 	lines = NULL;
 	if (file_validate(file))

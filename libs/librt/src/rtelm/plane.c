@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:07:14 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static t_mat4	pl_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 	(void) obj;
 	trans = mat4_translation(position.x, position.y, position.z);
 	rot = mat4_rotation(normal);
-	inv = mat4_inverse(mat4_mult_mat4(trans, rot));
+	inv = mat4_mult_mat4(&trans, &rot);
+	inv = mat4_inverse(&inv);
 	return (inv);
 }
 

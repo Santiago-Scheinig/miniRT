@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder_intersection.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/02 20:54:39 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/19 21:06:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:50:40 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

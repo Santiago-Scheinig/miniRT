@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_line.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 16:47:01 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/23 20:20:10 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,23 @@
  * @note Dispatches through g_dispatch using exact specifier matching.
  * Replace g_dispatch with the bonus version to support extra elements.
  */
-static int parse_element(char **arr, int i, t_rtapp *app)
+static int	parse_element(char **arr, int i, t_rtapp *app)
 {
-    const char  *err = "[line: %i][%s] parser failed: %s";
-    int         j;
+	const char	*err = "[line: %i][%s] parser failed: %s";
+	int			j;
 
-    j = 0;
-    while (g_dispatch[j].specifier)
-    {
-        if (!ft_strncmp(arr[0], g_dispatch[j].specifier,
-                ft_strlen(g_dispatch[j].specifier) + 1))
+	j = 0;
+	while (g_dispatch[j].specifier)
+	{
+		if (!ft_strncmp(arr[0], g_dispatch[j].specifier,
+				ft_strlen(g_dispatch[j].specifier) + 1))
 		{
 			rtlog(RT_LOG, 0, "[line: %i][%s] initializing element.", i, arr[0]);
-            return (g_dispatch[j].initializer(arr, i, app));
+			return (g_dispatch[j].initializer(arr, i, app));
 		}
-        j++;
-    }
-    return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
+		j++;
+	}
+	return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
 }
 
 int	parse_line(t_list *line, int i, t_rtapp *app)
@@ -52,12 +52,12 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 
 	j = -1;
 	aux = (char *) line->content;
-	while(aux[++j])
+	while (aux[++j])
 	{
 		if (aux[0] == '#')
 			return (RT_SUCCESS);
 		if (aux[j] != ' ' && aux[j] != '\t' && aux[j] != '\n')
-			break;		
+			break ;
 		return (RT_SUCCESS);
 	}
 	arr = ft_split_base(aux, " \t\n");

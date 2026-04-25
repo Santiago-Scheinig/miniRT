@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/24 20:21:46 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/19 21:06:51 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,9 @@ static t_mat4	cy_inv_mat4(t_object *obj, t_vector position, t_vector normal)
 	trans = mat4_translation(position.x, position.y, position.z);
 	scale = mat4_scale(cy->diam / 2.0, cy->height / 2.0, cy->diam / 2.0);
 	rot = mat4_rotation(normal);
-	inv = mat4_inverse(mat4_mult_mat4(trans, mat4_mult_mat4(rot, scale)));
+	inv = mat4_mult_mat4(&rot, &scale);
+	inv = mat4_mult_mat4(&trans, &inv);
+	inv = mat4_inverse(&inv);
 	return (inv);
 }
 
