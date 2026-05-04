@@ -28,7 +28,7 @@ static int	is_in_shadow(t_hit hit, t_elem_light_p *light, t_list *objs)
 }
 
 static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light,
-	t_vector mat_color)
+	t_vector mat_color, t_vector n)
 {
 	t_vector	to_light;
 	double		n_dot_l;
@@ -36,7 +36,7 @@ static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light,
 
 	to_light = vector_sub_vector(light->pos, hit.pos);
 	to_light = vector_normalize(to_light);
-	n_dot_l = vector_dot_product(hit.surf_normal, to_light);
+	n_dot_l = vector_dot_product(n, to_light);
 	if (n_dot_l <= 0)
 		return (vector_new(0, 0, 0));
 	diffuse = light->ratio * n_dot_l;
@@ -46,7 +46,7 @@ static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light,
 }
 
 static t_vector	get_specular(t_hit hit, t_elem_light_p *light,
-	t_rtapp *app, t_vector mat_color)
+	t_rtapp *app, t_vector mat_color, t_vector n)
 {
 	t_vector	to_light;
 	t_vector	view_dir;
@@ -57,11 +57,11 @@ static t_vector	get_specular(t_hit hit, t_elem_light_p *light,
 
 	to_light = vector_sub_vector(light->pos, hit.pos);
 	to_light = vector_normalize(to_light);
-	n_dot_l = vector_dot_product(hit.surf_normal, to_light);
+	n_dot_l = vector_dot_product(n, to_light);
 	if (n_dot_l <= 0)
 		return (vector_new(0, 0, 0));
 	reflect = vector_sum_vector(
-			vector_mult_scalar(hit.surf_normal, 2.0 * n_dot_l),
+			vector_mult_scalar(n, 2.0 * n_dot_l),
 			vector_mult_scalar(to_light, -1.0));
 	view_dir = vector_sub_vector(app->camera.pos, hit.pos);
 	view_dir = vector_normalize(view_dir);
@@ -77,7 +77,8 @@ static t_vector	get_puntual_lighting(
 	t_list *objs,
 	t_rtapp *app,
 	t_vector res,
-	t_vector mat_color
+	t_vector mat_color,
+	t_vector lighting_normal
 )
 {
 	t_list			*light_node;
@@ -91,9 +92,11 @@ static t_vector	get_puntual_lighting(
 		light = (t_elem_light_p *)light_node->content;
 		if (!is_in_shadow(hit, light, objs))
 		{
-			tmp_color = get_light_contribution(hit, light, mat_color);
+			tmp_color = get_light_contribution(hit, light, mat_color,
+					lighting_normal);
 			res = vector_sum_vector(res, tmp_color);
-			specular = get_specular(hit, light, app, mat_color);
+			specular = get_specular(hit, light, app, mat_color,
+					lighting_normal);
 			res = vector_sum_vector(res, specular);
 		}
 		light_node = light_node->next;
@@ -112,19 +115,25 @@ t_vector	get_color_at_hit(
 	t_vector	mat_color;
 	t_vector	local_point;
 	t_uv		uv;
+	t_vector	lighting_normal;
 
 	res = vector_new(0, 0, 0);
+	local_point = vector_mult_mat4_point(hit.pos, &hit.obj->transform.inv);
 	if (hit.obj->material.is_checker)
 	{
-		local_point = vector_mult_mat4_point(hit.pos, &hit.obj->transform.inv);
 		uv = hit.obj->c_uv_map(local_point);
 		mat_color = get_checker_color(uv);
 	}
 	else
 		mat_color = hit.obj->material.color;
+	if (hit.obj->material.normal_map && hit.obj->c_tangent)
+		lighting_normal = get_perturbed_normal(hit, local_point);
+	else
+		lighting_normal = hit.surf_normal;
 	tmp_color = color_hadamard(mat_color, app->ambient.color);
 	tmp_color = vector_mult_scalar(tmp_color, app->ambient.ratio);
 	res = vector_sum_vector(res, tmp_color);
-	res = get_puntual_lighting(hit, objs, app, res, mat_color);
+	res = get_puntual_lighting(hit, objs, app, res, mat_color,
+			lighting_normal);
 	return (res);
 }
