@@ -46,11 +46,19 @@ typedef struct s_elem_light_p
 	t_vector	color;
 }	t_elem_light_p;
 
+typedef struct s_normal_map
+{
+	unsigned char	*pixels;
+	int				width;
+	int				height;
+}	t_normal_map;
+
 typedef struct s_material
 {
-	t_vector	color;
-	double		shininess;
-	int			is_checker;
+	t_vector		color;
+	double			shininess;
+	int				is_checker;
+	t_normal_map	*normal_map;
 }	t_material;
 
 typedef struct s_uv
@@ -67,6 +75,7 @@ typedef struct s_object
 	double		(*c_intersection)(t_ray local_ray);
 	t_vector	(*c_normal)(t_vector point);
 	t_uv		(*c_uv_map)(t_vector local_point);
+	t_vector	(*c_tangent)(t_vector local_point);
 }	t_object;
 
 /**
@@ -240,5 +249,71 @@ t_uv		hyperboloid_uv(t_vector local_point);
  *         squares, based on a checkerboard scale of CHECKER_SCALE.
  */
 t_vector	get_checker_color(t_uv uv);
+
+/**
+ * @brief Loads a normal map image from file.
+ * @param filepath Path to the image file (PNG, JPG, BMP, TGA, etc.).
+ * @return A pointer to a newly allocated T_NORMAL_MAP, or NULL on failure.
+ * @note The caller is responsible for freeing the returned struct and its
+ *       pixels array.
+ */
+t_normal_map	*load_normal_map(char *filepath);
+
+/**
+ * @brief Frees a normal map structure and its pixel data.
+ * @param nmap Pointer to the normal map to free.
+ */
+void			free_normal_map(t_normal_map *nmap);
+
+/**
+ * @brief Computes a perturbed normal from a normal map at a hit point.
+ * @param hit The hit information containing the surface normal.
+ * @param local_point The intersection point in the object's local space.
+ * @return The perturbed normal in world space, or the original surface
+ *         normal if no normal map or tangent function is available.
+ */
+t_vector		get_perturbed_normal(t_hit hit, t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a plane in local space.
+ * @param local_point The point on the plane in local space.
+ * @return The tangent vector (1, 0, 0).
+ */
+t_vector		plane_tangent(t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a sphere in local space.
+ * @param local_point The point on the sphere in local space.
+ * @return The normalized tangent vector perpendicular to the surface normal.
+ */
+t_vector		sphere_tangent(t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a cylinder in local space.
+ * @param local_point The point on the cylinder in local space.
+ * @return The normalized tangent vector perpendicular to the surface normal.
+ */
+t_vector		cylinder_tangent(t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a cone in local space.
+ * @param local_point The point on the cone in local space.
+ * @return The normalized tangent vector perpendicular to the surface normal.
+ */
+t_vector		cone_tangent(t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a paraboloid in local space.
+ * @param local_point The point on the paraboloid in local space.
+ * @return The normalized tangent vector perpendicular to the surface normal.
+ */
+t_vector		paraboloid_tangent(t_vector local_point);
+
+/**
+ * @brief Computes the tangent vector for a hyperboloid in local space.
+ * @param local_point The point on the hyperboloid in local space.
+ * @return The normalized tangent vector perpendicular to the surface normal.
+ */
+t_vector		hyperboloid_tangent(t_vector local_point);
 
 #endif
