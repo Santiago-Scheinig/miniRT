@@ -6,13 +6,14 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:44 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/25 18:30:00 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/04 22:03:22 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RENDER_BONUS_H
 # define RENDER_BONUS_H
 # include "rtapp.h"
+# include "rtapp_render.h"
 
 typedef struct s_elem_cone
 {
@@ -37,6 +38,34 @@ typedef struct s_elem_hyperboloid
 	double		diam;
 	double		height;
 }	t_elem_hyperboloid;
+
+typedef struct s_elem_light_p
+{
+	t_vector	pos;
+	double		ratio;
+	t_vector	color;
+}	t_elem_light_p;
+
+typedef struct s_material
+{
+	t_vector	color;
+	double		shininess;
+}	t_material;
+
+/**
+ * @brief Computes the color at a ray-object intersection point using the
+ * full Phong reflection model (ambient + diffuse + specular).
+ * @param hit The T_HIT containing the intersection information for shading.
+ * @param objects The list of T_OBJECTs in the scene for shadow ray testing.
+ * @param app The T_RTAPP containing the scene's ambient light and point lights.
+ * @return A T_VECTOR representing the final RGB color at the hit point, with
+ * each component normalized to the 0.0-1.0 range.
+ */
+t_vector		get_color_at_hit(
+					t_hit hit,
+					t_list *objs,
+					t_rtapp *app
+					);
 
 /**
  * @brief Computes the inverse transformation matrix for a cone.
