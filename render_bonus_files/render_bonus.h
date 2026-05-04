@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:44 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/04 22:03:22 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/04 23:10:26 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,24 @@ typedef struct s_material
 {
 	t_vector	color;
 	double		shininess;
+	int			is_checker;
 }	t_material;
+
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
+typedef struct s_object
+{
+	t_transform	transform;
+	t_material	material;
+	void		*data;
+	double		(*c_intersection)(t_ray local_ray);
+	t_vector	(*c_normal)(t_vector point);
+	t_uv		(*c_uv_map)(t_vector local_point);
+}	t_object;
 
 /**
  * @brief Computes the color at a ray-object intersection point using the
@@ -173,5 +190,55 @@ t_vector	hb_normal(t_vector local_point);
  *       side surface is checked for intersections.
  */
 double		hb_intersection(t_ray local_ray);
+
+/**
+ * @brief Maps a sphere's local point to UV coordinates.
+ * @param local_point The point in the sphere's local object space.
+ * @return A T_UV with U = atan2(z,x)/(2π) + 0.5 and V = asin(y)/π + 0.5.
+ */
+t_uv		sphere_uv(t_vector local_point);
+
+/**
+ * @brief Maps a cylinder's local point to UV coordinates.
+ * @param local_point The point in the cylinder's local object space.
+ * @return A T_UV with U = atan2(z,x)/(2π) + 0.5 and V = (y+1)/2.
+ */
+t_uv		cylinder_uv(t_vector local_point);
+
+/**
+ * @brief Maps a cone's local point to UV coordinates.
+ * @param local_point The point in the cone's local object space.
+ * @return A T_UV with U = atan2(z,x)/(2π) + 0.5 and V = y.
+ */
+t_uv		cone_uv(t_vector local_point);
+
+/**
+ * @brief Maps a plane's local point to UV coordinates.
+ * @param local_point The point in the plane's local object space.
+ * @return A T_UV with U = x and V = z.
+ */
+t_uv		plane_uv(t_vector local_point);
+
+/**
+ * @brief Maps a paraboloid's local point to UV coordinates.
+ * @param local_point The point in the paraboloid's local object space.
+ * @return A T_UV with U = atan2(z,x)/(2π) + 0.5 and V = y.
+ */
+t_uv		paraboloid_uv(t_vector local_point);
+
+/**
+ * @brief Maps a hyperboloid's local point to UV coordinates.
+ * @param local_point The point in the hyperboloid's local object space.
+ * @return A T_UV with U = atan2(z,x)/(2π) + 0.5 and V = (y+1)/2.
+ */
+t_uv		hyperboloid_uv(t_vector local_point);
+
+/**
+ * @brief Computes the checkerboard color at a given UV coordinate.
+ * @param uv The UV coordinates on the checkerboard surface.
+ * @return A T_VECTOR of (1,1,1) for white squares or (0,0,0) for black
+ *         squares, based on a checkerboard scale of CHECKER_SCALE.
+ */
+t_vector	get_checker_color(t_uv uv);
 
 #endif
