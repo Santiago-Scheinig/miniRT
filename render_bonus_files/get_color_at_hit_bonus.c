@@ -27,7 +27,8 @@ static int	is_in_shadow(t_hit hit, t_elem_light_p *light, t_list *objs)
 	return (shadow_hit.obj && shadow_hit.distance < vector_module(to_light));
 }
 
-static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light)
+static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light,
+	t_vector mat_color)
 {
 	t_vector	to_light;
 	double		n_dot_l;
@@ -40,11 +41,12 @@ static t_vector	get_light_contribution(t_hit hit, t_elem_light_p *light)
 		return (vector_new(0, 0, 0));
 	diffuse = light->ratio * n_dot_l;
 	return (color_hadamard(
-			color_hadamard(hit.obj->material.color, light->color),
+			color_hadamard(mat_color, light->color),
 			vector_new(diffuse, diffuse, diffuse)));
 }
 
-static t_vector	get_specular(t_hit hit, t_elem_light_p *light, t_rtapp *app)
+static t_vector	get_specular(t_hit hit, t_elem_light_p *light,
+	t_rtapp *app, t_vector mat_color)
 {
 	t_vector	to_light;
 	t_vector	view_dir;
@@ -67,14 +69,15 @@ static t_vector	get_specular(t_hit hit, t_elem_light_p *light, t_rtapp *app)
 	if (r_dot_v <= 0.0)
 		return (vector_new(0, 0, 0));
 	spec = light->ratio * pow(r_dot_v, hit.obj->material.shininess);
-	return (vector_mult_scalar(light->color, spec));
+	return (vector_mult_scalar(mat_color, spec));
 }
 
 static t_vector	get_puntual_lighting(
 	t_hit hit,
 	t_list *objs,
 	t_rtapp *app,
-	t_vector res
+	t_vector res,
+	t_vector mat_color
 )
 {
 	t_list			*light_node;
@@ -88,9 +91,9 @@ static t_vector	get_puntual_lighting(
 		light = (t_elem_light_p *)light_node->content;
 		if (!is_in_shadow(hit, light, objs))
 		{
-			tmp_color = get_light_contribution(hit, light);
+			tmp_color = get_light_contribution(hit, light, mat_color);
 			res = vector_sum_vector(res, tmp_color);
-			specular = get_specular(hit, light, app);
+			specular = get_specular(hit, light, app, mat_color);
 			res = vector_sum_vector(res, specular);
 		}
 		light_node = light_node->next;
@@ -106,12 +109,22 @@ t_vector	get_color_at_hit(
 {
 	t_vector	res;
 	t_vector	tmp_color;
+	t_vector	mat_color;
+	t_vector	local_point;
+	t_uv		uv;
 
 	res = vector_new(0, 0, 0);
-	tmp_color = hit.obj->material.color;
-	tmp_color = color_hadamard(tmp_color, app->ambient.color);
+	if (hit.obj->material.is_checker)
+	{
+		local_point = vector_mult_mat4_point(hit.pos, &hit.obj->transform.inv);
+		uv = hit.obj->c_uv_map(local_point);
+		mat_color = get_checker_color(uv);
+	}
+	else
+		mat_color = hit.obj->material.color;
+	tmp_color = color_hadamard(mat_color, app->ambient.color);
 	tmp_color = vector_mult_scalar(tmp_color, app->ambient.ratio);
 	res = vector_sum_vector(res, tmp_color);
-	res = get_puntual_lighting(hit, objs, app, res);
+	res = get_puntual_lighting(hit, objs, app, res, mat_color);
 	return (res);
 }
