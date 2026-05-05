@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/05 16:11:08 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/05 17:35:41 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/05 17:38:08 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	rtapp_render(t_rtapp *app)
 		if (pthread_create(&(app->workers[i]),
 			NULL, render_worker_routine, app) != 0)
 			{
-				wait_created_workers(app, i - 1);
+				wait_created_workers(app, i);
 				pthread_mutex_destroy(&app->queue_mutex);
 				return (RT_FAILURE);
 			}
