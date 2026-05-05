@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:44 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/04 23:10:26 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/05 16:13:56 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define RENDER_BONUS_H
 # include "rtapp.h"
 # include "rtapp_render.h"
+# include <pthread.h>
+# define WORKER_COUNT 16
 
 typedef struct s_elem_cone
 {
@@ -77,6 +79,24 @@ typedef struct s_object
 	t_uv		(*c_uv_map)(t_vector local_point);
 	t_vector	(*c_tangent)(t_vector local_point);
 }	t_object;
+
+/**
+ * Represents the full state of the miniRT application.
+ * @note objects and lights are NULL until parsed from the scene file.
+ * camera.get_pixel_ray being NULL indicates the camera is uninitialized.
+ * ambient.ratio being -1 indicates the ambient light is uninitialized.
+ */
+typedef struct s_rtapp
+{
+	uint32_t		*img; // Render buffer for img, allocated after parsing.
+	t_list			*objects;	// Linked list of T_OBJECT scene elements.
+	t_list			*lights;	// Linked list of T_ELEM_LIGHT_P point lights.
+	t_elem_camera	camera;		// Unique camera instance for the scene.
+	t_elem_light_a	ambient;	// Unique ambient light instance for the scene.
+	t_tile_queue	tile_queue;	// Queue of tiles to render.
+	pthread_t		workers[WORKER_COUNT]; // Array of worker threads.
+	pthread_mutex_t	queue_mutex; // Mutex to protect tile queue access.
+}	t_rtapp;
 
 /**
  * @brief Computes the color at a ray-object intersection point using the
