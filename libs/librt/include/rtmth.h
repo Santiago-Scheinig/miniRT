@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 18:45:42 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/10 17:45:19 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define RTMTH_H
 # include <math.h>
 # include <stdint.h>
+
+# if BOUNS
+#  include "rtmth_bonus.h"
+# endif
 
 # define EPSILON 0.00001
 # ifndef M_PI

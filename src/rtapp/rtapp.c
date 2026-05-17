@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/24 11:40:53 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 16:49:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp.h"
 #include "rtapp_init.h"
 #include "rtapp_render.h"
 

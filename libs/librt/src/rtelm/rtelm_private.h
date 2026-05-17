@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm_private.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 19:04:14 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:50:57 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:46:37 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,5 @@ t_vector	build_color(char *str);
  */
 void		build_matrixes(
 				t_object *obj,
-				t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
-				t_vector position, t_vector normal
+				t_vector position, t_vector normal, t_vector scale
 				);

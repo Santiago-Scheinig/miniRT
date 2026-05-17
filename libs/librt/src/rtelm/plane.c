@@ -3,38 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/01 16:56:20 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:44:53 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
 #include "rtelm_private.h"
-
-/**
- * Computes the inverse transformation matrix for a plane object.
- * @param obj The plane object, unused since a plane has no unique geometry.
- * @param position The world space position of a point on the plane.
- * @param normal The orientation normal defining the plane's facing direction.
- * @return The inverse of the plane's transformation matrix M = T * R.
- * @note No scale is applied since the canonical plane is infinite.
- * Position and normal are consumed into the matrix and discarded after.
- */
-static t_mat4	pl_inv_mat4(t_object *obj, t_vector position, t_vector normal)
-{
-	t_mat4			inv;
-	t_mat4			rot;
-	t_mat4			trans;
-
-	(void) obj;
-	trans = mat4_translation(position.x, position.y, position.z);
-	rot = mat4_rotation(normal);
-	inv = mat4_mult_mat4(&trans, &rot);
-	inv = mat4_inverse(&inv);
-	return (inv);
-}
 
 /**
  * Computes the intersection distance of a ray with a canonical plane.
@@ -73,6 +50,7 @@ int	build_pl(char **str, t_object *obj)
 {
 	t_vector	position;
 	t_vector	normal;
+	t_vector	scale;
 
 	position = build_vector(str[1]);
 	normal = build_vector(str[2]);
@@ -82,6 +60,9 @@ int	build_pl(char **str, t_object *obj)
 	obj->data = NULL;
 	obj->c_intersection = &pl_intersection;
 	obj->c_normal = &pl_normal;
-	build_matrixes(obj, &pl_inv_mat4, position, normal);
+	scale.x = 1;
+	scale.y = 1;
+	scale.z = 1;
+	build_matrixes(obj, position, normal, scale);
 	return (0);
 }

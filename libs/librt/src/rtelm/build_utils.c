@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:17:09 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/24 12:52:15 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:40:53 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,23 @@ t_vector	build_vector(char *str)
 	return (v);
 }
 
-void	build_matrixes(
-			t_object *obj,
-			t_mat4 (*inv_mtx)(t_object *, t_vector, t_vector),
-			t_vector position, t_vector normal
-			)
+static t_mat4	build_mat4(t_vector position, t_vector normal, t_vector scale)
 {
-	obj->transform.inv = inv_mtx(obj, position, normal);
+	t_mat4	trans;
+	t_mat4	rot;
+	t_mat4	scl;
+
+	trans = mat4_translation(position.x, position.y, position.z);
+	rot = mat4_rotation(normal);
+	scl = mat4_scale(scale.x, scale.y, scale.z);
+	trans = mat4_mult_mat4(&trans, &rot);
+	return (mat4_mult_mat4(&trans, &scl));
+}
+
+void	build_matrixes(t_object *obj, t_vector position, t_vector normal, t_vector scale)
+{
+	obj->transform.mat = build_mat4(position, normal, scale);
+	obj->transform.inv = mat4_inverse(&(obj->transform.mat));
 	obj->transform.inv_transpose = mat4_transposed(&obj->transform.inv);
 }
 

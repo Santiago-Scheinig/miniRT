@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:44:03 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 15:13:20 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # if BONUS
 #  include "rtelm_bonus.h"
 # else
+
 /**
  * Represents a point light source in the scene.
  */
@@ -40,7 +41,41 @@ typedef struct s_material
 {
 	t_vector	color;	// Normalized RGB color in the 0.0-1.0 range.
 }	t_material;
+
+/**
+ * Holds the precomputed inverse matrices of an object's transformation.
+ * @note inv_transpose is used for correct normal transformation during
+ * lighting calculations.
+ */
+typedef struct s_transform
+{
+	t_mat4	mat;
+	t_mat4	inv;			// Inverse transformation matrix M⁻¹.
+	t_mat4	inv_transpose;	// Transposed inverse (M⁻¹)ᵀ for normals.
+}	t_transform;
+
+/**
+ * Represents a generic 3D object in the scene.
+ * @note obj->data is NULL for planes since they have no unique geometry.
+ * All intersection and normal calculations operate in local object space.
+ */
+typedef struct s_object
+{
+	t_transform	transform;	// Inverse and inverse transpose matrices.
+	t_material	material;	// Surface material containing the color.
+	void		*data;		// Object-specific geometry data.
+	double		(*c_intersection)(t_ray local_ray);	// Local intersection.
+	t_vector	(*c_normal)(t_vector point);		// Local surface normal.
+}	t_object;
+
 # endif
+
+typedef struct s_elem_quadric
+{
+	double	radius;
+	double	height;
+	double	param;
+}	t_elem_quadric;
 
 /**
  * Represents an ambient light source affecting the whole scene.
@@ -63,50 +98,6 @@ typedef struct s_elem_camera
 	int			fov;	// Horizontal field of view angle in degrees.
 	t_ray		(*get_pixel_ray)(void *ptr, int x, int y);	// Ray generator.
 }	t_elem_camera;
-
-/**
- * Holds the precomputed inverse matrices of an object's transformation.
- * @note inv_transpose is used for correct normal transformation during
- * lighting calculations.
- */
-typedef struct s_transform
-{
-	t_mat4	inv;			// Inverse transformation matrix M⁻¹.
-	t_mat4	inv_transpose;	// Transposed inverse (M⁻¹)ᵀ for normals.
-}	t_transform;
-
-/**
- * Represents a generic 3D object in the scene.
- * @note obj->data is NULL for planes since they have no unique geometry.
- * All intersection and normal calculations operate in local object space.
- */
-typedef struct s_object
-{
-	t_transform	transform;	// Inverse and inverse transpose matrices.
-	t_material	material;	// Surface material containing the color.
-	void		*data;		// Object-specific geometry data.
-	double		(*c_intersection)(t_ray local_ray);	// Local intersection.
-	t_vector	(*c_normal)(t_vector point);		// Local surface normal.
-}	t_object;
-
-/**
- * Holds the unique geometric properties of a cylinder.
- * @note Position and orientation are encoded in the transform matrix.
- */
-typedef struct s_elem_cylinder
-{
-	double		diam;	// Diameter in world space units.
-	double		height;	// Height in world space units.
-}	t_elem_cylinder;
-
-/**
- * Holds the unique geometric properties of a sphere.
- * @note Position is encoded in the transform matrix.
- */
-typedef struct s_elem_sphere
-{
-	double		diam; // Diameter in world space units.
-}	t_elem_sphere;
 
 /*--------------------------------------------------------------------------*/
 /*---------------------------------BUILDERS---------------------------------*/

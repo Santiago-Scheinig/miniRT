@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_bonus.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:44 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/05 16:13:56 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/10 17:44:28 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,69 +16,6 @@
 # include "rtapp_render.h"
 # include <pthread.h>
 # define WORKER_COUNT 16
-
-typedef struct s_elem_cone
-{
-	t_vector	origin;
-	t_vector	normal;
-	double		diam;
-	double		height;
-}	t_elem_cone;
-
-typedef struct s_elem_parabole
-{
-	t_vector	origin;
-	t_vector	normal;
-	double		diam;
-	double		height;
-}	t_elem_parabole;
-
-typedef struct s_elem_hyperboloid
-{
-	t_vector	origin;
-	t_vector	normal;
-	double		diam;
-	double		height;
-}	t_elem_hyperboloid;
-
-typedef struct s_elem_light_p
-{
-	t_vector	pos;
-	double		ratio;
-	t_vector	color;
-}	t_elem_light_p;
-
-typedef struct s_normal_map
-{
-	unsigned char	*pixels;
-	int				width;
-	int				height;
-}	t_normal_map;
-
-typedef struct s_material
-{
-	t_vector		color;
-	double			shininess;
-	int				is_checker;
-	t_normal_map	*normal_map;
-}	t_material;
-
-typedef struct s_uv
-{
-	double	u;
-	double	v;
-}	t_uv;
-
-typedef struct s_object
-{
-	t_transform	transform;
-	t_material	material;
-	void		*data;
-	double		(*c_intersection)(t_ray local_ray);
-	t_vector	(*c_normal)(t_vector point);
-	t_uv		(*c_uv_map)(t_vector local_point);
-	t_vector	(*c_tangent)(t_vector local_point);
-}	t_object;
 
 /**
  * Represents the full state of the miniRT application.
