@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_objects.c                                    :+:      :+:    :+:   */
+/*   parse_objects_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/12 16:41:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:33:26 by sscheini         ###   ########.fr       */
+/*   Created: 2026/05/17 17:31:17 by sscheini          #+#    #+#             */
+/*   Updated: 2026/05/17 17:47:50 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	parse_pl(char **arr, int i)
 	limits.max = 255;
 	if (parse_vector(arr[0], arr[3], i, limits))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	//extra steps for texture map and refraction [both optionals] Individual errors for each
 	return (RT_SUCCESS);
 }
 
@@ -59,6 +60,7 @@ int	parse_cy(char **arr, int i)
 	limits.max = 255;
 	if (parse_vector(arr[0], arr[5], i, limits))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	//extra steps for texture map and refraction [both optionals] Individual errors for each
 	return (RT_SUCCESS);
 }
 
@@ -81,5 +83,6 @@ int	parse_sp(char **arr, int i)
 	limits.max = 255;
 	if (parse_vector(arr[0], arr[3], i, limits))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	//extra steps for texture map and refraction [both optionals] Individual errors for each
 	return (RT_SUCCESS);
 }

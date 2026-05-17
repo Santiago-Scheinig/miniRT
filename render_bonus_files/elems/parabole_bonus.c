@@ -3,54 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parabole_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/04 00:00:00 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/04 21:23:30 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:30:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "render_bonus.h"
-
-/**
- * identifier: pb
- * x, y, z coordinates of the vertex of the paraboloid: 50.0,0.0,20.6
- * 3D normalized vector of axis of paraboloid: 0.0,1.0,0.0
- * the paraboloid diameter at the opening: 14.2
- * the paraboloid height (from vertex to opening): 21.42
- * R, G, B colors in the range [0,255]: 10, 0, 255
- * The bonus extra parameters (reflection and checkers)
- * Example: pb 50.0,0.0,20.6 0.0,1.0,0.0 14.2 21.42 10,0,255
- */
-
-t_mat4	pb_inv_mat4(t_object *obj, t_vector pos, t_vector normal)
-{
-	t_elem_parabole	*parabole;
-	t_mat4			inv;
-	t_mat4			trans;
-	t_mat4			rot;
-	t_mat4			scale;
-
-	parabole = (t_elem_parabole *) obj->data;
-	trans = mat4_translation(pos.x, pos.y, pos.z);
-	scale = mat4_scale(parabole->diam / 2.0, parabole->height,
-			parabole->diam / 2.0);
-	rot = mat4_rotation(normal);
-	inv = mat4_mult_mat4(&rot, &scale);
-	inv = mat4_mult_mat4(&trans, &inv);
-	inv = mat4_inverse(&inv);
-	return (inv);
-}
-
-t_vector	pb_normal(t_vector local_point)
-{
-	t_vector	normal;
-
-	if (local_point.y >= 1.0 - EPSILON)
-		return (vector_new(0.0, 1.0, 0.0));
-	normal = vector_new(2.0 * local_point.x, -1.0, 2.0 * local_point.z);
-	return (vector_normalize(normal));
-}
 
 /**
  * Computes the quadratic coefficients for a ray-paraboloid side intersection.
@@ -75,7 +35,7 @@ static t_roots	get_parabole_roots(t_ray local_ray)
 	return (solve_quadratic(a, b, c));
 }
 
-double	pb_intersection(t_ray local_ray)
+static double	pb_intersection(t_ray local_ray)
 {
 	t_roots		roots;
 	t_vector	p1;
@@ -99,4 +59,41 @@ double	pb_intersection(t_ray local_ray)
 			valid_t = roots.sol2;
 	}
 	return (valid_t);
+}
+
+static t_vector	pb_normal(t_vector local_point)
+{
+	t_vector	normal;
+
+	if (local_point.y >= 1.0 - EPSILON)
+		return (vector_new(0.0, 1.0, 0.0));
+	normal = vector_new(2.0 * local_point.x, -1.0, 2.0 * local_point.z);
+	return (vector_normalize(normal));
+}
+
+int	build_pb(char **str, t_object *obj)
+{
+	t_elem_quadric	*data;
+	t_vector		position;
+	t_vector		normal;
+	t_vector		scale;
+
+	position = build_vector(str[1]);
+	normal = build_vector(str[2]);
+	if (!normal.x && !normal.y && !normal.z)
+		return (1);
+	data = ft_calloc(1, sizeof(t_elem_quadric));
+	if (!data)
+		return (1);
+	data->radius = ft_atod(str[2]) / 2.0;
+	data->height = ft_atod(str[4]);
+	obj->material.color = build_color(str[3]);
+	obj->data = data;
+	obj->c_intersection = &pb_intersection;
+	obj->c_normal = &pb_normal;
+	scale.x = data->radius;
+	scale.y = data->height;
+	scale.z = data->radius;
+	build_matrixes(obj, position, normal, scale);
+	return (0);
 }

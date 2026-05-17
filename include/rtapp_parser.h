@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:26:41 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:54:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "rtapp.h"
 # include "g_parse_err_msgs.h"
 # include <float.h>
+
+# if BONUS
+#  include "rtapp_parser_bonus.h"
+# endif
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   g_init_dispatch.h                                  :+:      :+:    :+:   */
+/*   g_init_dispatch_bonus.h                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:11:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:51:06 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/17 17:52:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef G_INIT_DISPATCH_H
-# define G_INIT_DISPATCH_H
+#ifndef G_INIT_DISPATCH_BONUSH
+# define G_INIT_DISPATCH_BONUSH
 
-# if BONUS
-#  include "g_init_dispatch_bonus.h"
-# else
-#  include "rtapp_init.h"
-#  include "rtapp_parser.h"
+# include "rtapp_init.h"
+# include "rtapp_parser.h"
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -74,6 +71,9 @@ static const t_obj_dispatch	g_obj_dispatch[] = {
 {"pl", {&parse_pl, &build_pl, NULL}},
 {"cy", {&parse_cy, &build_cy, NULL}},
 {"sp", {&parse_sp, &build_sp, NULL}},
+{"hb", {&parse_hb, &build_hb, NULL}},
+{"cn", {&parse_cn, &build_cn, NULL}},
+{"pb", {&parse_pb, &build_pb, NULL}},
 {NULL, {NULL, NULL, NULL}}
 };
 
@@ -90,6 +90,9 @@ static const t_dispatch		g_dispatch[] = {
 {"pl", &init_object},
 {"cy", &init_object},
 {"sp", &init_object},
+{"hb", &init_object},
+{"cn", &init_object},
+{"pb", &init_object},
 {"C", &init_camera},
 {"L", &init_light_p},
 {"A", &init_light_a},
