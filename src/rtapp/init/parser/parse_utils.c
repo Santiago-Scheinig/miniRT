@@ -6,11 +6,20 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:45:36 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:55:56 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
+
+t_dlim	build_limit(double min, double max)
+{
+	t_dlim	new;
+
+	new.min = min;
+	new.max = max;
+	return (new);
+}
 
 /**
  * Validates that a string represents a double within the given limits.
@@ -109,19 +118,5 @@ int	parse_vector(char *sp, char *str, int i, t_dlim limits)
 		return (RT_FAILURE);
 	}
 	ft_split_free(split);
-	return (RT_SUCCESS);
-}
-
-int	parse_arg(char **arr, int i, const char *const msgs[], int expected)
-{
-	const char	*err = "[line: %i][%s] parser failed: %s";
-	int			j;
-
-	j = -1;
-	while (++j < expected)
-		if (!arr[j + 1])
-			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[j]));
-	if (arr[expected + 1])
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[expected]));
 	return (RT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lights_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 15:47:37 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:51:18 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:58:14 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_elem_light_a	build_la(char **str)
 {
 	t_elem_light_a	new_la;
 
-	new_la->ratio = ft_atod(str[1]);
-	new_la->color = build_color(str[2]);
+	new_la.ratio = ft_atod(str[1]);
+	new_la.color = build_color(str[2]);
 	return (new_la);
 }
 

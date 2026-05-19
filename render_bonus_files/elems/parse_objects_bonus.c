@@ -6,83 +6,86 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:31:17 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:47:50 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:53:22 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-int	parse_pl(char **arr, int i)
+static int	parse_arg(char **arr, int i, const char *const msgs[], int e)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
+	int			j;
 
-	if (parse_arg(arr, i, g_pl_msgs, 3))
-		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = -1;
-	limits.max = 1;
-	if (parse_vector(arr[0], arr[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[3], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	//extra steps for texture map and refraction [both optionals] Individual errors for each
+	j = -1;
+	while (++j < e)
+		if (!arr[j + 1])
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[j]));
+	if (arr[e + 1] && arr[e + 2] && arr[e + 3]) //Does this work?
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[e]));
 	return (RT_SUCCESS);
 }
 
-int	parse_cy(char **arr, int i)
+int	parse_quadric(char **arr, int i, static const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
 
-	if (parse_arg(arr, i, g_cy_msgs, 5))
+	if (parse_arg(arr, i, (*g_msgs), 5))
 		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = -1;
-	limits.max = 1;
-	if (parse_vector(arr[0], arr[2], i, limits))
+	if (parse_vector(arr[0], arr[2], i, build_limit(-1, 1)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
-	limits.min = 0;
-	limits.max = FLT_MAX;
-	if (parse_double(arr[0], arr[3], i, limits))
+	if (parse_double(arr[0], arr[3], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid diameter."));
-	if (parse_double(arr[0], arr[4], i, limits))
+	if (parse_double(arr[0], arr[4], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid height."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[5], i, limits))
+	if (parse_vector(arr[0], arr[5], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	//extra steps for texture map and refraction [both optionals] Individual errors for each
+	if (arr[6] && parse_double(arr[0], arr[6], i, build_limit(0, FLT_MAX)))
+		if (parse_extention(arr[0], arr[6], i, ".map"))
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
+	if (arr[7] && parse_extention(arr[0], arr[6], i, ".map"))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
 	return (RT_SUCCESS);
 }
 
-int	parse_sp(char **arr, int i)
+int	parse_sp(char **arr, int i, static const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
 
 	if (parse_arg(arr, i, g_sp_msgs, 3))
 		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = 0;
-	limits.max = FLT_MAX;
-	if (parse_double(arr[0], arr[2], i, limits))
+	if (parse_double(arr[0], arr[2], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid radius."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[3], i, limits))
+	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	//extra steps for texture map and refraction [both optionals] Individual errors for each
+	if (arr[4] && parse_double(arr[0], arr[4], i, build_limit(0, FLT_MAX)))
+		if (parse_extention(arr[0], arr[4], i, ".map"))
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
+	if (arr[5] && parse_extention(arr[0], arr[5], i, ".map"))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
+	return (RT_SUCCESS);
+}
+
+int	parse_pl(char **arr, int i, static const char *const *g_msgs)
+{
+	const char	*err = "[line: %i][%s] parser failed: %s";
+
+	if (parse_arg(arr, i, g_pl_msgs, 3))
+		return (RT_FAILURE);
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
+	if (parse_vector(arr[0], arr[2], i, build_limit(-1, 1)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
+	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	if (arr[4] && parse_double(arr[0], arr[4], i, build_limit(0, FLT_MAX)))
+		if (parse_extention(arr[0], arr[4], i, ".map"))
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
+	if (arr[5] && parse_extention(arr[0], arr[5], i, ".map"))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid bonus attributes."));
 	return (RT_SUCCESS);
 }

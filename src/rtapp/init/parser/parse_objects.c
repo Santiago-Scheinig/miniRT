@@ -6,80 +6,71 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:41:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:33:26 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:45:19 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-int	parse_pl(char **arr, int i)
+static int	parse_arg(char **arr, int i, const char *const *msgs, int e)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
+	int			j;
 
-	if (parse_arg(arr, i, g_pl_msgs, 3))
-		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = -1;
-	limits.max = 1;
-	if (parse_vector(arr[0], arr[2], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[3], i, limits))
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	j = -1;
+	while (++j < e)
+		if (!arr[j + 1])
+			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[j]));
+	if (arr[e + 1])
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[e]));
 	return (RT_SUCCESS);
 }
 
-int	parse_cy(char **arr, int i)
+int	parse_quadric(char **arr, int i, const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
 
-	if (parse_arg(arr, i, g_cy_msgs, 5))
+	if (parse_arg(arr, i, g_msgs, 5))
 		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = -1;
-	limits.max = 1;
-	if (parse_vector(arr[0], arr[2], i, limits))
+	if (parse_vector(arr[0], arr[2], i, build_limit(-1, 1)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
-	limits.min = 0;
-	limits.max = FLT_MAX;
-	if (parse_double(arr[0], arr[3], i, limits))
+	if (parse_double(arr[0], arr[3], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid diameter."));
-	if (parse_double(arr[0], arr[4], i, limits))
+	if (parse_double(arr[0], arr[4], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid height."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[5], i, limits))
+	if (parse_vector(arr[0], arr[5], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
 	return (RT_SUCCESS);
 }
 
-int	parse_sp(char **arr, int i)
+int	parse_sp(char **arr, int i, const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
-	t_dlim		limits;
 
-	if (parse_arg(arr, i, g_sp_msgs, 3))
+	if (parse_arg(arr, i, g_msgs, 3))
 		return (RT_FAILURE);
-	limits.min = -FLT_MAX;
-	limits.max = FLT_MAX;
-	if (parse_vector(arr[0], arr[1], i, limits))
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	limits.min = 0;
-	limits.max = FLT_MAX;
-	if (parse_double(arr[0], arr[2], i, limits))
+	if (parse_double(arr[0], arr[2], i, build_limit(0, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid radius."));
-	limits.min = 0;
-	limits.max = 255;
-	if (parse_vector(arr[0], arr[3], i, limits))
+	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
+	return (RT_SUCCESS);
+}
+
+int	parse_pl(char **arr, int i, const char *const *g_msgs)
+{
+	const char	*err = "[line: %i][%s] parser failed: %s";
+
+	if (parse_arg(arr, i, g_msgs, 3))
+		return (RT_FAILURE);
+	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
+	if (parse_vector(arr[0], arr[2], i, build_limit(-1, 1)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
+	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
 	return (RT_SUCCESS);
 }

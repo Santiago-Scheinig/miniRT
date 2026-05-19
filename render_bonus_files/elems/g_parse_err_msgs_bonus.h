@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:58:45 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:50:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 18:35:42 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,33 @@ static const char *const	g_lp_msgs[] = {
 	"light brighness undeclared.",
 	"light color undeclared.",
 	"light has excess arguments.",
+};
+
+static const char *const	g_cn_msgs[] = {
+	"cone coordinates undeclared.",
+	"cone normal undeclared.",
+	"cone diameter undeclared.",
+	"cone height undeclared.",
+	"cone color undeclared.",
+	"cone has excess arguments.",
+};
+
+static const char *const	g_hb_msgs[] = {
+	"hyperboloid coordinates undeclared."
+	"hyperboloid normal undeclared."
+	"hyperboloid diameter undeclared."
+	"hyperboloid height undeclared."
+	"hyperboloid color undeclared.",
+	"hyperboloid has excess arguments.",
+};
+
+static const char *const	g_pb_msgs[] = {
+	"parabole coordinates undeclared.",
+	"parabole normal undeclared.",
+	"parabole diameter undeclared.",
+	"parabole height undeclared.",
+	"parabole color undeclared.",
+	"parabole has excess arguments.",
 };
 
 /*--------------------------------------------------------------------------*/

@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:28:11 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:40:03 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int	build_and_add(
 	t_object		*obj;
 	t_list			*new_node;
 
-	if (builder.parse(argv, i))
+	if (builder.parse(argv, i, builder.g_msgs))
 		return (RT_FAILURE);
 	obj = build_object(argv, builder.build);
 	if (!obj)
