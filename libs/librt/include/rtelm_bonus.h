@@ -6,16 +6,19 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 16:47:35 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/10 17:41:24 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:20:51 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_BONUS_H
 # define RTELM_BONUS_H
 
+# include "libft.h"
 # include "rtmlx.h"
 # include "rtmth.h"
-# include "libft.h"
+# if BONUS
+#  include "rtmth_bonus.h"
+# endif
 
 /**
  * Represents a point light source in the scene.
@@ -64,5 +67,11 @@ typedef struct s_object
 	t_uv		(*c_uv_map)(t_vector local_point);
 	t_vector	(*c_tangent)(t_vector local_point);
 }	t_object;
+
+int	build_cn(char **str, t_object *obj);
+
+int	build_hb(char **str, t_object *obj);
+
+int	build_pb(char **str, t_object *obj);
 
 #endif

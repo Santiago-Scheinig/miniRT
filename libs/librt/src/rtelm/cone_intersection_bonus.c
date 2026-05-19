@@ -1,14 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cone_intersection.c                                :+:      :+:    :+:   */
+/*   cone_intersection_bonus.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:25:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:25:39 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:23:14 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "rtelm.h"
 
 /**
  * Computes the intersection distance of a ray with the cone's single base cap.

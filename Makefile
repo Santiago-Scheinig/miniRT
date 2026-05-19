@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/25 17:21:49 by sscheini         ###   ########.fr        #
+#    Updated: 2026/05/19 20:32:23 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,26 +15,41 @@
 NAME        = miniRT
 NAME_BONUS  = miniRT_bonus
 
-MAIN_SRC =	$(SOURCE_DIR)/main.c								\
-			$(SOURCE_DIR)/rtapp/rtapp.c							\
-			$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
-			$(SOURCE_DIR)/rtapp/init/init_file.c				\
-			$(SOURCE_DIR)/rtapp/init/init_elements.c			\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
-			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
-			$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
-			$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
+MAIN_SRC	=	$(SOURCE_DIR)/main.c								\
+				$(SOURCE_DIR)/rtapp/rtapp.c							\
+				$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
+				$(SOURCE_DIR)/rtapp/init/init_file.c				\
+				$(SOURCE_DIR)/rtapp/init/init_elements.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
+				$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
+				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
 
-BONUS_SRC   = $(SOURCE_DIR)/main_bonus.c
+BONUS_SRC	=	$(SOURCE_DIR)/main.c									\
+				$(SOURCE_DIR)/rtapp/rtapp.c								\
+				$(SOURCE_DIR)/rtapp/debug/rtlog.c						\
+				$(SOURCE_DIR)/rtapp/init/init_file.c					\
+				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_line.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/tile_queue.c					\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c			\
+				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c			\
+				
 
 # ================================ Library Configuration ========================= #
 
 LIBS        = libs/librt
 
 LINK_LIBS   = -l:librt.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
+
+LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
 
 # ================================ Directory Structure =========================== #
 
@@ -65,7 +80,7 @@ LDFLAGS     = $(LIBRARY_PATHS)
 # ================================ Object Files ================================== #
 
 MAIN_OBJ    = $(MAIN_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
-BONUS_OBJ   = $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
+BONUS_OBJ = $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/bonus/%.o)
 DEPENDENCIES = $(MAIN_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d) \
                $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d)
 
@@ -104,10 +119,18 @@ $(OBJECT_DIR) $(DEPEND_DIR): msg
 $(LIBS):
 	@$(MAKE) -s -C $@ SCREEN_HEIGHT=$(SCREEN_HEIGHT) SCREEN_WIDTH=$(SCREEN_WIDTH)
 
+libs_bonus:
+	@$(MAKE) bonus -s -C $(LIBS) SCREEN_HEIGHT=$(SCREEN_HEIGHT) SCREEN_WIDTH=$(SCREEN_WIDTH)
+
 # ================================ Object Compilation ============================ #
 
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) $(DEPFLAGS) -c $< -o $@ -MF $(DEPEND_DIR)/$(@F:.o=.d)
+	@printf "\r\033[2K\t$(COLOR_GREEN)[⚙] $< created.$(COLOR_RESET)"
+
+$(OBJECT_DIR)/bonus/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -D BONUS=1 $(DEPFLAGS) -c $< -o $@ -MF $(DEPEND_DIR)/$(@F:.o=.d)
 	@printf "\r\033[2K\t$(COLOR_GREEN)[⚙] $< created.$(COLOR_RESET)"
 
 -include $(DEPENDENCIES)
@@ -119,8 +142,8 @@ $(NAME): $(LIBS) $(MAIN_OBJ)
 	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
 	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME) - Build complete.\n\n$(COLOR_RESET)"
 
-$(NAME_BONUS): $(LIBS) $(BONUS_OBJ)
-	@$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_OBJ) $(LDFLAGS) $(LINK_LIBS) -o $@
+$(NAME_BONUS): libs_bonus $(BONUS_OBJ)
+	@$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_OBJ) $(LDFLAGS) $(LINK_LIBS_BONUS) -o $@
 	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
 	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME_BONUS) - Build complete.\n\n$(COLOR_RESET)"
 # ================================ Cleanup ======================================= #
@@ -138,6 +161,9 @@ fclean: clean
 	@if [ -f $(NAME) ] || [ -f $(NAME_BONUS) ]; then \
 		rm -f $(NAME) $(NAME_BONUS); \
 		echo "$(COLOR_RED)[X] $(NAME) - Files removed.\n$(COLOUR_END)"; \
+	fi
+	@if [ -f "vlog.txt" ]; then	\
+		rm -rf "vlog.txt";	\
 	fi
 	@echo "$(COLOR_GREEN)[✓] $(NAME) - Full clean complete.$(COLOR_RESET)\n"
 

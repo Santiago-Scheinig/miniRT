@@ -6,11 +6,13 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/25 17:19:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/17 17:28:32 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 21:09:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "render_bonus.h"
+#include "rtelm_bonus.h"
+#include "rtelm_private.h"
+#include "rtelm_private_bonus.h"
 
 static t_vector	cn_normal(t_vector local_point)
 {
@@ -36,9 +38,9 @@ int	build_cn(char **str, t_object *obj)
 	data = ft_calloc(1, sizeof(t_elem_quadric));
 	if (!data)
 		return (1);
-	data->radius = ft_atod(str[2]) / 2.0;
+	data->radius = ft_atod(str[3]) / 2.0;
 	data->height = ft_atod(str[4]);
-	obj->material.color = build_color(str[3]);
+	obj->material.color = build_color(str[5]);
 	obj->data = data;
 	obj->c_intersection = &cn_intersection;
 	obj->c_normal = &cn_normal;

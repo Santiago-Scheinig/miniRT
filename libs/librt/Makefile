@@ -20,7 +20,12 @@ SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
 			$(SRCDIR)$(MLXDIR)window.c								\
 			$(SRCDIR)$(ERRDIR)object_del.c							\
 
-BSRC	=	#- *_bonus.c													-#
+BSRC	=	$(filter-out $(SRCDIR)$(ELMDIR)lights.c, $(SRC))	\
+			$(SRCDIR)$(ELMDIR)cone_bonus.c						\
+			$(SRCDIR)$(ELMDIR)cone_intersection_bonus.c			\
+			$(SRCDIR)$(ELMDIR)hyperboloid_bonus.c				\
+			$(SRCDIR)$(ELMDIR)parabole_bonus.c					\
+			$(SRCDIR)$(ELMDIR)lights_bonus.c					\
 
 SRCDIR	=	src/
 OBJDIR	=	obj/
@@ -40,8 +45,9 @@ W_HEIGHT ?= 1080
 
 # --------------------------- Makefile Object Compilation -------------------------- #
 
-OBJ		=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
-BOBJ	=	$(BSRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+OBJ			=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+BONUS_SRC	=	$(BSRC)
+BOBJ		=	$(BONUS_SRC:$(SRCDIR)%.c=$(OBJDIR)bonus/%.o)
 
 # ------------------------------- Makefile Cosmetics ------------------------------- #
 
@@ -90,11 +96,22 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
 
+$(OBJDIR)bonus/%.o: $(SRCDIR)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -D BONUS=1 -c $< -o $@
+	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
+
 #- Compiles the $(NAME) static library.											-#
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
-#
+
+bonus: libft minilibx $(BONUS)
+
+$(BONUS): $(OBJDIR) $(BOBJ)
+	@ar rcs $(BONUS) $(BOBJ)
+	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Bonus library compiled successfully.\n\n"
+
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
 	@make clean -C libs/libft

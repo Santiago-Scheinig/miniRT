@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:44:55 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 19:55:42 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:50:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	parse_arg(char **arr, int i, const char *const msgs[], int e)
+static int	parse_arg(char **arr, int i, const char *const *msgs, int e)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 	int			j;
@@ -45,7 +45,7 @@ int	parse_lp(char **split, int i)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	if (parse_arg(split, i, g_lp_msgs_bonus, 3))
+	if (parse_arg(split, i, g_lp_msgs, 3))
 		return (RT_FAILURE);
 	if (parse_vector(split[0], split[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates."));

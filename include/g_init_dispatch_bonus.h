@@ -6,13 +6,14 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:11:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 19:52:41 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:24:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef G_INIT_DISPATCH_BONUSH
 # define G_INIT_DISPATCH_BONUSH
 
+# include "rtapp.h"
 # include "rtapp_init.h"
 # include "rtapp_parser.h"
 
@@ -69,13 +70,13 @@ typedef struct s_obj_dispatch
  * version to add new geometric object types without modifying any logic.
  */
 static const t_obj_dispatch	g_obj_dispatch[] = {
-{"pl", {&g_pl_msgs, &parse_pl, &build_pl, NULL}},
-{"sp", {&g_sp_msgs, &parse_sp, &build_sp, NULL}},
-{"cy", {&g_cy_msgs, &parse_quadric, &build_cy, NULL}},
-{"cn", {&g_cn_msgs, &parse_quadric, &build_cn, NULL}},
-{"pb", {&g_pb_msgs, &parse_quadric, &build_pb, NULL}},
-{"hb", {&g_hb_msgs, &parse_quadric, &build_hb, NULL}},
-{NULL, {NULL, NULL, NULL}}
+{"pl", {g_pl_msgs, &parse_pl, &build_pl, NULL}},
+{"sp", {g_sp_msgs, &parse_sp, &build_sp, NULL}},
+{"cy", {g_cy_msgs, &parse_quadric, &build_cy, NULL}},
+{"cn", {g_cn_msgs, &parse_quadric, &build_cn, NULL}},
+{"pb", {g_pb_msgs, &parse_quadric, &build_pb, NULL}},
+{"hb", {g_hb_msgs, &parse_quadric, &build_hb, NULL}},
+{NULL, {NULL, NULL, NULL, NULL}}
 };
 
 /**
@@ -99,8 +100,6 @@ static const t_dispatch		g_dispatch[] = {
 {"A", &init_light_a},
 {NULL, NULL}
 };
-
-# endif
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

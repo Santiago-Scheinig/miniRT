@@ -6,9 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 19:04:14 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 15:46:37 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 20:21:20 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#ifndef RTELM_PRIVATE_H
+# define RTELM_PRIVATE_H
 
 #include "rtelm.h"
 
@@ -54,3 +57,5 @@ void		build_matrixes(
 				t_object *obj,
 				t_vector position, t_vector normal, t_vector scale
 				);
+
+#endif
