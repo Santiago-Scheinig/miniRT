@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   object_del.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:52:38 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/24 15:55:28 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "rtelm.h"
 #include "rterr.h"
 
 void	object_del(void *content)

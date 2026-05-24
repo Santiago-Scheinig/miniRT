@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:33:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 16:49:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:40:48 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,5 +96,6 @@ int	rtapp_kill(t_rtapp *app, t_rterr errcode)
 		ft_lstclear(&(app->lights), free);
 	if (app->img)
 		free(app->img);
+	del_mlx(&app->mlx, 0);
 	exit(errcode);
 }

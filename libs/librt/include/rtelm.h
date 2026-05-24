@@ -6,16 +6,16 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 20:19:57 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:36:08 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTELM_H
 # define RTELM_H
 
-# include "rtmlx.h"
-# include "rtmth.h"
 # include "libft.h"
+# include "rtmth.h"
+# include "rtmlx.h"
 # if BONUS
 #  include "rtelm_bonus.h"
 # else
@@ -59,6 +59,7 @@ typedef struct s_transform
  */
 typedef struct s_object
 {
+	t_mlx		*mlx;
 	t_transform	transform;	// Inverse and inverse transpose matrices.
 	t_material	material;	// Surface material containing the color.
 	void		*data;		// Object-specific geometry data.
@@ -180,7 +181,7 @@ int				build_sp(char **str, t_object *obj);
  * @note The caller is responsible for freeing the returned object. Returns
  * NULL both on allocation failure and if the builder reports an error.
  */
-t_object		*build_object(char **arr, int (*builder)(char **, t_object *));
+t_object		*build_object(t_mlx *mlx, char **arr, int (*builder)(char **, t_object *));
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

@@ -6,7 +6,7 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/05/19 20:32:23 by sscheini         ###   ########.fr        #
+#    Updated: 2026/05/24 19:38:29 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,32 +15,28 @@
 NAME        = miniRT
 NAME_BONUS  = miniRT_bonus
 
-MAIN_SRC	=	$(SOURCE_DIR)/main.c								\
-				$(SOURCE_DIR)/rtapp/rtapp.c							\
-				$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
-				$(SOURCE_DIR)/rtapp/init/init_file.c				\
-				$(SOURCE_DIR)/rtapp/init/init_elements.c			\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
-				$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
-				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c		\
-				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c		\
-
-BONUS_SRC	=	$(SOURCE_DIR)/main.c									\
+MAIN_SRC	=	$(SOURCE_DIR)/main.c									\
 				$(SOURCE_DIR)/rtapp/rtapp.c								\
 				$(SOURCE_DIR)/rtapp/debug/rtlog.c						\
 				$(SOURCE_DIR)/rtapp/init/init_file.c					\
 				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_line.c			\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c			\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
 				$(SOURCE_DIR)/rtapp/render/tile_queue.c					\
 				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c			\
 				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c			\
+
+BONUS_SRC	=	$(filter-out											\
+				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c,		\
+				$(MAIN_SRC))											\
+				$(SOURCE_DIR)/rtapp/init/init_elements_bonus.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
 				
 
 # ================================ Library Configuration ========================= #
@@ -79,10 +75,11 @@ LDFLAGS     = $(LIBRARY_PATHS)
 
 # ================================ Object Files ================================== #
 
-MAIN_OBJ    = $(MAIN_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
-BONUS_OBJ = $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/bonus/%.o)
-DEPENDENCIES = $(MAIN_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d) \
-               $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d)
+MAIN_OBJ    	= 	$(MAIN_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
+BSRC			=	$(BONUS_SRC)
+BONUS_OBJ		= 	$(BSRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/bonus/%.o)
+DEPENDENCIES	=	$(MAIN_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d) \
+               		$(BONUS_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d)
 
 # ================================ Colors ======================================== #
 

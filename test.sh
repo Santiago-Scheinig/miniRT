@@ -21,6 +21,11 @@ NORM_DIRS=(
   ./src/rtapp/init/parser
   ./src/rtapp/render
   ./libs/librt/src/rtelm
+  ./libs/librt/src/rtelm/light
+  ./libs/librt/src/rtelm/plane
+  ./libs/librt/src/rtelm/sphere
+  ./libs/librt/src/rtelm/cylinder
+  ./libs/librt/src/rtelm/utils
   ./libs/librt/src/rterr
   ./libs/librt/src/rtmth/equations
   ./libs/librt/src/rtmth/matrix

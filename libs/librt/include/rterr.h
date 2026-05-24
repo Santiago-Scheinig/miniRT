@@ -6,14 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 20:15:34 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 15:55:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTERR_H
 # define RTERR_H
-# include "libft.h"
-# include "rtelm.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>

@@ -6,13 +6,13 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 16:41:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 19:45:19 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/21 18:15:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
 
-static int	parse_arg(char **arr, int i, const char *const *msgs, int e)
+static int	parse_req_att(char **arr, int i, const char *const *msgs, int e)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 	int			j;
@@ -30,7 +30,7 @@ int	parse_quadric(char **arr, int i, const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	if (parse_arg(arr, i, g_msgs, 5))
+	if (parse_req_att(arr, i, g_msgs, 5))
 		return (RT_FAILURE);
 	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
@@ -49,7 +49,7 @@ int	parse_sp(char **arr, int i, const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	if (parse_arg(arr, i, g_msgs, 3))
+	if (parse_req_att(arr, i, g_msgs, 3))
 		return (RT_FAILURE);
 	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
@@ -64,7 +64,7 @@ int	parse_pl(char **arr, int i, const char *const *g_msgs)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	if (parse_arg(arr, i, g_msgs, 3))
+	if (parse_req_att(arr, i, g_msgs, 3))
 		return (RT_FAILURE);
 	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));

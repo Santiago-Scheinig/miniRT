@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:23:52 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/19 19:40:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 19:33:57 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	build_and_add(
 
 	if (builder.parse(argv, i, builder.g_msgs))
 		return (RT_FAILURE);
-	obj = build_object(argv, builder.build);
+	obj = build_object(&app->mlx, argv, builder.build);
 	if (!obj)
 	{
 		if (errno)

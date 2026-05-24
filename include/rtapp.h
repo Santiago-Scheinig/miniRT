@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/17 17:55:46 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 18:53:06 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,6 @@
 # include "rtmlx.h"
 # include "rtmth.h"
 # include "rtapp_debug.h"
-# include "time.h" // TODO: delete before submission
-# if BONUS
-#  include "rtelm_bonus.h"
-#  include "rtmth_bonus.h"
-# endif
 
 # ifndef DEV
 #  define DEV 0
@@ -70,6 +65,7 @@ typedef struct s_rtapp
 	uint32_t		*img; // Render buffer for img, allocated after parsing.
 	t_list			*objects;	// Linked list of T_OBJECT scene elements.
 	t_list			*lights;	// Linked list of T_ELEM_LIGHT_P point lights.
+	t_mlx			mlx;
 	t_elem_camera	camera;		// Unique camera instance for the scene.
 	t_elem_light_a	ambient;	// Unique ambient light instance for the scene.
 	t_tile_queue	tile_queue;	// Queue of tiles to render.

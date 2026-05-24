@@ -1,12 +1,12 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
 SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
-			$(SRCDIR)$(ELMDIR)plane.c								\
-			$(SRCDIR)$(ELMDIR)sphere.c								\
-			$(SRCDIR)$(ELMDIR)cylinder.c							\
-			$(SRCDIR)$(ELMDIR)cylinder_intersection.c				\
-			$(SRCDIR)$(ELMDIR)lights.c								\
-			$(SRCDIR)$(ELMDIR)build_utils.c							\
+			$(SRCDIR)$(ELMDIR)plane/plane.c							\
+			$(SRCDIR)$(ELMDIR)sphere/sphere.c						\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder.c					\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_utils.c				\
+			$(SRCDIR)$(ELMDIR)light/lights.c						\
+			$(SRCDIR)$(ELMDIR)utils/build_utils.c					\
 			$(SRCDIR)$(MTHDIR)matrix/mat4.c							\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c					\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c				\
@@ -20,12 +20,26 @@ SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
 			$(SRCDIR)$(MLXDIR)window.c								\
 			$(SRCDIR)$(ERRDIR)object_del.c							\
 
-BSRC	=	$(filter-out $(SRCDIR)$(ELMDIR)lights.c, $(SRC))	\
-			$(SRCDIR)$(ELMDIR)cone_bonus.c						\
-			$(SRCDIR)$(ELMDIR)cone_intersection_bonus.c			\
-			$(SRCDIR)$(ELMDIR)hyperboloid_bonus.c				\
-			$(SRCDIR)$(ELMDIR)parabole_bonus.c					\
-			$(SRCDIR)$(ELMDIR)lights_bonus.c					\
+BSRC	=	$(filter-out											\
+			$(SRCDIR)$(ELMDIR)light/lights.c						\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder.c					\
+			$(SRCDIR)$(ELMDIR)sphere/sphere.c						\
+			$(SRCDIR)$(ELMDIR)plane/plane.c							\
+			$(SRCDIR)$(ERRDIR)object_del.c,							\
+			$(SRC))													\
+			$(SRCDIR)$(ELMDIR)cone/cone_bonus.c						\
+			$(SRCDIR)$(ELMDIR)cone/cone_utils_bonus.c				\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_bonus.c				\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_utils.c				\
+			$(SRCDIR)$(ELMDIR)hyperboloid/hyperboloid_bonus.c		\
+			$(SRCDIR)$(ELMDIR)hyperboloid/hyperboloid_utils_bonus.c	\
+			$(SRCDIR)$(ELMDIR)paraboloid/paraboloid_bonus.c			\
+			$(SRCDIR)$(ELMDIR)paraboloid/paraboloid_utils_bonus.c	\
+			$(SRCDIR)$(ELMDIR)plane/plane_bonus.c					\
+			$(SRCDIR)$(ELMDIR)sphere/sphere_bonus.c					\
+			$(SRCDIR)$(ELMDIR)light/lights_bonus.c					\
+			$(SRCDIR)$(ELMDIR)utils/build_utils_bonus.c				\
+			$(SRCDIR)$(ERRDIR)object_del_bonus.c					\
 
 SRCDIR	=	src/
 OBJDIR	=	obj/
@@ -88,6 +102,11 @@ $(OBJDIR):
 	@mkdir -p $@$(MTHDIR)raytracing/
 	@mkdir -p $@$(MTHDIR)vector/
 	@mkdir -p $@$(ELMDIR)
+	@mkdir -p $@$(ELMDIR)cylinder/
+	@mkdir -p $@$(ELMDIR)sphere/
+	@mkdir -p $@$(ELMDIR)plane/
+	@mkdir -p $@$(ELMDIR)light/
+	@mkdir -p $@$(ELMDIR)utils/
 	@mkdir -p $@$(ERRDIR)
 	@mkdir -p $@$(MLXDIR)
 

@@ -1,26 +1,14 @@
 A 0.1 255,255,255
 
-C 0,0,30 0,0,-1 40
+C 0,0,50 0,0,-1 90
 
-# small area light (important detail: NOT a point light)
-L 0,25,15 1.0 255,255,255
+L 0,18,0 1.0 255,255,255
 
-# room (correct proportions)
-# floor
 pl 0,-20,0 0,1,0 200,200,200
-
-# ceiling
 pl 0,20,0 0,-1,0 200,200,200
-
-# back wall
 pl 0,0,-20 0,0,1 200,200,200
-
-# left (red)
 pl -20,0,0 1,0,0 255,70,70
-
-# right (green)
 pl 20,0,0 -1,0,0 70,255,70
 
-# objects (classic boxes approximated with primitives)
-sp -5,-20,-5 5 255,255,255
-sp 5,-20,-10 5 180,180,180
+sp -5,-15,-5 5 255,255,255
+sp 5,-15,-10 5 180,180,180
