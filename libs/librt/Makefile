@@ -1,12 +1,12 @@
 # --------------------------------- Makefile Main ---------------------------------- #
 
 SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
-			$(SRCDIR)$(ELMDIR)plane.c								\
-			$(SRCDIR)$(ELMDIR)sphere.c								\
-			$(SRCDIR)$(ELMDIR)cylinder.c							\
-			$(SRCDIR)$(ELMDIR)cylinder_intersection.c				\
-			$(SRCDIR)$(ELMDIR)lights.c								\
-			$(SRCDIR)$(ELMDIR)build_utils.c							\
+			$(SRCDIR)$(ELMDIR)plane/plane.c							\
+			$(SRCDIR)$(ELMDIR)sphere/sphere.c						\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder.c					\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_utils.c				\
+			$(SRCDIR)$(ELMDIR)light/lights.c						\
+			$(SRCDIR)$(ELMDIR)utils/build_utils.c					\
 			$(SRCDIR)$(MTHDIR)matrix/mat4.c							\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_inverse.c					\
 			$(SRCDIR)$(MTHDIR)matrix/mat4_transforms.c				\
@@ -20,7 +20,26 @@ SRC		=	$(SRCDIR)$(ELMDIR)camera.c								\
 			$(SRCDIR)$(MLXDIR)window.c								\
 			$(SRCDIR)$(ERRDIR)object_del.c							\
 
-BSRC	=	#- *_bonus.c													-#
+BSRC	=	$(filter-out											\
+			$(SRCDIR)$(ELMDIR)light/lights.c						\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder.c					\
+			$(SRCDIR)$(ELMDIR)sphere/sphere.c						\
+			$(SRCDIR)$(ELMDIR)plane/plane.c							\
+			$(SRCDIR)$(ERRDIR)object_del.c,							\
+			$(SRC))													\
+			$(SRCDIR)$(ELMDIR)cone/cone_bonus.c						\
+			$(SRCDIR)$(ELMDIR)cone/cone_utils_bonus.c				\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_bonus.c				\
+			$(SRCDIR)$(ELMDIR)cylinder/cylinder_utils.c				\
+			$(SRCDIR)$(ELMDIR)hyperboloid/hyperboloid_bonus.c		\
+			$(SRCDIR)$(ELMDIR)hyperboloid/hyperboloid_utils_bonus.c	\
+			$(SRCDIR)$(ELMDIR)paraboloid/paraboloid_bonus.c			\
+			$(SRCDIR)$(ELMDIR)paraboloid/paraboloid_utils_bonus.c	\
+			$(SRCDIR)$(ELMDIR)plane/plane_bonus.c					\
+			$(SRCDIR)$(ELMDIR)sphere/sphere_bonus.c					\
+			$(SRCDIR)$(ELMDIR)light/lights_bonus.c					\
+			$(SRCDIR)$(ELMDIR)utils/build_utils_bonus.c				\
+			$(SRCDIR)$(ERRDIR)object_del_bonus.c					\
 
 SRCDIR	=	src/
 OBJDIR	=	obj/
@@ -40,8 +59,9 @@ W_HEIGHT ?= 1080
 
 # --------------------------- Makefile Object Compilation -------------------------- #
 
-OBJ		=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
-BOBJ	=	$(BSRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+OBJ			=	$(SRC:$(SRCDIR)%.c=$(OBJDIR)%.o)
+BONUS_SRC	=	$(BSRC)
+BOBJ		=	$(BONUS_SRC:$(SRCDIR)%.c=$(OBJDIR)bonus/%.o)
 
 # ------------------------------- Makefile Cosmetics ------------------------------- #
 
@@ -82,6 +102,11 @@ $(OBJDIR):
 	@mkdir -p $@$(MTHDIR)raytracing/
 	@mkdir -p $@$(MTHDIR)vector/
 	@mkdir -p $@$(ELMDIR)
+	@mkdir -p $@$(ELMDIR)cylinder/
+	@mkdir -p $@$(ELMDIR)sphere/
+	@mkdir -p $@$(ELMDIR)plane/
+	@mkdir -p $@$(ELMDIR)light/
+	@mkdir -p $@$(ELMDIR)utils/
 	@mkdir -p $@$(ERRDIR)
 	@mkdir -p $@$(MLXDIR)
 
@@ -90,11 +115,22 @@ $(OBJDIR)%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
 
+$(OBJDIR)bonus/%.o: $(SRCDIR)%.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) -D BONUS=1 -c $< -o $@
+	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
+
 #- Compiles the $(NAME) static library.											-#
 $(NAME): $(OBJDIR) $(OBJ)
 	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
-#
+
+bonus: libft minilibx $(BONUS)
+
+$(BONUS): $(OBJDIR) $(BOBJ)
+	@ar rcs $(BONUS) $(BOBJ)
+	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Bonus library compiled successfully.\n\n"
+
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
 	@make clean -C libs/libft

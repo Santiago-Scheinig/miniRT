@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 18:11:04 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:15:55 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:40:35 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ int	main(int argc, char **argv)
 	app.img = ft_calloc(W_HEIGHT * W_WIDTH, sizeof(uint32_t));
 	if (!app.img)
 		return (rtlog(RT_ERRLOG, 0, err, strerror(errno)), RT_FAILURE);
+	app.mlx.instance = mlx_init();
+	if (!app.mlx.instance)
+		return (del_mlx(&app.mlx, 1));
 	if (rtapp_init(argc, argv, &app))
 		rtapp_kill(&app, RT_FAILURE);
 	if (rtapp_render(&app))
 		return (rtapp_kill(&app, RT_FAILURE));
-	if (window_run(app.img, argv[1]))
+	if (window_run(&app.mlx, app.img, argv[1]))
 		return (rtapp_kill(&app, RT_FAILURE));
 	rtapp_kill(&app, RT_SUCCESS);
 	return (RT_SUCCESS);

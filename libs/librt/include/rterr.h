@@ -3,25 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   rterr.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:19:49 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:41:55 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/05/24 15:55:15 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTERR_H
 # define RTERR_H
-# include "libft.h"
-# include "rtelm.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <sys/time.h>
 # include <sys/types.h>
-# if BONUS
-#  include "rterr_bonus.h"
-# endif
 
 /*--------------------------------------------------------------------------*/
 /*----------------------------------MEMFREE---------------------------------*/

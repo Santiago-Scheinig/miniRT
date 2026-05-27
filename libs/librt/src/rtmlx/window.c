@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 19:01:10 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:18:28 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:43:02 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	set_hooks(t_mlx *mlx)
 	mlx_hook(mlx->win, 17, 0, &close_window, mlx);
 }
 
-static int	del_mlx(t_mlx *mlx, int exit_no)
+int	del_mlx(t_mlx *mlx, int exit_no)
 {
 	if (mlx->img)
 		mlx_destroy_image(mlx->instance, mlx->img);
@@ -42,22 +42,14 @@ static int	del_mlx(t_mlx *mlx, int exit_no)
 		mlx_destroy_display(mlx->instance);
 		free(mlx->instance);
 	}
-	free(mlx);
 	return (exit_no);
 }
 
-int	window_run(uint32_t *image, char *filename)
+int	window_run(t_mlx *mlx, uint32_t *image, char *filename)
 {
 	char		*w;
-	t_mlx		*mlx;
 
 	w = ft_strjoin("miniRT - ", filename);
-	mlx = ft_calloc(1, sizeof(t_mlx));
-	if (!mlx)
-		return (1);
-	mlx->instance = mlx_init();
-	if (!mlx->instance)
-		return (del_mlx(mlx, 1));
 	mlx->win = mlx_new_window(mlx->instance, W_WIDTH, W_HEIGHT, (char *) w);
 	free(w);
 	if (!mlx->win)
@@ -72,5 +64,5 @@ int	window_run(uint32_t *image, char *filename)
 	mlx_put_image_to_window(mlx->instance, mlx->win, mlx->img, 0, 0);
 	set_hooks(mlx);
 	mlx_loop(mlx->instance);
-	return (del_mlx(mlx, 0));
+	return (0);
 }

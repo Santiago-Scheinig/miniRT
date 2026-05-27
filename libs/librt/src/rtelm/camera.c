@@ -6,12 +6,12 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 21:14:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:20:40 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/24 17:27:52 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
-#include "rtelm_private.h"
+#include ".include/rtelm_private.h"
 
 /**
  * Computes the world space ray for a given pixel coordinate.
@@ -24,7 +24,7 @@
  * The ray direction is built from the camera's precomputed right and up
  * vectors, then normalized before use.
  */
-static t_ray	get_pixel_ray(void *ptr, int x, int y)
+static t_ray	camera_calc_pixel_ray(void *ptr, int x, int y)
 {
 	t_elem_camera	*camera;
 	t_ray			ray;
@@ -51,13 +51,19 @@ static t_ray	get_pixel_ray(void *ptr, int x, int y)
  * FOV and aspect ratio. If the camera points straight up or down, the guide
  * vector switches from Y to X to avoid a degenerate cross product.
  */
-static void	build_camera_data(t_elem_camera *camera)
+int	build_camera(char **str, t_elem_camera *camera)
 {
 	t_vector	guide;
 	t_vector	right_norm;
 	t_vector	up_norm;
 	double		v_width;
 
+	camera->pos = build_vector(str[1]);
+	camera->normal = build_vector(str[2]);
+	if (!camera->normal.x && !camera->normal.y && !camera->normal.z)
+		return (1);
+	camera->fov = ft_atod(str[3]);
+	camera->get_pixel_ray = &camera_calc_pixel_ray;
 	v_width = 2.0 * tan((camera->fov / 2.0) * (M_PI / 180.0));
 	guide = vector_new(0.0, 1.0, 0.0);
 	if (fabs(camera->normal.y) > 1.0 - EPSILON)
@@ -69,16 +75,5 @@ static void	build_camera_data(t_elem_camera *camera)
 	camera->right = vector_mult_scalar(right_norm, v_width);
 	camera->up = vector_mult_scalar(up_norm,
 			v_width * ((double)W_HEIGHT / (double)W_WIDTH));
-}
-
-int	build_camera(char **str, t_elem_camera *camera)
-{
-	camera->pos = build_vector(str[1]);
-	camera->normal = build_vector(str[2]);
-	if (!camera->normal.x && !camera->normal.y && !camera->normal.z)
-		return (1);
-	camera->fov = ft_atod(str[3]);
-	camera->get_pixel_ray = &get_pixel_ray;
-	build_camera_data(camera);
 	return (0);
 }

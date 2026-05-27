@@ -6,19 +6,18 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:11:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:32:51 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:48:10 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef G_INIT_DISPATCH_H
 # define G_INIT_DISPATCH_H
 
-# include "rtapp_init.h"
-# include "rtapp_parser.h"
-
 # if BONUS
 #  include "g_init_dispatch_bonus.h"
 # else
+#  include "rtapp_init.h"
+#  include "rtapp_parser.h"
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -32,9 +31,10 @@
  */
 typedef struct s_object_build
 {
-	int	(*parse)(char **arr, int i); // Validates raw string arguments.
-	int	(*build)(char **arr, t_object *obj); // Allocates and fills the object.
-	int	(*info)(t_object *obj); // Prints debug info, NULL in release.
+	const char *const	*g_msgs;
+	int					(*parse)(char **arr, int i, const char *const *g_msgs);
+	int					(*build)(char **arr, t_object *obj); // Allocates and fills the object.
+	int					(*info)(t_object *obj); // Prints debug info, NULL in release.
 }	t_object_build;
 
 /**
@@ -72,10 +72,10 @@ typedef struct s_obj_dispatch
  * version to add new geometric object types without modifying any logic.
  */
 static const t_obj_dispatch	g_obj_dispatch[] = {
-{"pl", {&parse_pl, &build_pl, NULL}},
-{"cy", {&parse_cy, &build_cy, NULL}},
-{"sp", {&parse_sp, &build_sp, NULL}},
-{NULL, {NULL, NULL, NULL}}
+{"pl", {g_pl_msgs, &parse_pl, &build_pl, NULL}},
+{"sp", {g_sp_msgs, &parse_sp, &build_sp, NULL}},
+{"cy", {g_cy_msgs, &parse_quadric, &build_cy, NULL}},
+{NULL, {NULL, NULL, NULL, NULL}}
 };
 
 /**

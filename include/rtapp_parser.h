@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/27 16:43:31 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/25 17:26:41 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/05/19 19:44:19 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,10 @@
 # include "rtapp.h"
 # include "g_parse_err_msgs.h"
 # include <float.h>
+
+# if BONUS
+#  include "rtapp_parser_bonus.h"
+# endif
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -48,17 +52,6 @@ typedef struct s_dlim
 int				parse_camera(char **split, int i);
 
 /**
- * Validates the arguments of a point light declaration.
- * @param split The array of strings containing the point light parameters,
- * where split[1] is position, split[2] is brightness, split[3] is color.
- * @param i The line number in the scene file, used for error logging.
- * @return RT_SUCCESS if all arguments are valid, RT_FAILURE otherwise.
- * @note Brightness is validated in the -1.0 to 1.0 range. Color channels
- * are validated in the 0 to 255 range. Only available in bonus mode.
- */
-int				parse_lp(char **split, int i);
-
-/**
  * Validates the arguments of an ambient light declaration.
  * @param split The array of strings containing the ambient light parameters,
  * where split[1] is the brightness ratio and split[2] is the RGB color.
@@ -70,26 +63,17 @@ int				parse_lp(char **split, int i);
 int				parse_la(char **split, int i);
 
 /**
- * Validates the arguments of a plane declaration.
- * @param arr The array of strings where arr[1] is position, arr[2] is
- * normal, and arr[3] is the RGB color.
+ * Validates the arguments of a point light declaration.
+ * @param split The array of strings containing the point light parameters,
+ * where split[1] is position, split[2] is brightness, split[3] is color.
  * @param i The line number in the scene file, used for error logging.
  * @return RT_SUCCESS if all arguments are valid, RT_FAILURE otherwise.
- * @note Position accepts any double range. Normal components are validated
- * in the -1.0 to 1.0 range. Color channels in the 0 to 255 range.
+ * @note Brightness is validated in the -1.0 to 1.0 range. Color channels
+ * are validated in the 0 to 255 range. Only available in bonus mode.
  */
-int				parse_pl(char **split, int i);
+int				parse_lp(char **split, int i);
 
-/**
- * Validates the arguments of a cylinder declaration.
- * @param arr The array of strings where arr[1] is position, arr[2] is
- * normal, arr[3] is diameter, arr[4] is height, and arr[5] is RGB color.
- * @param i The line number in the scene file, used for error logging.
- * @return RT_SUCCESS if all arguments are valid, RT_FAILURE otherwise.
- * @note Normal components are validated in the -1.0 to 1.0 range.
- * Diameter and height must be positive. Color channels in 0 to 255 range.
- */
-int				parse_cy(char **split, int i);
+int				parse_quadric(char **arr, int i, const char *const *g_msgs);
 
 /**
  * Validates the arguments of a sphere declaration.
@@ -100,29 +84,22 @@ int				parse_cy(char **split, int i);
  * @note Position accepts any double range. Diameter must be positive.
  * Color channels are validated in the 0 to 255 range.
  */
-int				parse_sp(char **split, int i);
+int				parse_sp(char **split, int i, const char *const *g_msgs);
+
+/**
+ * Validates the arguments of a plane declaration.
+ * @param arr The array of strings where arr[1] is position, arr[2] is
+ * normal, and arr[3] is the RGB color.
+ * @param i The line number in the scene file, used for error logging.
+ * @return RT_SUCCESS if all arguments are valid, RT_FAILURE otherwise.
+ * @note Position accepts any double range. Normal components are validated
+ * in the -1.0 to 1.0 range. Color channels in the 0 to 255 range.
+ */
+int				parse_pl(char **split, int i, const char *const *g_msgs);
 
 /*--------------------------------------------------------------------------*/
 /*-----------------------------PARSER UTILITIES-----------------------------*/
 /*--------------------------------------------------------------------------*/
-
-/**
- * Validates that a string array has the expected number of arguments.
- * @param arr The NULL-terminated array of strings to validate, where
- * arr[0] is the element specifier and arr[1..n] are its parameters.
- * @param i The line number in the scene file, used for error logging.
- * @param msgs The error message array where msgs[0..expected-1] are
- * missing argument errors and msgs[expected] is the excess error.
- * @param expected The exact number of arguments expected after arr[0].
- * @return RT_SUCCESS if ARR has exactly EXPECTED arguments, RT_FAILURE
- * with the appropriate message if any argument is missing or excess.
- */
-int				parse_arg(
-					char **arr,
-					int i,
-					const char *const msgs[],
-					int expected
-					);
 
 /**
  * Parses a single line of a scene file and initializes its element.
@@ -157,6 +134,8 @@ int				parse_vector(char *sp, char *str, int i, t_dlim limits);
  * if STR is NULL, has more than one decimal point, or is out of range.
  */
 int				parse_double(char *sp, char *str, int i, t_dlim limits);
+
+t_dlim			build_limit(double min, double max);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
