@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/05/24 19:38:29 by sscheini         ###   ########.fr        #
+#    Updated: 2026/05/29 20:27:06 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ COLOR_RESET = \033[0m
 
 .PHONY: all msg dev bonus clean fclean re $(LIBS)
 
-all: $(NAME)
+all: $(NAME) bonus
 
 dev:
 	@$(MAKE) -s re DEV=1
