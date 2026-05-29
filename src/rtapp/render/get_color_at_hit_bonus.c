@@ -128,11 +128,6 @@ t_vector	get_material_color(t_object *obj, t_vector local_point)
 		uv = obj->c_uv_map(local_point);
 		return (get_checker_color(uv));
 	}
-	if (obj->material.map.img && obj->c_uv_map)
-	{
-		uv = obj->c_uv_map(local_point);
-		return (sample_texture_color(&obj->material.map, uv));
-	}
 	return (obj->material.color);
 }
 
