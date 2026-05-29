@@ -48,6 +48,32 @@ static t_vector	sample_normal_map(t_texture *map, t_uv uv)
 	return (rgb_to_normal(rgb));
 }
 
+t_vector	sample_texture_color(t_texture *map, t_uv uv)
+{
+	int		x;
+	int		y;
+	int		pixel;
+	t_vector	rgb;
+
+	if (!map || !map->pixels || !map->img)
+		return (vector_new(0.8, 0.8, 0.8));
+	x = (int)(uv.u * (map->width - 1));
+	y = (int)(uv.v * (map->height - 1));
+	if (x < 0)
+		x = 0;
+	if (y < 0)
+		y = 0;
+	if (x >= map->width)
+		x = map->width - 1;
+	if (y >= map->height)
+		y = map->height - 1;
+	pixel = y * (map->line_len / 4) + x;
+	rgb.r = ((map->pixels[pixel] >> 16) & 0xFF) / 255.0;
+	rgb.g = ((map->pixels[pixel] >> 8) & 0xFF) / 255.0;
+	rgb.b = (map->pixels[pixel] & 0xFF) / 255.0;
+	return (rgb);
+}
+
 static t_vector	build_bitangent(t_vector normal, t_vector tangent)
 {
 	return (vector_cross_product(normal, tangent));

@@ -19,6 +19,8 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 	t_list		*lines;
 
 	errno = 0;
+	app->logfd.orig_outfd = -1;
+	app->logfd.orig_errfd = -1;
 	if (argc != 2)
 		return (rtlog(RT_ERRLOG, 0, err, "invalid number of arguments."));
 	lines = init_file(argv[1]);
@@ -26,8 +28,6 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 		return (RT_FAILURE);
 	if (init_file_contents(lines, argv[1], app))
 		return (RT_FAILURE);
-	app->logfd.orig_outfd = -1;
-	app->logfd.orig_errfd = -1;
 	if (init_log(app))
 		return (RT_SUCCESS);
 	return (RT_SUCCESS);
@@ -132,5 +132,5 @@ int	rtapp_kill(t_rtapp *app)
 	if (app->logfd.orig_errfd != -1)
 		if (dup2(app->logfd.orig_errfd, STDERR_FILENO) == -1)
 			rtlog(RT_ERRLOG, 0, err, "unable to restore stderr.");
-	return (RT_SUCCESS);
+	exit(RT_SUCCESS);
 }

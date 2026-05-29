@@ -28,5 +28,6 @@ t_vector	get_checker_color(t_uv uv);
 t_vector	get_perturbed_normal(t_hit hit, t_vector local_point);
 t_vector	get_material_color(t_object *obj, t_vector local_point);
 t_vector	get_lighting_normal(t_hit hit, t_vector local_point);
+t_vector	sample_texture_color(t_texture *map, t_uv uv);
 
 #endif
