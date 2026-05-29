@@ -1,0 +1,25 @@
+En el proyecto actual tenemos un motor pequeño de ray tracing basada en el enunciado especificado en documentation/subject.md. para programar este rey tracing tenemos que basarnos unas reglas específicas de programación y estilo en documentation/norminette.md. Ahora mismo el proyecto tiene dos partes, está el proyecto base que tiene que compilar de forma normal haciendo make y luego está una parte de bonus que es la parte que le piden en el en el enunciado, que vamos a implementar esta parcialmente, pero mal implementado ahora mismo. 
+
+El objetivo de la sesión actual será terminar de programar y arreglar la implementación en mal hechas que hay ahora mismo en bonus, esto va a incluir la programación de la lógica y la integración con el make-file de tal manera que no sustituya código del proyecto original, sino que sea un código aparte que solo se compile si se hace la regla make bonus.
+
+Ahora mismo hay varios problemas, primero tenemos que implementar que en los objetos del bonus que tenemos hiperboloide paraboloide y cono. Ahora mismo no tienen en su base del objeto una tapa y entonces por como se calculan la normales de la luz se genera sombra donde no deberia haberla, así que lo que vamos a hacer es ponerle una tapa a los objetos en lugar de ser transparentes al estilo del cilindro, que ya está implementado correctamente que está el proyecto base.
+
+También otra parte que tenemos que implementar que está parcialmente implementada es el manejo de Checkers que en el paseo se detecta una flag que se mete en la estructura de cada objeto en la que se marca si tiene textura de Checker o no, si tiene textura de Checker lo que pasa es que se renderiza como si fuese el patrón de colores de un tablero de  damas blanco y negro y no afecta al color base el objeto.
+
+Otra cosa bastante clave que implementar es la reflexión de phong. Ahora mismo las luces tienen el color de ambiente y tienen el color de la luces que inciden en ello, pero se ve que falta el color especular. Creo que se llama para obtener el modelo de Fong el parset, ya tiene metido en el material en cada objeto en la estructura en algún archivo. H que defina lo del bonus tanto el valor de el color de la reflexión como el exponente. tu trabajo es ver cómo funciona esta reflexión investigar cómo funciona y saber cómo implementar el render ya existente a un nuevo render bonus en el que se tenga en cuenta esos componentes y se calcule los reflexión de phong completa.
+
+otra cosa también es el uso de mapas de normales ahora mismo lo que vamos a hacer es usar una librería propietaria llamada minilibx, cuya documentación está en documentation/minilibx.md. Vamos a usar la manera que es para no tener links que se lean los mapas de normales. en formato archivo XPM pero creo que eso ya está implementado en el parser.
+
+Es extremadamente importante que a la hora de implementar no se toque bajo ningún concepto a menos que sea pequeño y muy obligatorio, el parset solo se toca el render las matemáticas y lo necesario, pero el parser no se toca.
+
+También el bono se incluye el uso de luces de colores y manejo de múltiples luces en la escena, pero son muy sencillos porque luces ya de por sí es una lista enlazada, así que solo le quite era por cada luz y obtener la luz que recibe ya está, pero bueno, creo que no está implementado. Igualmente todo esto. Tú tienes que verificar si ya está implementado no hay que cambiarlo para cumplir la norma, hay mejores patrones de diseño.
+
+Del proyecto base tienes completamente prohibido tocar nada, solo debes tocar archivos que tengan el sufijo _bonus.
+
+Tu finalidad es crear un plan de implementación para que el proyecto esté listo cumpliendo la norma la parte del render bonus la del parser, se puede dejarla como está de mal.
+
+Énfasis en que no puede tener ningún link de memoria tampoco ni incumplir en ningún momento la norminette. Además, deberá seguir patrones de implementación limpio y buena gestión de archivos, si hace falta crear archivos porque agrupar un grupo de funciones en más óptimo se hace si hay que crear subcarpetas y tal. Se hace el makefile ya que también hay que integrarlo con el resto del proyecto para que compile obviamente porque ahora mismo por estos bonus no compila.
+
+Todas las funciones deben de seguir un buen estándar de programación siendo todas atómicas modulares puras reutilizables, testeables y que no se repita código. Además deberán estar todos documentadas con su funcionamiento que son limite en formato que sigue el resto del proyecto de la documentación.
+
+Ahora mismo hay archivos que tienen una implementación incompleta o incorrecta o tal en la carpeta bonus_unmerged, Quién tú tienes que mover esos archivos a la carpeta correspondiente del proyecto que les toque modificarla completamente sin miedo. Y arreglarla cumpliendo los estándares, que ya te he dicho.
