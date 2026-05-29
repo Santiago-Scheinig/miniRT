@@ -16,7 +16,7 @@
 # include "rtapp.h"
 # include "rtapp_render.h"
 
-# define CHECKER_SCALE 10
+# define CHECKER_SCALE 4
 
 typedef struct s_shade_ctx
 {

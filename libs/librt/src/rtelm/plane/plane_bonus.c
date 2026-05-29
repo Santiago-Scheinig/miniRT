@@ -13,18 +13,24 @@
 #include "rtelm.h"
 #include "../.include/rtelm_private.h"
 
+#define PLANE_UV_TILE 4.0
+
 static t_vector	pl_calc_tangent(t_vector local_point)
 {
 	(void)local_point;
 	return (vector_new(1.0, 0.0, 0.0));
 }
 
-static  t_uv	pl_calc_uv_map(t_vector local_point)
+static t_uv	pl_calc_uv_map(t_vector local_point)
 {
 	t_uv	uv;
 
-	uv.u = local_point.x;
-	uv.v = local_point.z;
+	uv.u = fmod(local_point.x / PLANE_UV_TILE, 1.0);
+	uv.v = fmod(local_point.z / PLANE_UV_TILE, 1.0);
+	if (uv.u < 0.0)
+		uv.u += 1.0;
+	if (uv.v < 0.0)
+		uv.v += 1.0;
 	return (uv);
 }
 
