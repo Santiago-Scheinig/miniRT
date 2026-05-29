@@ -52,7 +52,8 @@ NAME	=	librt.a
 BONUS	=	librt_bonus.a
 
 CC		=	cc
-CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I libs/libft/include -I libs/minilibx -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
+EXTRA_FLAGS	?=	-Wno-error=incompatible-pointer-types
+CFLAGS	=	-g -Wall -Werror -Wextra $(EXTRA_FLAGS) -I include/ -I libs/libft/include -I libs/minilibx -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
 
 W_WIDTH ?= 1920
 W_HEIGHT ?= 1080

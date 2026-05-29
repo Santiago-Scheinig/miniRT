@@ -76,13 +76,13 @@ static t_vector	calc_specular(t_hit hit, t_elem_light_p *light,
 				hit.obj->material.specular.exponent)));
 }
 
-static t_vector	process_light(t_hit hit, t_list *objs,
-	t_rtapp *app, t_shade_ctx ctx)
+static t_vector	process_light(t_hit hit, t_list *node,
+	t_list *objs, t_rtapp *app, t_shade_ctx ctx)
 {
 	t_elem_light_p	*light;
 	t_vector		res;
 
-	light = (t_elem_light_p *)objs->content;
+	light = (t_elem_light_p *)node->content;
 	if (is_in_shadow(hit, light, objs))
 		return (vector_new(0, 0, 0));
 	res = calc_diffuse(hit, light, ctx);
@@ -100,7 +100,7 @@ static t_vector	sum_lighting(t_hit hit, t_list *objs,
 	res = vector_new(0, 0, 0);
 	while (node)
 	{
-		tmp = process_light(hit, node, app, ctx);
+		tmp = process_light(hit, node, objs, app, ctx);
 		res = vector_sum_vector(res, tmp);
 		node = node->next;
 	}

@@ -30,24 +30,6 @@ static t_uv	hb_calc_uv_map(t_vector local_point)
 	return (uv);
 }
 
-static double	hb_calc_intersection(t_ray local_ray)
-{
-	double	sides_t;
-	double	ends_t;
-
-	sides_t = hb_calc_sides_intersection(local_ray);
-	ends_t = hb_calc_ends_intersection(local_ray);
-	if (sides_t < EPSILON && ends_t < EPSILON)
-		return (INFINITY);
-	if (sides_t > EPSILON && ends_t > EPSILON)
-		return (fmin(sides_t, ends_t));
-	if (sides_t > EPSILON)
-		return (sides_t);
-	if (ends_t > EPSILON)
-		return (ends_t);
-	return (INFINITY);
-}
-
 static double	hb_calc_sides_intersection(t_ray local_ray)
 {
 	t_roots		roots;
@@ -72,6 +54,24 @@ static double	hb_calc_sides_intersection(t_ray local_ray)
 			valid_t = roots.sol2;
 	}
 	return (valid_t);
+}
+
+static double	hb_calc_intersection(t_ray local_ray)
+{
+	double	sides_t;
+	double	ends_t;
+
+	sides_t = hb_calc_sides_intersection(local_ray);
+	ends_t = hb_calc_ends_intersection(local_ray);
+	if (sides_t < EPSILON && ends_t < EPSILON)
+		return (INFINITY);
+	if (sides_t > EPSILON && ends_t > EPSILON)
+		return (fmin(sides_t, ends_t));
+	if (sides_t > EPSILON)
+		return (sides_t);
+	if (ends_t > EPSILON)
+		return (ends_t);
+	return (INFINITY);
 }
 
 static t_vector	hb_calc_normal(t_vector local_point)

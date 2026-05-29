@@ -29,12 +29,15 @@ MAIN_SRC	=	$(SOURCE_DIR)/main.c									\
 				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c			\
 
 BONUS_SRC	=	$(filter-out											\
+				$(SOURCE_DIR)/rtapp/rtapp.c								\
 				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
 				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c,			\
 				$(MAIN_SRC))											\
+				$(SOURCE_DIR)/rtapp/rtapp_bonus.c						\
 				$(SOURCE_DIR)/rtapp/init/init_elements_bonus.c			\
+				$(SOURCE_DIR)/rtapp/init/init_log_bonus.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
