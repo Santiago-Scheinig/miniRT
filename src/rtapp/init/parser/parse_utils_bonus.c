@@ -60,6 +60,7 @@ static int	parse_phong(char *sp, char *str, int i)
 			ft_split_free(split);
 			return (RT_FAILURE);
 		}
+		ft_split_free(split);
 		return (RT_SUCCESS);
 	}
 	return (RT_FAILURE);
