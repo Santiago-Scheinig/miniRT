@@ -21,6 +21,6 @@ void	object_del(void *content)
 	if (aux->data)
 		free(aux->data);
 	if (aux->material.map.img)
-		mlx_destroy_image(aux->mlx, aux->material.map.img);
+		mlx_destroy_image(aux->mlx->instance, aux->material.map.img);
 	free(aux);
 }

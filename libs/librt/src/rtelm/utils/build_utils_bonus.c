@@ -16,7 +16,7 @@
 
 static void	build_flag(t_object *obj, char *str)
 {
-	if (ft_strnstr("ch", str, 3))
+	if (ft_strncmp(str, "ch", 3) == 0)
 		obj->material.is_checker = 1;
 }
 
@@ -40,27 +40,33 @@ static int	build_texture(t_object *obj, char *str)
 	tex = &(obj->material.map);
 	if (tex->img)
 	{
-		mlx_destroy_image(obj->mlx, tex->img);
+		mlx_destroy_image(obj->mlx->instance, tex->img);
 		tex->img = NULL;
 		tex->pixels = NULL;
 	}
-	tex->img = mlx_xpm_file_to_image(obj->mlx, str, &tex->width, &tex->height);
+	tex->img = mlx_xpm_file_to_image(obj->mlx->instance, str,
+			&tex->width, &tex->height);
 	if (!tex->img)
-		return (1);
-	tex->pixels = (uint32_t *)mlx_get_data_addr(tex->img, &tex->bpp, &tex->line_len, &tex->endian);
+		return (0);
+	tex->pixels = (uint32_t *)mlx_get_data_addr(tex->img, &tex->bpp,
+			&tex->line_len, &tex->endian);
 	if (!tex->pixels)
-		return (1);
+	{
+		mlx_destroy_image(obj->mlx->instance, tex->img);
+		tex->img = NULL;
+		return (0);
+	}
 	return (0);
 }
 
 int	build_add_att(t_object *obj, char **arr)
 {
 	int	i;
-	
+
 	if (!obj || !arr)
 		return (1);
 	i = -1;
-	while(arr[++i])
+	while (arr[++i])
 	{
 		if (arr[i][0] == '-')
 			build_flag(obj, &arr[i][1]);
@@ -73,8 +79,7 @@ int	build_add_att(t_object *obj, char **arr)
 		{
 			errno = 0;
 			if (build_texture(obj, arr[i]))
-					return (1);	
-			return (0);
+				return (1);
 		}
 	}
 	return (0);
