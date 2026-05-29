@@ -40,7 +40,8 @@ int	parse_quadric(char **arr, int i, const char *const *g_msgs)
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid height."));
 	if (parse_vector(arr[0], arr[5], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	parse_add_att(arr, 6, i);
+	if (parse_add_att(arr, 6, i))
+		return (RT_FAILURE);
 	return (RT_SUCCESS);
 }
 
@@ -56,7 +57,8 @@ int	parse_sp(char **arr, int i, const char *const *g_msgs)
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid radius."));
 	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	parse_add_att(arr, 4, i);
+	if (parse_add_att(arr, 4, i))
+		return (RT_FAILURE);
 	return (RT_SUCCESS);
 }
 
@@ -72,6 +74,7 @@ int	parse_pl(char **arr, int i, const char *const *g_msgs)
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid normal."));
 	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
-	parse_add_att(arr, 4, i);
+	if (parse_add_att(arr, 4, i))
+		return (RT_FAILURE);
 	return (RT_SUCCESS);
 }

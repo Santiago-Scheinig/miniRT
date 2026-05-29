@@ -80,14 +80,22 @@ int	parse_add_att(char **arr, int index, int line)
 	const char	*err = "[line: %i][%s] parser failed: \'%s\' %s.";
 	const char	*msg = "is an invalid additional attribute";
 	int			arrlen;
+	int			result;
 
 	arrlen = ft_arglen(arr);
 	while (index < arrlen)
 	{
-		if (parse_flag(arr[0], arr[index], line)
-			&& parse_phong(arr[0], arr[index], line)
-			&& parse_texture(arr[0], arr[index], line, ".xpm"))
-			return (rtlog(RT_ERRLOG, 0, err, line, arr[0], arr[index], msg));
+		if (arr[index][0] == '-')
+			result = parse_flag(arr[0], arr[index], line);
+		else if (arr[index][0] == 'P' && arr[index][1] == '=')
+			result = parse_phong(arr[0], arr[index], line);
+		else if (ft_strchr(arr[index], '.'))
+			result = parse_texture(arr[0], arr[index], line, ".xpm");
+		else
+			result = rtlog(RT_ERRLOG, 0, err, line, arr[0],
+					arr[index], msg);
+		if (result)
+			return (result);
 		index++;
 	}
 	return (RT_SUCCESS);
