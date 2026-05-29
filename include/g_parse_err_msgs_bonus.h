@@ -35,10 +35,10 @@ static const char *const	g_cn_msgs[] = {
 };
 
 static const char *const	g_hb_msgs[] = {
-	"hyperboloid coordinates undeclared."
-	"hyperboloid normal undeclared."
-	"hyperboloid diameter undeclared."
-	"hyperboloid height undeclared."
+	"hyperboloid coordinates undeclared.",
+	"hyperboloid normal undeclared.",
+	"hyperboloid diameter undeclared.",
+	"hyperboloid height undeclared.",
 	"hyperboloid color undeclared.",
 	"hyperboloid has excess arguments.",
 };

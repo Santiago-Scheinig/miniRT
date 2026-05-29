@@ -65,9 +65,7 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	const char	*err = "[line: %i] parser failed: %s";
 	char		*aux;
 	char		**arr;
-	int			j;
 
-	j = -1;
 	aux = (char *) line->content;
 	if (is_empty_or_comment_line(aux))
 		return (RT_SUCCESS);

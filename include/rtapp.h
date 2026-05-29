@@ -19,6 +19,10 @@
 # include "rtmlx.h"
 # include "rtmth.h"
 # include "rtapp_debug.h"
+# if BONUS
+#  include <pthread.h>
+#  define WORKER_COUNT 16
+# endif
 
 # ifndef DEV
 #  define DEV 0
@@ -62,13 +66,18 @@ typedef struct s_tile_queue
  */
 typedef struct s_rtapp
 {
-	uint32_t		*img; // Render buffer for img, allocated after parsing.
-	t_list			*objects;	// Linked list of T_OBJECT scene elements.
-	t_list			*lights;	// Linked list of T_ELEM_LIGHT_P point lights.
+	uint32_t		*img;
+	t_list			*objects;
+	t_list			*lights;
 	t_mlx			mlx;
-	t_elem_camera	camera;		// Unique camera instance for the scene.
-	t_elem_light_a	ambient;	// Unique ambient light instance for the scene.
-	t_tile_queue	tile_queue;	// Queue of tiles to render.
+	t_elem_camera	camera;
+	t_elem_light_a	ambient;
+	t_tile_queue	tile_queue;
+# if BONUS
+	t_rtlog			logfd;
+	pthread_t		workers[WORKER_COUNT];
+	pthread_mutex_t	queue_mutex;
+# endif
 }	t_rtapp;
 
 /*--------------------------------------------------------------------------*/
@@ -100,7 +109,11 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app);
  * saved in app->logfd if they were redirected during logging. Logs an
  * error if either dup2 restoration fails but continues cleanup regardless.
  */
+# if BONUS
+int	rtapp_kill(t_rtapp *app);
+# else
 int	rtapp_kill(t_rtapp *app, t_rterr errcode);
+# endif
 
 int	rtapp_render(t_rtapp *app);
 

@@ -23,9 +23,13 @@ double	cn_calc_sides_intersection(t_ray local_ray);
 
 t_roots	hb_get_roots(t_ray local_ray);
 
+double	hb_calc_cap_dist(t_ray local_ray, double height);
+
+double	hb_calc_ends_intersection(t_ray local_ray);
+
 t_roots	pb_calc_roots(t_ray local_ray);
 
-
+double	pb_calc_cap_dist(t_ray local_ray);
 
 int	build_add_att(t_object *obj, char **arr);
 

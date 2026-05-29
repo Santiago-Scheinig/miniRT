@@ -31,12 +31,15 @@ MAIN_SRC	=	$(SOURCE_DIR)/main.c									\
 BONUS_SRC	=	$(filter-out											\
 				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c,		\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c,			\
 				$(MAIN_SRC))											\
 				$(SOURCE_DIR)/rtapp/init/init_elements_bonus.c			\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/normal_map_bonus.c\
 				
 
 # ================================ Library Configuration ========================= #
@@ -45,7 +48,7 @@ LIBS        = libs/librt
 
 LINK_LIBS   = -l:librt.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
 
-LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
+LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext -lpthread
 
 # ================================ Directory Structure =========================== #
 

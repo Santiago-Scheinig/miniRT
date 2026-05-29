@@ -30,7 +30,7 @@ static t_uv	pb_calc_uv_map(t_vector local_point)
 	return (uv);
 }
 
-static double	pb_calc_intersection(t_ray local_ray)
+static double	pb_calc_sides_intersection(t_ray local_ray)
 {
 	t_roots		roots;
 	t_vector	p1;
@@ -54,6 +54,22 @@ static double	pb_calc_intersection(t_ray local_ray)
 			valid_t = roots.sol2;
 	}
 	return (valid_t);
+}
+
+static double	pb_calc_intersection(t_ray local_ray)
+{
+	double	sides_t;
+	double	cap_t;
+
+	sides_t = pb_calc_sides_intersection(local_ray);
+	cap_t = pb_calc_cap_dist(local_ray);
+	if (sides_t < EPSILON && cap_t < EPSILON)
+		return (INFINITY);
+	if (sides_t > EPSILON && cap_t > EPSILON)
+		return (fmin(sides_t, cap_t));
+	if (sides_t > EPSILON)
+		return (sides_t);
+	return (cap_t);
 }
 
 static t_vector	pb_calc_normal(t_vector local_point)
