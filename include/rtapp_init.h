@@ -91,6 +91,7 @@ int			init_light_p(char **argv, int i, t_rtapp *app);
 int			init_object(char **argv, int i, t_rtapp *app);
 
 # if BONUS
+
 int			init_log(t_rtapp *app);
 # endif
 

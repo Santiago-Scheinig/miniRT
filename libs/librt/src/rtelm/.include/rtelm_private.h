@@ -18,13 +18,13 @@
 #  include "rtelm_private_bonus.h"
 # endif
 
-double	cy_calc_sides_intersection(t_ray local_ray);
+double		cy_calc_sides_intersection(t_ray local_ray);
 
-t_roots	cy_calc_roots(t_ray local_ray);
+t_roots		cy_calc_roots(t_ray local_ray);
 
-double	cy_calc_ends_intersection(t_ray local_ray);
+double		cy_calc_ends_intersection(t_ray local_ray);
 
-double	cy_calc_cap_dist(t_ray local_ray, double height);
+double		cy_calc_cap_dist(t_ray local_ray, double height);
 
 /**
  * Converts a comma-separated coordinate string to a 3D vector.
@@ -53,9 +53,7 @@ t_vector	build_color(char *str);
  * to be stored after this call. The inv_transpose is used for correct
  * normal transformation during lighting calculations.
  */
-void		build_matrixes(
-				t_object *obj,
-				t_vector position, t_vector normal, t_vector scale
-				);
+void		build_matrixes(t_object *obj, t_vector position,
+				t_vector normal, t_vector scale);
 
 #endif

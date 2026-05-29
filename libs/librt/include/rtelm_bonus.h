@@ -47,7 +47,6 @@ typedef struct s_phong
 	double		exponent;
 }	t_phong;
 
-
 typedef struct s_material
 {
 	t_texture		map;

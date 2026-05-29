@@ -42,7 +42,10 @@ BONUS_SRC	=	$(filter-out											\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
 				$(SOURCE_DIR)/rtapp/render/get_color_at_hit_bonus.c		\
-				$(SOURCE_DIR)/rtapp/render/normal_map_bonus.c\
+				$(SOURCE_DIR)/rtapp/render/get_lighting_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/get_material_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/normal_map_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/rtapp_render_bonus.c\
 				
 
 # ================================ Library Configuration ========================= #

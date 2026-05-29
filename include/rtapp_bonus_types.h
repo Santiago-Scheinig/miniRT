@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_color_at_hit_bonus.c                           :+:      :+:    :+:   */
+/*   rtapp_bonus_types.h                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,27 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rtapp_render_bonus.h"
+#ifndef RTAPP_BONUS_TYPES_H
+# define RTAPP_BONUS_TYPES_H
 
-t_vector	get_color_at_hit(
-	t_hit hit,
-	t_list *objs,
-	t_rtapp *app
-)
+# if BONUS
+#  include <pthread.h>
+#  define WORKER_COUNT 16
+
+typedef struct s_rtapp_bonus
 {
-	t_shade_ctx	ctx;
-	t_vector	local_point;
-	t_vector	ambient;
-	t_vector	res;
+	t_rtlog			logfd;
+	pthread_t		workers[WORKER_COUNT];
+	pthread_mutex_t	queue_mutex;
+}	t_rtapp_bonus;
 
-	local_point = vector_mult_mat4_point(hit.pos,
-			&hit.obj->transform.inv);
-	ctx.hit = hit;
-	ctx.objs = objs;
-	ctx.mat_color = get_material_color(hit.obj, local_point);
-	ctx.normal = get_lighting_normal(hit, local_point);
-	ambient = color_hadamard(ctx.mat_color, app->ambient.color);
-	ambient = vector_mult_scalar(ambient, app->ambient.ratio);
-	res = vector_sum_vector(ambient, sum_lighting(ctx, app));
-	return (res);
-}
+# else
+
+typedef struct s_rtapp_bonus
+{
+	int	_pad;
+}	t_rtapp_bonus;
+
+# endif
+
+#endif

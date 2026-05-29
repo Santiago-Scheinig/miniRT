@@ -65,3 +65,20 @@ double	hb_calc_ends_intersection(t_ray local_ray)
 		return (bottom);
 	return (INFINITY);
 }
+
+t_vector	hb_calc_tangent(t_vector local_point)
+{
+	t_vector	t;
+
+	t = vector_new(-local_point.z, 0.0, local_point.x);
+	return (vector_normalize(t));
+}
+
+t_uv	hb_calc_uv_map(t_vector local_point)
+{
+	t_uv	uv;
+
+	uv.u = atan2(local_point.z, local_point.x) / (2.0 * M_PI) + 0.5;
+	uv.v = (local_point.y + 1.0) / 2.0;
+	return (uv);
+}

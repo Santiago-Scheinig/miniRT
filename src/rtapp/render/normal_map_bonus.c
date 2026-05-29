@@ -24,9 +24,9 @@ static t_vector	rgb_to_normal(t_vector rgb)
 
 static t_vector	sample_normal_map(t_texture *map, t_uv uv)
 {
-	int		x;
-	int		y;
-	int		pixel;
+	int			x;
+	int			y;
+	int			pixel;
 	t_vector	rgb;
 
 	if (!map || !map->pixels || !map->img)

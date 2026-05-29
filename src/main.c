@@ -37,27 +37,11 @@ int	main(int argc, char **argv)
 	if (!app.mlx.instance)
 		return (del_mlx(&app.mlx, 1));
 	if (rtapp_init(argc, argv, &app))
-# if BONUS
-		rtapp_kill(&app);
-# else
-		rtapp_kill(&app, RT_FAILURE);
-# endif
+		return (rtapp_kill(&app, RT_FAILURE));
 	if (rtapp_render(&app))
-# if BONUS
-		return (rtapp_kill(&app));
-# else
 		return (rtapp_kill(&app, RT_FAILURE));
-# endif
 	if (window_run(&app.mlx, app.img, argv[1]))
-# if BONUS
-		return (rtapp_kill(&app));
-# else
 		return (rtapp_kill(&app, RT_FAILURE));
-# endif
-# if BONUS
-	rtapp_kill(&app);
-# else
 	rtapp_kill(&app, RT_SUCCESS);
-# endif
 	return (RT_SUCCESS);
 }

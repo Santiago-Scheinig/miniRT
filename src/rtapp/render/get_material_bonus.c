@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_color_at_hit_bonus.c                           :+:      :+:    :+:   */
+/*   get_material_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,25 +12,33 @@
 
 #include "rtapp_render_bonus.h"
 
-t_vector	get_color_at_hit(
-	t_hit hit,
-	t_list *objs,
-	t_rtapp *app
-)
+t_vector	get_checker_color(t_uv uv)
 {
-	t_shade_ctx	ctx;
-	t_vector	local_point;
-	t_vector	ambient;
-	t_vector	res;
+	int	iu;
+	int	iv;
 
-	local_point = vector_mult_mat4_point(hit.pos,
-			&hit.obj->transform.inv);
-	ctx.hit = hit;
-	ctx.objs = objs;
-	ctx.mat_color = get_material_color(hit.obj, local_point);
-	ctx.normal = get_lighting_normal(hit, local_point);
-	ambient = color_hadamard(ctx.mat_color, app->ambient.color);
-	ambient = vector_mult_scalar(ambient, app->ambient.ratio);
-	res = vector_sum_vector(ambient, sum_lighting(ctx, app));
-	return (res);
+	iu = (int)floor(uv.u * CHECKER_SCALE);
+	iv = (int)floor(uv.v * CHECKER_SCALE);
+	if ((iu + iv) % 2 == 0)
+		return (vector_new(1.0, 1.0, 1.0));
+	return (vector_new(0.0, 0.0, 0.0));
+}
+
+t_vector	get_material_color(t_object *obj, t_vector local_point)
+{
+	t_uv	uv;
+
+	if (obj->material.is_checker && obj->c_uv_map)
+	{
+		uv = obj->c_uv_map(local_point);
+		return (get_checker_color(uv));
+	}
+	return (obj->material.color);
+}
+
+t_vector	get_lighting_normal(t_hit hit, t_vector local_point)
+{
+	if (hit.obj->material.map.img && hit.obj->c_tangent)
+		return (get_perturbed_normal(hit, local_point));
+	return (hit.surf_normal);
 }

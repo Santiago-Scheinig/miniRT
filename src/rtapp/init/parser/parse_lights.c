@@ -49,7 +49,7 @@ int	parse_lp(char **arr, int i)
 		return (RT_FAILURE);
 	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	if (parse_double(arr[0], arr[2], i, build_limit(-1 , 1)))
+	if (parse_double(arr[0], arr[2], i, build_limit(-1, 1)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid brightness."));
 	return (RT_SUCCESS);
 }

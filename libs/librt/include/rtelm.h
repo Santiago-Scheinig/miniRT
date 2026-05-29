@@ -181,7 +181,8 @@ int				build_sp(char **str, t_object *obj);
  * @note The caller is responsible for freeing the returned object. Returns
  * NULL both on allocation failure and if the builder reports an error.
  */
-t_object		*build_object(t_mlx *mlx, char **arr, int (*builder)(char **, t_object *));
+t_object		*build_object(t_mlx *mlx, char **arr,
+					int (*builder)(char **, t_object *));
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/
