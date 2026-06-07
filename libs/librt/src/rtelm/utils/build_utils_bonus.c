@@ -47,14 +47,14 @@ static int	build_texture(t_object *obj, char *str)
 	tex->img = mlx_xpm_file_to_image(obj->mlx->instance, str,
 			&tex->width, &tex->height);
 	if (!tex->img)
-		return (0);
+		return (1);
 	tex->pixels = (uint32_t *)mlx_get_data_addr(tex->img, &tex->bpp,
 			&tex->line_len, &tex->endian);
 	if (!tex->pixels)
 	{
 		mlx_destroy_image(obj->mlx->instance, tex->img);
 		tex->img = NULL;
-		return (0);
+		return (1);
 	}
 	return (0);
 }

@@ -73,6 +73,6 @@ int	init_log(t_rtapp *app)
 	log_fd = open("log.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	errlog_fd = open("errlog.txt", O_RDWR | O_CREAT | O_TRUNC, 0644);
 	if (dup2_logs(log_fd, errlog_fd, app))
-		return (rtlog(RT_LOG, 0, "< Log files initialization failed >"));
-	return (rtlog(RT_LOG, 0, "< Log files initialization successfull >"));
+		return (RT_FAILURE);
+	return (RT_SUCCESS);
 }

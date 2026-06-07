@@ -66,7 +66,7 @@ t_vector	get_perturbed_normal(t_hit hit, t_vector local_point)
 	uv = hit.obj->c_uv_map(local_point);
 	map_normal = sample_normal_map(&hit.obj->material.map, uv);
 	tangent = hit.obj->c_tangent(local_point);
-	tangent = vector_mult_mat4_dir(tangent, &hit.obj->transform.inv_transpose);
+	tangent = vector_mult_mat4_dir(tangent, &hit.obj->transform.mat);
 	tangent = vector_normalize(tangent);
 	bitangent = build_bitangent(hit.surf_normal, tangent);
 	result = vector_sum_vector(

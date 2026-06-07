@@ -45,12 +45,14 @@ int	parse_lp(char **arr, int i)
 {
 	const char	*err = "[line: %i][%s] parser failed: %s";
 
-	if (parse_arg(arr, i, g_lp_msgs, 2))
+	if (parse_arg(arr, i, g_lp_msgs, 3))
 		return (RT_FAILURE);
 	if (parse_vector(arr[0], arr[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid coordinates."));
-	if (parse_double(arr[0], arr[2], i, build_limit(-1, 1)))
+	if (parse_double(arr[0], arr[2], i, build_limit(0, 1)))
 		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid brightness."));
+	if (parse_vector(arr[0], arr[3], i, build_limit(0, 255)))
+		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid color."));
 	return (RT_SUCCESS);
 }
 

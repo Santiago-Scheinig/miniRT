@@ -29,7 +29,7 @@ int	rtapp_init(int argc, char **argv, t_rtapp *app)
 	if (init_file_contents(lines, argv[1], app))
 		return (RT_FAILURE);
 	if (init_log(app))
-		return (RT_SUCCESS);
+		return (RT_FAILURE);
 	return (RT_SUCCESS);
 }
 
@@ -37,7 +37,6 @@ int	rtapp_kill(t_rtapp *app, t_rterr errcode)
 {
 	const char	*err = "termination of miniRT app failed: %s";
 
-	(void)errcode;
 	if (app->objects)
 		ft_lstclear(&(app->objects), object_del);
 	if (app->lights)
@@ -51,5 +50,5 @@ int	rtapp_kill(t_rtapp *app, t_rterr errcode)
 	if (app->bonus.logfd.orig_errfd != -1)
 		if (dup2(app->bonus.logfd.orig_errfd, STDERR_FILENO) == -1)
 			rtlog(RT_ERRLOG, 0, err, "unable to restore stderr.");
-	exit(RT_SUCCESS);
+	exit(errcode);
 }

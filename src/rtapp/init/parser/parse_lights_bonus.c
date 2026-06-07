@@ -49,7 +49,7 @@ int	parse_lp(char **split, int i)
 		return (RT_FAILURE);
 	if (parse_vector(split[0], split[1], i, build_limit(-FLT_MAX, FLT_MAX)))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid coordinates."));
-	if (parse_double(split[0], split[2], i, build_limit(-1, 1)))
+	if (parse_double(split[0], split[2], i, build_limit(0, 1)))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid brightness."));
 	if (parse_vector(split[0], split[3], i, build_limit(0, 255)))
 		return (rtlog(RT_ERRLOG, 0, err, i, split[0], "invalid color."));

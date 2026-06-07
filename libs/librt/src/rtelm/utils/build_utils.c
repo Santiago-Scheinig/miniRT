@@ -68,6 +68,9 @@ t_object	*build_object(t_mlx *mlx, char **arr,
 		return (NULL);
 	obj->mlx = mlx;
 	if (builder(arr, obj))
+	{
+		free(obj);
 		return (NULL);
+	}
 	return (obj);
 }

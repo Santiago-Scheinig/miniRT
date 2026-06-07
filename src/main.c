@@ -35,7 +35,10 @@ int	main(int argc, char **argv)
 		return (rtlog(RT_ERRLOG, 0, err, strerror(errno)), RT_FAILURE);
 	app.mlx.instance = mlx_init();
 	if (!app.mlx.instance)
+	{
+		free(app.img);
 		return (del_mlx(&app.mlx, 1));
+	}
 	if (rtapp_init(argc, argv, &app))
 		return (rtapp_kill(&app, RT_FAILURE));
 	if (rtapp_render(&app))

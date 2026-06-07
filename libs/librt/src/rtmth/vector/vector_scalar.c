@@ -26,11 +26,11 @@ t_vector	vector_div_scalar(t_vector v, double scalar)
 {
 	t_vector	result;
 
-	if (scalar == 0.0f)
+	if (scalar == 0.0)
 	{
-		result.x = 0.0f;
-		result.y = 0.0f;
-		result.z = 0.0f;
+		result.x = 0.0;
+		result.y = 0.0;
+		result.z = 0.0;
 	}
 	else
 	{

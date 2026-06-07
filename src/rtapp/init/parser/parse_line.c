@@ -21,13 +21,12 @@ static int	is_empty_or_comment_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[0] == '#')
+		if (line[i] == '#')
 			return (TRUE);
 		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			break ;
-		return (TRUE);
+			return (FALSE);
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
 /**
