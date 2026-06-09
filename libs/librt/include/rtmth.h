@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 18:07:38 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:17:49 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,6 +307,8 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
 /*--------------------------------------------------------------------------*/
 /*--------------------------------RAYCASTING--------------------------------*/
 /*--------------------------------------------------------------------------*/
+
+t_ray		ray_new(t_vector origin, t_vector direction);
 
 /**
  * Creates a new ray with the given origin and direction.

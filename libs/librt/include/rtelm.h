@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 18:07:15 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:17:04 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int				build_pl(char **str, t_object *obj);
  * @return 0 on success, 1 if the normal vector is zero or allocation fails.
  * @note Position and normal are consumed into the transform matrices and
  * not stored. The object is fully initialized with intersection, normal
- * and matrix data after this call.
+ * and matrix data after this call.ray_new
  */
 int				build_cy(char **str, t_object *obj);
 
