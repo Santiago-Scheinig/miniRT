@@ -50,14 +50,16 @@ static t_mat4	build_mat4(t_vector position, t_vector normal, t_vector scale)
 	return (mat4_mult_mat4(&trans, &scl));
 }
 
-void	build_matrixes(t_object *obj, t_vector position, t_vector normal, t_vector scale)
+void	build_matrixes(t_object *obj, t_vector position,
+			t_vector normal, t_vector scale)
 {
 	obj->transform.mat = build_mat4(position, normal, scale);
 	obj->transform.inv = mat4_inverse(&(obj->transform.mat));
 	obj->transform.inv_transpose = mat4_transposed(&obj->transform.inv);
 }
 
-t_object	*build_object(t_mlx *mlx, char **arr, int (*builder)(char **, t_object *))
+t_object	*build_object(t_mlx *mlx, char **arr,
+			int (*builder)(char **, t_object *))
 {
 	t_object	*obj;
 
@@ -66,6 +68,9 @@ t_object	*build_object(t_mlx *mlx, char **arr, int (*builder)(char **, t_object 
 		return (NULL);
 	obj->mlx = mlx;
 	if (builder(arr, obj))
+	{
+		free(obj);
 		return (NULL);
+	}
 	return (obj);
 }

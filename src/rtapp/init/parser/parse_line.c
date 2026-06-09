@@ -21,13 +21,12 @@ static int	is_empty_or_comment_line(char *line)
 	i = -1;
 	while (line[++i])
 	{
-		if (line[0] == '#')
+		if (line[i] == '#')
 			return (TRUE);
 		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
-			break ;
-		return (TRUE);
+			return (FALSE);
 	}
-	return (FALSE);
+	return (TRUE);
 }
 
 /**
@@ -65,9 +64,7 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	const char	*err = "[line: %i] parser failed: %s";
 	char		*aux;
 	char		**arr;
-	int			j;
 
-	j = -1;
 	aux = (char *) line->content;
 	if (is_empty_or_comment_line(aux))
 		return (RT_SUCCESS);

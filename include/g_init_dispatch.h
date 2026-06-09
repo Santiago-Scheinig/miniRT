@@ -32,9 +32,10 @@
 typedef struct s_object_build
 {
 	const char *const	*g_msgs;
-	int					(*parse)(char **arr, int i, const char *const *g_msgs);
-	int					(*build)(char **arr, t_object *obj); // Allocates and fills the object.
-	int					(*info)(t_object *obj); // Prints debug info, NULL in release.
+	int					(*parse)(char **, int,
+			const char *const *);
+	int					(*build)(char **, t_object *);
+	int					(*info)(t_object *);
 }	t_object_build;
 
 /**
@@ -44,8 +45,8 @@ typedef struct s_object_build
  */
 typedef struct s_dispatch
 {
-	const char	*specifier;	// Scene file element identifier.
-	int			(*initializer)(char **, int, t_rtapp *); // Elem init function.
+	const char	*specifier;
+	int			(*initializer)(char **, int, t_rtapp *);
 }	t_dispatch;
 
 /**

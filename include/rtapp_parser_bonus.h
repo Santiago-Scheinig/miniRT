@@ -13,6 +13,6 @@
 #ifndef RTAPP_PARSER_BONUS_H
 # define RTAPP_PARSER_BONUS_H
 
-int parse_add_att(char **arr, int index, int line);
+int	parse_add_att(char **arr, int index, int line);
 
 #endif

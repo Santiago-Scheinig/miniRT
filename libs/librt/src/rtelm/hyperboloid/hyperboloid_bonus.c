@@ -13,24 +13,7 @@
 #include "rtelm.h"
 #include "../.include/rtelm_private.h"
 
-static t_vector	hb_calc_tangent(t_vector local_point)
-{
-	t_vector	t;
-
-	t = vector_new(-local_point.z, 0.0, local_point.x);
-	return (vector_normalize(t));
-}
-
-static t_uv	hb_calc_uv_map(t_vector local_point)
-{
-	t_uv	uv;
-
-	uv.u = atan2(local_point.z, local_point.x) / (2.0 * M_PI) + 0.5;
-	uv.v = (local_point.y + 1.0) / 2.0;
-	return (uv);
-}
-
-static double	hb_calc_intersection(t_ray local_ray)
+static double	hb_calc_sides_intersection(t_ray local_ray)
 {
 	t_roots		roots;
 	t_vector	p1;
@@ -56,13 +39,34 @@ static double	hb_calc_intersection(t_ray local_ray)
 	return (valid_t);
 }
 
+static double	hb_calc_intersection(t_ray local_ray)
+{
+	double	sides_t;
+	double	ends_t;
+
+	sides_t = hb_calc_sides_intersection(local_ray);
+	ends_t = hb_calc_ends_intersection(local_ray);
+	if (sides_t < EPSILON && ends_t < EPSILON)
+		return (INFINITY);
+	if (sides_t > EPSILON && ends_t > EPSILON)
+		return (fmin(sides_t, ends_t));
+	if (sides_t > EPSILON)
+		return (sides_t);
+	if (ends_t > EPSILON)
+		return (ends_t);
+	return (INFINITY);
+}
+
 static t_vector	hb_calc_normal(t_vector local_point)
 {
-	t_vector	normal;
-
-	normal = vector_new(2.0 * local_point.x, -2.0 * local_point.y,
-			2.0 * local_point.z);
-	return (vector_normalize(normal));
+	if (local_point.y >= 1.0 - EPSILON)
+		return (vector_new(0.0, 1.0, 0.0));
+	if (local_point.y <= -1.0 + EPSILON)
+		return (vector_new(0.0, -1.0, 0.0));
+	return (vector_normalize(vector_new(
+				2.0 * local_point.x,
+				-2.0 * local_point.y,
+				2.0 * local_point.z)));
 }
 
 int	build_hb(char **str, t_object *obj)

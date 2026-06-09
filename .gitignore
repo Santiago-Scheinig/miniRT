@@ -55,6 +55,7 @@ dkms.conf
 *.dwo
 
 miniRT
+miniRT_bonus
 .vscode
 
 mlx-test

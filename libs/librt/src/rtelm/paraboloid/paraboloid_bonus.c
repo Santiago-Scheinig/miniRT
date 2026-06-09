@@ -13,24 +13,7 @@
 #include "rtelm.h"
 #include "../.include/rtelm_private.h"
 
-static t_vector	pb_calc_tangent(t_vector local_point)
-{
-	t_vector	t;
-
-	t = vector_new(-local_point.z, 0.0, local_point.x);
-	return (vector_normalize(t));
-}
-
-static t_uv	pb_calc_uv_map(t_vector local_point)
-{
-	t_uv	uv;
-
-	uv.u = atan2(local_point.z, local_point.x) / (2.0 * M_PI) + 0.5;
-	uv.v = local_point.y;
-	return (uv);
-}
-
-static double	pb_calc_intersection(t_ray local_ray)
+static double	pb_calc_sides_intersection(t_ray local_ray)
 {
 	t_roots		roots;
 	t_vector	p1;
@@ -54,6 +37,22 @@ static double	pb_calc_intersection(t_ray local_ray)
 			valid_t = roots.sol2;
 	}
 	return (valid_t);
+}
+
+static double	pb_calc_intersection(t_ray local_ray)
+{
+	double	sides_t;
+	double	cap_t;
+
+	sides_t = pb_calc_sides_intersection(local_ray);
+	cap_t = pb_calc_cap_dist(local_ray);
+	if (sides_t < EPSILON && cap_t < EPSILON)
+		return (INFINITY);
+	if (sides_t > EPSILON && cap_t > EPSILON)
+		return (fmin(sides_t, cap_t));
+	if (sides_t > EPSILON)
+		return (sides_t);
+	return (cap_t);
 }
 
 static t_vector	pb_calc_normal(t_vector local_point)

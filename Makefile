@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/05/24 19:38:29 by sscheini         ###   ########.fr        #
+#    Updated: 2026/05/29 20:27:06 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,14 +29,23 @@ MAIN_SRC	=	$(SOURCE_DIR)/main.c									\
 				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c			\
 
 BONUS_SRC	=	$(filter-out											\
+				$(SOURCE_DIR)/rtapp/rtapp.c								\
 				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
-				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c,		\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c,			\
 				$(MAIN_SRC))											\
+				$(SOURCE_DIR)/rtapp/rtapp_bonus.c						\
 				$(SOURCE_DIR)/rtapp/init/init_elements_bonus.c			\
+				$(SOURCE_DIR)/rtapp/init/init_log_bonus.c				\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
 				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/get_lighting_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/get_material_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/normal_map_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/rtapp_render_bonus.c\
 				
 
 # ================================ Library Configuration ========================= #
@@ -45,7 +54,7 @@ LIBS        = libs/librt
 
 LINK_LIBS   = -l:librt.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
 
-LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
+LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext -lpthread
 
 # ================================ Directory Structure =========================== #
 
@@ -93,7 +102,7 @@ COLOR_RESET = \033[0m
 
 .PHONY: all msg dev bonus clean fclean re $(LIBS)
 
-all: $(NAME)
+all: $(NAME) bonus
 
 dev:
 	@$(MAKE) -s re DEV=1

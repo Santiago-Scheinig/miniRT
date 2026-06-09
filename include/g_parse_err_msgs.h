@@ -24,8 +24,9 @@
  */
 static const char *const	g_lp_msgs[] = {
 	"light coordinates undeclared.",
-	"light brighness undeclared.",
-	"light has excess arguments"
+	"light brightness undeclared.",
+	"light color undeclared.",
+	"light has excess arguments."
 };
 # endif
 

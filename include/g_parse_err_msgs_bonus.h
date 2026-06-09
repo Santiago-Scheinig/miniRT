@@ -20,7 +20,7 @@
  */
 static const char *const	g_lp_msgs[] = {
 	"light coordinates undeclared.",
-	"light brighness undeclared.",
+	"light brightness undeclared.",
 	"light color undeclared.",
 	"light has excess arguments.",
 };
@@ -35,21 +35,21 @@ static const char *const	g_cn_msgs[] = {
 };
 
 static const char *const	g_hb_msgs[] = {
-	"hyperboloid coordinates undeclared."
-	"hyperboloid normal undeclared."
-	"hyperboloid diameter undeclared."
-	"hyperboloid height undeclared."
+	"hyperboloid coordinates undeclared.",
+	"hyperboloid normal undeclared.",
+	"hyperboloid diameter undeclared.",
+	"hyperboloid height undeclared.",
 	"hyperboloid color undeclared.",
 	"hyperboloid has excess arguments.",
 };
 
 static const char *const	g_pb_msgs[] = {
-	"parabole coordinates undeclared.",
-	"parabole normal undeclared.",
-	"parabole diameter undeclared.",
-	"parabole height undeclared.",
-	"parabole color undeclared.",
-	"parabole has excess arguments.",
+	"paraboloid coordinates undeclared.",
+	"paraboloid normal undeclared.",
+	"paraboloid diameter undeclared.",
+	"paraboloid height undeclared.",
+	"paraboloid color undeclared.",
+	"paraboloid has excess arguments.",
 };
 
 /*--------------------------------------------------------------------------*/

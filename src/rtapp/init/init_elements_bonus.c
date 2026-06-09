@@ -39,7 +39,10 @@ int	init_light_p(char **argv, int i, t_rtapp *app)
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
 	new_node = ft_lstnew(new_light_p);
 	if (!new_node)
+	{
+		free(new_light_p);
 		return (rtlog(RT_ERRLOG, 0, err, i, argv[0], strerror(errno)));
+	}
 	ft_lstadd_back(&(app->lights), new_node);
 	return (RT_SUCCESS);
 }

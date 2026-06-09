@@ -42,11 +42,11 @@ static int	check_phong(char *sp, char **split, int i)
 static int	parse_phong(char *sp, char *str, int i)
 {
 	const char	*err = "[line: %i][%s]: \'%s\' %s";
-	const char	*msg_inv = "invalid format: [P=R,G,B^e]."; 
+	const char	*msg_inv = "invalid format: [P=R,G,B^e].";
 	char		**split;
 
 	if (str[0] == 'P' && str[1] == '=')
-	{	
+	{
 		split = ft_split(str, '^');
 		if (!split)
 			return (rtlog(RT_ERRLOG, 0, "[line: %i][%s]:", i, strerror(errno)));
@@ -60,6 +60,7 @@ static int	parse_phong(char *sp, char *str, int i)
 			ft_split_free(split);
 			return (RT_FAILURE);
 		}
+		ft_split_free(split);
 		return (RT_SUCCESS);
 	}
 	return (RT_FAILURE);
@@ -70,25 +71,33 @@ static int	parse_texture(char *sp, char *str, int i, char *extention)
 	const char	*err = "[line: %i][%s]: \'%s\' %s";
 	const char	*msg = "uses an invalid extention.";
 
-	if (ft_strnstr(str, extention, ft_strlen(extention)))
-		return (rtlog(RT_ERRLOG, 0, err, i, sp, str, msg));
-	return (RT_SUCCESS);
+	if (ft_strnstr(str, extention, ft_strlen(str)))
+		return (RT_SUCCESS);
+	return (rtlog(RT_ERRLOG, 0, err, i, sp, str, msg));
 }
 
-int parse_add_att(char **arr, int index, int line)
+int	parse_add_att(char **arr, int index, int line)
 {
-	const char	*err = "[line: %i][%s] parser failed: \'%s\' %s."; 
+	const char	*err = "[line: %i][%s] parser failed: \'%s\' %s.";
 	const char	*msg = "is an invalid additional attribute";
 	int			arrlen;
+	int			result;
 
 	arrlen = ft_arglen(arr);
 	while (index < arrlen)
 	{
-		if (parse_flag(arr[0], arr[index], line)
-		&& parse_phong(arr[0], arr[index], line)
-		&& parse_texture(arr[0], arr[index], line, ".xpm"))
-			return (rtlog(RT_ERRLOG, 0, err, line, arr[0], arr[index], msg));
+		if (arr[index][0] == '-')
+			result = parse_flag(arr[0], arr[index], line);
+		else if (arr[index][0] == 'P' && arr[index][1] == '=')
+			result = parse_phong(arr[0], arr[index], line);
+		else if (ft_strchr(arr[index], '.'))
+			result = parse_texture(arr[0], arr[index], line, ".xpm");
+		else
+			result = rtlog(RT_ERRLOG, 0, err, line, arr[0],
+					arr[index], msg);
+		if (result)
+			return (result);
 		index++;
 	}
-	return(RT_SUCCESS);
+	return (RT_SUCCESS);
 }
