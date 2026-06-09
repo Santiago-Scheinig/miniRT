@@ -98,7 +98,7 @@ fi
 make fclean
 eval $RES
 make clean
-for f in .test_files/bonus/*.rt test_files/bonus/*/*.rt; do
+for f in .test_files/bonus/*.rt .test_files/bonus/*/*.rt; do
   echo "Running $f"
   if [ "$VALGRIND" -eq 1 ]; then
     valgrind --leak-check=full --error-exitcode=1 ./miniRT_bonus "$f" 2>> $OP_FILE || echo "❌ crash or error: $f"

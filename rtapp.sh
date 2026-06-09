@@ -105,7 +105,7 @@ make fclean
 eval $RES
 make clean
 
-for f in .test_files/mandatory/*.rt test_files/mandatory/*/*.rt; do
+for f in .test_files/mandatory/*.rt .test_files/mandatory/*/*.rt; do
   echo "Running $f"
   if [ "$VALGRIND" -eq 1 ]; then
     valgrind --leak-check=full --error-exitcode=1 ./miniRT "$f" 2>> $OP_FILE || echo "❌ crash or error: $f"
