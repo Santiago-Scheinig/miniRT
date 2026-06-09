@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_arglen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/01 17:34:13 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:08:37 by aramos-r         ###   ########.fr       */
+/*   Created: 2026/06/09 17:45:27 by sscheini          #+#    #+#             */
+/*   Updated: 2026/06/09 17:47:21 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -17,7 +17,6 @@ NORM_DIRS=(
   ./src/rtapp/init
   ./src/rtapp/init/parser
   ./src/rtapp/render
-  ./libs/librt/src/rtelm
   ./libs/librt/src/rtelm/light
   ./libs/librt/src/rtelm/plane
   ./libs/librt/src/rtelm/sphere

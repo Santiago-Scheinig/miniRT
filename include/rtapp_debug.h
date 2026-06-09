@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_debug.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 20:22:21 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 19:49:03 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/06/09 17:36:39 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

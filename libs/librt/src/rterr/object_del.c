@@ -5,13 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/03/25 18:55:26 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/24 15:55:28 by sscheini         ###   ########.fr       */
+/*   Created: 2026/06/09 17:43:58 by sscheini          #+#    #+#             */
+/*   Updated: 2026/06/09 17:44:07 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtelm.h"
-#include "rterr.h"
 
 void	object_del(void *content)
 {

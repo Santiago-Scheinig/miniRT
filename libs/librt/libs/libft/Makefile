@@ -121,7 +121,6 @@ fclean: clean
 		rm -f $(NAME); \
 		echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"; \
 	fi
-
 #
 #- Restarts the Makefile. Erases everything to default, and executes again.			-#
 re: fclean all

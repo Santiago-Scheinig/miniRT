@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
+#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/05/29 20:27:06 by aramos-r         ###   ########.fr        #
+#    Updated: 2026/06/09 17:58:46 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ COLOR_RESET = \033[0m
 
 .PHONY: all msg dev bonus clean fclean re $(LIBS)
 
-all: $(NAME) bonus
+all: $(NAME)
 
 dev:
 	@$(MAKE) -s re DEV=1
@@ -123,10 +123,10 @@ $(OBJECT_DIR) $(DEPEND_DIR): msg
 # ================================ Library Building ============================== #
 
 $(LIBS):
-	@$(MAKE) -s -C $@ SCREEN_HEIGHT=$(SCREEN_HEIGHT) SCREEN_WIDTH=$(SCREEN_WIDTH)
+	@$(MAKE) -s -C $@ W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
 
 libs_bonus:
-	@$(MAKE) bonus -s -C $(LIBS) SCREEN_HEIGHT=$(SCREEN_HEIGHT) SCREEN_WIDTH=$(SCREEN_WIDTH)
+	@$(MAKE) bonus -s -C $(LIBS) W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
 
 # ================================ Object Compilation ============================ #
 
