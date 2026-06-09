@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 17:57:07 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:07:38 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -312,16 +312,6 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
  * Creates a new ray with the given origin and direction.
  * @param origin The starting point of the ray in world space.
  * @param direction The direction of the ray, should be normalized.
- * @return The newly created T_RAY.
- * @note If direction is (0, 0, 0) ray calculations will not behave
- * as expected.
- */
-t_ray		ray_new(t_vector origin, t_vector direction);
-
-/**
- * Calculates a point along a ray at a given distance from its origin.
- * @param ray The ray to evaluate.
- * @param t The distance from the ray origin to the point.
  * @return The T_VECTOR point at distance T along RAY, computed as
  * origin + t * direction.
  * @note The direction vector of the ray should be normalized.

@@ -110,6 +110,7 @@ $(NAME): $(OBJDIR) $(OBJ)
 #
 #- Removes every object inside $(OBJDIR) and the directory itself.					-#
 clean:
+<<<<<<<< HEAD:libs/librt/libs/libft/Makefile
 	@if [ -d $(OBJDIR) ]; then \
 		rm -rf $(OBJDIR); \
 		printf "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete. \n$(COLOUR_END)\n"; \
@@ -121,6 +122,16 @@ fclean: clean
 		rm -f $(NAME); \
 		echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"; \
 	fi
+========
+	@rm -rf $(OBJDIR)
+	@echo "$(COLOUR_BLUE)[i] $(CNAME) - Object cleaning complete.\n$(COLOUR_END)"
+#
+#- Removes the final files made with this makefile, executing clean as well.		-#
+fclean: clean
+	@rm -f $(NAME)
+	@echo "$(COLOUR_RED)[X] $(CNAME) - Files removed.\n$(COLOUR_END)"
+
+>>>>>>>> main:libs/libft/Makefile
 #
 #- Restarts the Makefile. Erases everything to default, and executes again.			-#
 re: fclean all
