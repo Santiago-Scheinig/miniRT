@@ -6,12 +6,28 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 18:40:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:28:52 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:10:40 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_init.h"
 #include "rtapp_parser.h"
+#include "g_init_dispatch.h"
+
+static int	is_empty_or_comment_line(char *line)
+{
+	int	i;
+
+	i = -1;
+	while (line[++i])
+	{
+		if (line[i] == '#')
+			return (TRUE);
+		if (line[i] != ' ' && line[i] != '\t' && line[i] != '\n')
+			return (FALSE);
+	}
+	return (TRUE);
+}
 
 /**
  * Looks up and calls the initializer for a scene element by its specifier.
@@ -24,23 +40,23 @@
  * @note Dispatches through g_dispatch using exact specifier matching.
  * Replace g_dispatch with the bonus version to support extra elements.
  */
-static int parse_element(char **arr, int i, t_rtapp *app)
+static int	parse_element(char **arr, int i, t_rtapp *app)
 {
-    const char  *err = "[line: %i][%s] parser failed: %s";
-    int         j;
+	const char	*err = "[line: %i][%s] parser failed: %s";
+	int			j;
 
-    j = 0;
-    while (g_dispatch[j].specifier)
-    {
-        if (!ft_strncmp(arr[0], g_dispatch[j].specifier,
-                ft_strlen(g_dispatch[j].specifier) + 1))
+	j = 0;
+	while (g_dispatch[j].specifier)
+	{
+		if (!ft_strncmp(arr[0], g_dispatch[j].specifier,
+				ft_strlen(g_dispatch[j].specifier) + 1))
 		{
 			rtlog(RT_LOG, 0, "[line: %i][%s] initializing element.", i, arr[0]);
-            return (g_dispatch[j].initializer(arr, i, app));
+			return (g_dispatch[j].initializer(arr, i, app));
 		}
-        j++;
-    }
-    return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
+		j++;
+	}
+	return (rtlog(RT_ERRLOG, 0, err, i, arr[0], "invalid element."));
 }
 
 int	parse_line(t_list *line, int i, t_rtapp *app)
@@ -50,7 +66,7 @@ int	parse_line(t_list *line, int i, t_rtapp *app)
 	char		**arr;
 
 	aux = (char *) line->content;
-	if (aux[0] == '\n')
+	if (is_empty_or_comment_line(aux))
 		return (RT_SUCCESS);
 	arr = ft_split_base(aux, " \t\n");
 	if (!arr || !arr[0])

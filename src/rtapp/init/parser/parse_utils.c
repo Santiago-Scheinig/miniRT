@@ -6,11 +6,20 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/25 19:13:33 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:50:08 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:10:53 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtapp_parser.h"
+
+t_dlim	build_limit(double min, double max)
+{
+	t_dlim	new;
+
+	new.min = min;
+	new.max = max;
+	return (new);
+}
 
 /**
  * Validates that a string represents a double within the given limits.
@@ -25,15 +34,24 @@ static int	double_check(char *str, char **split, t_dlim limits)
 {
 	double	aux;
 	int		i;
-	int		j;
 
-	i = -1;
-	while (split[++i])
+	if (!split || !split[0])
+		return (RT_FAILURE);
+	i = 0;
+	if (split[0][0] == '-')
+		i = 1;
+	while (split[0][i])
 	{
-		j = -1;
-		while (split[i][++j])
-			if (split[i][0] != '-' && !ft_isdigit(split[i][j]))
-					return (RT_FAILURE);
+		if (!ft_isdigit(split[0][i]))
+			return (RT_FAILURE);
+		i++;
+	}
+	if (split[1])
+	{
+		if (ft_strlen(split[1]) > 1)
+			return (RT_FAILURE);
+		if (!ft_isdigit(split[1][0]))
+			return (RT_FAILURE);
 	}
 	aux = ft_atod(str);
 	if (aux > limits.max || aux < limits.min)
@@ -86,11 +104,11 @@ static int	vector_check(char *sp, char **split, int line, t_dlim limits)
 	return (ans);
 }
 
-int parse_vector(char *sp, char *str, int i, t_dlim limits)
+int	parse_vector(char *sp, char *str, int i, t_dlim limits)
 {
 	const char	*errmsg = "[line: %i][%s] parser failed: %s";
 	char		**split;
-	
+
 	split = ft_split(str, ',');
 	if (!split)
 		return (rtlog(RT_ERRLOG, 0, errmsg, i, sp, strerror(errno)));
@@ -100,19 +118,5 @@ int parse_vector(char *sp, char *str, int i, t_dlim limits)
 		return (RT_FAILURE);
 	}
 	ft_split_free(split);
-	return (RT_SUCCESS);
-}
-
-int	parse_arg(char **arr, int i, const char *const msgs[], int expected)
-{
-	const char	*err = "[line: %i][%s] parser failed: %s";
-	int			j;
-
-	j = -1;
-	while (++j < expected)
-		if (!arr[j + 1])
-			return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[j]));
-	if (arr[expected + 1])
-		return (rtlog(RT_ERRLOG, 0, err, i, arr[0], msgs[expected]));
 	return (RT_SUCCESS);
 }

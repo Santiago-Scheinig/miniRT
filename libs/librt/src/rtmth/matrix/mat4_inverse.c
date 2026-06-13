@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/29 20:53:21 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/04/12 20:20:07 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:09:36 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static double	mat3_determinant(t_mat3 m)
  * @param col The index of the column to remove (0-3).
  * @return The resulting T_MAT3 after removing ROW and COL from MAT.
  */
-static t_mat3	mat4_get_submatrix(t_mat4 mat, int row, int col)
+static t_mat3	mat4_get_submatrix(const t_mat4 *mat, int row, int col)
 {
 	t_mat3	res;
 	int		i;
@@ -52,7 +52,7 @@ static t_mat3	mat4_get_submatrix(t_mat4 mat, int row, int col)
 			while (++j < 4)
 			{
 				if (j != col)
-					res.m[r][c++] = mat.m[i][j];
+					res.m[r][c++] = mat->m[i][j];
 			}
 			r++;
 		}
@@ -70,7 +70,7 @@ static t_mat3	mat4_get_submatrix(t_mat4 mat, int row, int col)
  * @note The cofactor is the signed determinant of the submatrix obtained
  * by removing ROW and COL from MAT.
  */
-static double	mat4_cofactor(t_mat4 mat, int row, int col)
+static double	mat4_cofactor(const t_mat4 *mat, int row, int col)
 {
 	t_mat3	submatrix;
 	double	det;
@@ -82,7 +82,7 @@ static double	mat4_cofactor(t_mat4 mat, int row, int col)
 	return (det);
 }
 
-t_mat4	mat4_inverse(t_mat4 mat)
+t_mat4	mat4_inverse(const t_mat4 *mat)
 {
 	t_mat4	res;
 	int		i;

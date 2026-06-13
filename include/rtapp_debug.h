@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 20:22:21 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:43:32 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:06:20 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
  */
 typedef enum e_logtype
 {
-	RT_LOG = 1, // Standard output logging.
-	RT_ERRLOG,  // Standard error logging.
+	RT_LOG = 1,	// Standard output logging.
+	RT_ERRLOG,	// Standard error logging.
 }	t_logtype;
 
 /**

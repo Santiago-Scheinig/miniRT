@@ -6,13 +6,14 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:24:57 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:44:22 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:17:49 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTMTH_H
 # define RTMTH_H
 # include <math.h>
+# include <stdint.h>
 
 # define EPSILON 0.00001
 # ifndef M_PI
@@ -29,6 +30,12 @@
 /*--------------------------------STRUCTURES--------------------------------*/
 /*--------------------------------------------------------------------------*/
 
+typedef struct s_uv
+{
+	double	u;
+	double	v;
+}	t_uv;
+
 /**
  * Represents a 3D vector usable as either a spatial coordinate or a color.
  * @note The union allows the same data to be accessed as (x, y, z) for
@@ -36,8 +43,18 @@
  */
 typedef union u_vector
 {
-	struct {double x, y, z;}; // Spatial coordinate access.
-	struct {double r, g, b;}; // Normalized color access in 0.0-1.0 range.
+	struct
+	{
+		double	x;
+		double	y;
+		double	z;
+	};
+	struct
+	{
+		double	r;
+		double	g;
+		double	b;
+	};
 }	t_vector;
 
 /**
@@ -68,9 +85,9 @@ typedef struct s_mat3
  */
 typedef struct s_roots
 {
-	int		has_solutions; // 1 if real solutions exist, 0 otherwise.
-	double	sol1;          // Smallest solution of the equation.
-	double	sol2;          // Largest solution of the equation.
+	int		has_solutions;	// 1 if real solutions exist, 0 otherwise.
+	double	sol1;	// Smallest solution of the equation.
+	double	sol2;	// Largest solution of the equation.
 }	t_roots;
 
 /**
@@ -80,7 +97,7 @@ typedef struct s_roots
  */
 typedef struct s_ray
 {
-	t_vector	origin;    // Starting point of the ray in world space.
+	t_vector	origin;	// Starting point of the ray in world space.
 	t_vector	direction; // Normalized direction vector of the ray.
 }	t_ray;
 
@@ -189,14 +206,14 @@ t_mat4		mat4_new_identity(void);
  * @param mat The matrix to transpose.
  * @return The transposed T_MAT4.
  */
-t_mat4		mat4_transposed(t_mat4 mat);
+t_mat4		mat4_transposed(const t_mat4 *mat);
 
 /**
  * Calculates the determinant of a 4x4 matrix.
  * @param mat The matrix for which to calculate the determinant.
  * @return The determinant of MAT as a double.
  */
-double		mat4_determinant(t_mat4 mat);
+double		mat4_determinant(const t_mat4 *mat);
 
 /**
  * Creates the inverse of a 4x4 matrix.
@@ -204,7 +221,7 @@ double		mat4_determinant(t_mat4 mat);
  * @return The inverted T_MAT4, or the identity matrix if MAT is not
  * invertible (determinant is 0).
  */
-t_mat4		mat4_inverse(t_mat4 mat);
+t_mat4		mat4_inverse(const t_mat4 *mat);
 
 /**
  * Multiplies two 4x4 matrices together.
@@ -214,7 +231,7 @@ t_mat4		mat4_inverse(t_mat4 mat);
  * @note Matrix multiplication is not commutative — mat4_mult_mat4(m1, m2)
  * may not equal mat4_mult_mat4(m2, m1).
  */
-t_mat4		mat4_mult_mat4(t_mat4 m1, t_mat4 m2);
+t_mat4		mat4_mult_mat4(const t_mat4 *m1, const t_mat4 *m2);
 
 /**
  * Creates a translation matrix for the given translation values.
@@ -291,20 +308,12 @@ t_mat4		mat4_scale(double sx, double sy, double sz);
 /*--------------------------------RAYCASTING--------------------------------*/
 /*--------------------------------------------------------------------------*/
 
+t_ray		ray_new(t_vector origin, t_vector direction);
+
 /**
  * Creates a new ray with the given origin and direction.
  * @param origin The starting point of the ray in world space.
  * @param direction The direction of the ray, should be normalized.
- * @return The newly created T_RAY.
- * @note If direction is (0, 0, 0) ray calculations will not behave
- * as expected.
- */
-t_ray		ray_new(t_vector origin, t_vector direction);
-
-/**
- * Calculates a point along a ray at a given distance from its origin.
- * @param ray The ray to evaluate.
- * @param t The distance from the ray origin to the point.
  * @return The T_VECTOR point at distance T along RAY, computed as
  * origin + t * direction.
  * @note The direction vector of the ray should be normalized.
@@ -317,7 +326,7 @@ t_vector	ray_point_at(t_ray ray, double t);
  * @param transform The T_MAT4 transformation matrix to apply.
  * @return The transformed T_RAY with both origin and direction updated.
  */
-t_ray		ray_transform(t_ray ray, t_mat4 transform);
+t_ray		ray_transform(t_ray ray, const t_mat4 *transform);
 
 /*--------------------------------------------------------------------------*/
 /*---------------------------------UTILITIES--------------------------------*/
@@ -330,7 +339,7 @@ t_ray		ray_transform(t_ray ray, t_mat4 transform);
  * @return The transformed T_VECTOR including translation effects.
  * @note Use this for transforming positions in homogeneous coordinates.
  */
-t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
+t_vector	vector_mult_mat4_point(t_vector v, const t_mat4 *m);
 
 /**
  * Multiplies a 4x4 matrix by a vector treated as a direction (w = 0).
@@ -339,7 +348,7 @@ t_vector	vector_mult_mat4_point(t_vector v, t_mat4 m);
  * @return The transformed T_VECTOR unaffected by translation.
  * @note Use this for transforming normals and ray directions.
  */
-t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
+t_vector	vector_mult_mat4_dir(t_vector v, const t_mat4 *m);
 
 /**
  * Solves a quadratic equation of the form ax² + bx + c = 0.
@@ -351,6 +360,17 @@ t_vector	vector_mult_mat4_dir(t_vector v, t_mat4 m);
  * @note If the equation has a repeated root, sol1 and sol2 are equal.
  */
 t_roots		solve_quadratic(double a, double b, double c);
+
+/**
+ * Converts a normalized color vector to a packed uint32_t pixel value.
+ * @param color The T_VECTOR with r, g, b components in the 0.0-1.0 range.
+ * @return A UINT32_T packed as 0x00RRGGBB ready for mlx buffer writing.
+ * @note Components are clamped to 0.0-1.0 before conversion to prevent
+ * overflow from lighting calculations that exceed the valid range.
+ */
+uint32_t	translate_color(t_vector color);
+
+t_vector	color_hadamard(t_vector ca, t_vector cb);
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

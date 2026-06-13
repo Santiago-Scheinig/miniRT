@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/22 17:11:27 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:46:38 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/09 18:11:17 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	init_file_contents(t_list *lines, char *file, t_rtapp *app)
 		return (rtlog(RT_ERRLOG, 0, err, file, "no ambient light defined."));
 	if (!app->camera.get_pixel_ray)
 		return (rtlog(RT_ERRLOG, 0, err, file, "no camera defined."));
-	return (rtlog(RT_LOG, 0, "< Compilation successfull >", file));
+	return (rtlog(RT_LOG, 0, "< Compilation successful >", file));
 }
 
 /**
@@ -50,24 +50,40 @@ int	init_file_contents(t_list *lines, char *file, t_rtapp *app)
 static int	file_validate(char *file)
 {
 	const char	*err = "failed to open '%s': %s";
-	char	*aux;
-	
+	char		*aux;
+
 	aux = ft_strrchr(file, '.');
 	if (!aux)
 		return (rtlog(RT_ERRLOG, 0, err, file, "invalid .rt file"));
 	aux++;
-	if (ft_strncmp(aux, "rt", 2))
+	if (ft_strncmp(aux, "rt", 3))
 		return (rtlog(RT_ERRLOG, 0, err, file, "invalid .rt file"));
 	return (RT_SUCCESS);
+}
+
+static t_list	*read_and_close(int fd, char *file)
+{
+	const char		*err = "failed to open '%s': %s";
+	t_list			*lines;
+
+	lines = NULL;
+	if (ft_read_file(&lines, fd) == -1)
+	{
+		close(fd);
+		rtlog(RT_ERRLOG, 0, err, file, strerror(errno));
+		return (NULL);
+	}
+	close(fd);
+	if (!lines)
+		rtlog(RT_ERRLOG, 0, err, file, "empty file.");
+	return (lines);
 }
 
 t_list	*init_file(char *file)
 {
 	const char	*err = "failed to open '%s': %s";
-	t_list	*lines;
-	int		fd;
+	int			fd;
 
-	lines = NULL;
 	if (file_validate(file))
 		return (NULL);
 	fd = open(file, O_RDONLY);
@@ -76,16 +92,5 @@ t_list	*init_file(char *file)
 		rtlog(RT_ERRLOG, 0, err, file, strerror(errno));
 		return (NULL);
 	}
-	if (ft_read_file(&lines, fd) == -1)
-	{
-		rtlog(RT_ERRLOG, 0, err, file, strerror(errno));
-		return (NULL);
-	}
-	if (!lines)
-	{
-		rtlog(RT_ERRLOG, 0, err, file, "empty file.");
-		return (NULL);
-	}
-	close(fd);
-	return (lines);
+	return (read_and_close(fd, file));
 }

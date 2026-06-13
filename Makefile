@@ -6,174 +6,171 @@
 #    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/04/19 17:42:49 by sscheini         ###   ########.fr        #
+#    Updated: 2026/06/09 18:11:56 by sscheini         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-#	================================ Main Configuration ================================	#
+# ================================ Main Configuration ============================ #
 
-#	Executable names
-NAME = miniRT
-NAME_BONUS = miniRT_bonus
+NAME        = miniRT
+NAME_BONUS  = miniRT_bonus
 
-#	Source files
-MAIN_SRC =	$(SOURCE_DIR)/main.c								\
-			$(SOURCE_DIR)/rtapp/rtapp.c							\
-			$(SOURCE_DIR)/rtapp/debug/rtlog.c					\
-			$(SOURCE_DIR)/rtapp/init/init_file.c				\
-			$(SOURCE_DIR)/rtapp/init/init_elements.c			\
-			$(SOURCE_DIR)/rtapp/init/g_init_dispatch.c			\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_line.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c		\
-			$(SOURCE_DIR)/rtapp/init/parser/g_parse_err_msgs.c	\
-			$(SOURCE_DIR)/rtapp/render/tile_queue.c				\
+MAIN_SRC	=	$(SOURCE_DIR)/main.c									\
+				$(SOURCE_DIR)/rtapp/rtapp.c								\
+				$(SOURCE_DIR)/rtapp/debug/rtlog.c						\
+				$(SOURCE_DIR)/rtapp/init/init_file.c					\
+				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_line.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils.c			\
+				$(SOURCE_DIR)/rtapp/render/tile_queue.c					\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c			\
+				$(SOURCE_DIR)/rtapp/render/get_hit_from_ray.c			\
 
-BONUS_SRC = $(SOURCE_DIR)/main_bonus.c
+BONUS_SRC	=	$(filter-out											\
+				$(SOURCE_DIR)/rtapp/rtapp.c								\
+				$(SOURCE_DIR)/rtapp/init/init_elements.c				\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights.c			\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects.c			\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit.c,			\
+				$(MAIN_SRC))											\
+				$(SOURCE_DIR)/rtapp/rtapp_bonus.c						\
+				$(SOURCE_DIR)/rtapp/init/init_elements_bonus.c			\
+				$(SOURCE_DIR)/rtapp/init/init_log_bonus.c				\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_lights_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_objects_bonus.c	\
+				$(SOURCE_DIR)/rtapp/init/parser/parse_utils_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/get_color_at_hit_bonus.c		\
+				$(SOURCE_DIR)/rtapp/render/get_lighting_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/get_material_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/normal_map_bonus.c			\
+				$(SOURCE_DIR)/rtapp/render/rtapp_render_bonus.c\
+				
 
-#	================================ Library Configuration =============================	#
+# ================================ Library Configuration ========================= #
 
-#	Libraries to build (in build order)
-LIBS = libs/libft libs/librt #minilibx
+LIBS        = libs/librt
 
-#	Library linking order: most dependent first, base libraries last
-LINK_LIBS = -l:librt.a -l:libft.a -lm #minilibx
+LINK_LIBS   = -l:librt.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext
 
-#	Library linking order for bonus build
-LINK_LIBS_BONUS = #librtapp_bonus #librterr #librtmth #librtmlx #minilibx #libft
+LINK_LIBS_BONUS   = -l:librt_bonus.a -l:libft.a -l:libmlx_Linux.a -lm -lX11 -lXext -lpthread
 
-# ================================ Directory Structure =============================== #
+# ================================ Directory Structure =========================== #
 
-# Source, Object, and Dependency directories
-SOURCE_DIR = src
-OBJECT_DIR = obj
-DEPEND_DIR = dep
+SOURCE_DIR  = src
+OBJECT_DIR  = obj
+DEPEND_DIR  = dep
 
-# Include paths for headers
-INCLUDE_DIRS = -I include -I libs/libft/include -I libs/librt/include
+INCLUDE_DIRS    = -I include						\
+				  -I libs/librt/include				\
+				  -I libs/librt/libs/libft/include	\
+				  -I libs/librt/libs/minilibx		\
 
-# Library paths for linking
-LIBRARY_PATHS = $(addprefix -L, $(LIBS))
+LIBRARY_PATHS   = -L libs/librt					\
+				  -L libs/librt/libs/libft		\
+				  -L libs/librt/libs/minilibx	\
 
-# ================================ Compiler Settings ================================= #
+# ================================ Compiler Settings ============================ #
 
 DEV ?= 0
+W_WIDTH ?= 1920
+W_HEIGHT ?= 1080
 
-# Compiler flags
-CFLAGS = -Wall -Wextra -Werror -g -D DEV=$(DEV)
+CFLAGS      = -Wall -Wextra -Werror -g -D DEV=$(DEV) -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
+DEPFLAGS    = -MMD -MP
+CPPFLAGS    = $(INCLUDE_DIRS)
+LDFLAGS     = $(LIBRARY_PATHS)
 
-# Dependency generation flags
-DEPFLAGS = -MMD -MP
+# ================================ Object Files ================================== #
 
-# Preprocessor flags (includes)
-CPPFLAGS = $(INCLUDE_DIRS)
+MAIN_OBJ    	= 	$(MAIN_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
+BSRC			=	$(BONUS_SRC)
+BONUS_OBJ		= 	$(BSRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/bonus/%.o)
+DEPENDENCIES	=	$(MAIN_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d) \
+               		$(BONUS_SRC:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d)
 
-# Linker flags (library paths)
-LDFLAGS = $(LIBRARY_PATHS)
+# ================================ Colors ======================================== #
 
-# ================================ Object Files ====================================== #
-
-# Main program objects
-MAIN_OBJ = $(MAIN_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
-
-# Bonus program objects
-BONUS_OBJ = $(BONUS_SRC:$(SOURCE_DIR)/%.c=$(OBJECT_DIR)/%.o)
-
-# Dependency files
-ALL_SOURCES = $(MAIN_SRC) $(BONUS_SRC)
-DEPENDENCIES = $(ALL_SOURCES:$(SOURCE_DIR)/%.c=$(DEPEND_DIR)/%.d)
-
-# ================================ Colors for Output ================================= #
-
-COLOR_RED = \033[0;31m
+COLOR_RED   = \033[0;31m
 COLOR_GREEN = \033[0;32m
-COLOR_BLUE = \033[0;34m
-COLOR_CYAN = \033[0;35m
+COLOR_BLUE  = \033[0;34m
+COLOR_CYAN  = \033[0;35m
 COLOR_RESET = \033[0m
 
-# ================================ Build Rules ======================================= #
+# ================================ Build Rules =================================== #
 
-.PHONY: all dev bonus clean fclean re $(LIBS)
+.PHONY: all msg dev bonus clean fclean re $(LIBS)
 
-# Default: build main program
 all: $(NAME)
-	@echo "$(COLOR_GREEN)[✓] $(NAME) - Build complete!$(COLOR_RESET)\n"
 
-# Developer mode
 dev:
 	@$(MAKE) -s re DEV=1
-	@echo "$(COLOR_GREEN)[✓] $(NAME) - Dev build complete!$(COLOR_RESET)\n"
 
-# Build bonus program
 bonus: $(NAME_BONUS)
-	@echo "$(COLOR_GREEN)[✓] $(NAME) - Bonus build complete!$(COLOR_RESET)\n"
+
+# ================================ Directory Creation ============================ #
 
 msg:
 	@echo "$(COLOR_BLUE)[i] $(NAME) - Object compilation:"
 
-start_msg:
-	@echo "$(COLOR_GREEN)[⚙] $(NAME) - Building:\n"
-
-# ================================ Directory Creation ================================ #
-
-$(OBJECT_DIR) $(DEPEND_DIR):
-	@mkdir -p $@
-	@mkdir -p $@/rtapp
+$(OBJECT_DIR) $(DEPEND_DIR): msg
 	@mkdir -p $@/rtapp/debug
-	@mkdir -p $@/rtapp/init
 	@mkdir -p $@/rtapp/init/parser
 	@mkdir -p $@/rtapp/render
 	@mkdir -p $@/rtapp/run
 
-# ================================ Library Building ================================== #
+# ================================ Library Building ============================== #
 
-# Build each library in its subdirectory
 $(LIBS):
-	@$(MAKE) -s -C $@
+	@$(MAKE) -s -C $@ W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
 
-# Build each library in its subdirectory
-libs_bonus: $(LIBS)
-	@$(MAKE) bonus -s -C $(SOURCE_DIR)/mshft
+libs_bonus:
+	@$(MAKE) bonus -s -C $(LIBS) W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
 
-# ================================ Object Compilation ================================ #
+# ================================ Object Compilation ============================ #
 
-# Compile source files to object files
 $(OBJECT_DIR)/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
 	@$(CC) $(CPPFLAGS) $(CFLAGS) $(DEPFLAGS) -c $< -o $@ -MF $(DEPEND_DIR)/$(@F:.o=.d)
 	@printf "\r\033[2K\t$(COLOR_GREEN)[⚙] $< created.$(COLOR_RESET)"
 
-# Include dependency files for header tracking
+$(OBJECT_DIR)/bonus/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
+	@mkdir -p $(dir $@)
+	@$(CC) $(CPPFLAGS) $(CFLAGS) -D BONUS=1 $(DEPFLAGS) -c $< -o $@ -MF $(DEPEND_DIR)/$(@F:.o=.d)
+	@printf "\r\033[2K\t$(COLOR_GREEN)[⚙] $< created.$(COLOR_RESET)"
+
 -include $(DEPENDENCIES)
 
-# ================================ Linking =========================================== #
+# ================================ Linking ======================================= #
 
-# Link main executable
-# Order: compiler, object files, library paths, libraries, output
-$(NAME): start_msg $(LIBS) msg $(MAIN_OBJ)
+$(NAME): $(LIBS) $(MAIN_OBJ)
 	@$(CC) $(CFLAGS) $(MAIN_OBJ) $(LDFLAGS) $(LINK_LIBS) -o $@
 	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
+	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME) - Build complete.\n\n$(COLOR_RESET)"
 
-# Link bonus executable
-$(NAME_BONUS): libs_bonus msg_bonus $(BONUS_OBJ)
+$(NAME_BONUS): libs_bonus $(BONUS_OBJ)
 	@$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_OBJ) $(LDFLAGS) $(LINK_LIBS_BONUS) -o $@
-	@printf "\r\t$(COLOR_CYAN)[OK] Main compiled successfully.\n$(COLOR_RESET)"
+	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
+	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME_BONUS) - Build complete.\n\n$(COLOR_RESET)"
+# ================================ Cleanup ======================================= #
 
-# ================================ Cleanup Rules ===================================== #
-
-# Remove object and dependency files
 clean:
 	@$(foreach lib, $(LIBS), $(MAKE) -s -C $(lib) clean;)
-	@rm -rf $(OBJECT_DIR) $(DEPEND_DIR)
-	@echo "$(COLOR_BLUE)[i] $(NAME) - Cleaned build artifacts$(COLOR_RESET)\n"
+	@if [ -d $(OBJECT_DIR) ]; then \
+		rm -rf $(OBJECT_DIR) $(DEPEND_DIR); \
+		printf "$(COLOR_BLUE)[i] $(NAME) - Object cleaning complete. \n$(COLOUR_END)\n"; \
+	fi
+	@echo "$(COLOR_GREEN)[✓] $(NAME) - Cleaned build artifacts.$(COLOR_RESET)\n"
 
-# Remove everything including executables
-fclean:
+fclean: clean
 	@$(foreach lib, $(LIBS), $(MAKE) -s -C $(lib) fclean;)
-	@rm -rf $(OBJECT_DIR) $(DEPEND_DIR)
-	@echo "$(COLOR_BLUE)[i] $(NAME) - Object cleaning complete.\n$(COLOUR_END)"
-	@rm -f $(NAME) $(NAME_BONUS)
-	@echo "$(COLOR_RED)[X] $(NAME) - Full clean complete$(COLOR_RESET)\n"
+	@if [ -f $(NAME) ] || [ -f $(NAME_BONUS) ]; then \
+		rm -f $(NAME) $(NAME_BONUS); \
+		echo "$(COLOR_RED)[X] $(NAME) - Files removed.\n$(COLOUR_END)"; \
+	fi
+	@if [ -f "vlog.txt" ]; then	\
+		rm -rf "vlog.txt";	\
+	fi
+	@echo "$(COLOR_GREEN)[✓] $(NAME) - Full clean complete.$(COLOR_RESET)\n"
 
-# Rebuild from scratch
 re: fclean all
