@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/15 16:06:18 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/06/15 17:08:05 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ char	*get_next_line(int fd);
  * @note This function modifies the original STRING, doesn't 
  * allocate a new one.
  */
-void	ft_striteri(char *s, void (*f)(unsigned int i, char * c));
+void	ft_striteri(char *s, void (*f)(unsigned int i, char *c));
 
 /**
  * Compares two CONST STRING for n bytes.

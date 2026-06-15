@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:51:56 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/15 16:44:19 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/06/15 17:08:25 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	*memfree(void *content, t_list **lst, void (*del)(void *ptr))
 		ft_lstclear(lst, del);
 	return (NULL);
 }
+
 /**
  * Creates and allocates a new LIST result of iterating a FUNCTION on every
  * content of the original LIST.

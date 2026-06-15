@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 18:11:22 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/15 16:07:52 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/06/15 17:07:11 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,11 @@ typedef struct s_obj_dispatch
  * Terminated by a NULL sentinel entry. Replace this file with the bonus
  * version to add new geometric object types without modifying any logic.
  */
-static const t_obj_dispatch	g_obj_dispatch[] =
-{
-	{"pl", {g_pl_msgs, &parse_pl, &build_pl, NULL}},
-	{"sp", {g_sp_msgs, &parse_sp, &build_sp, NULL}},
-	{"cy", {g_cy_msgs, &parse_quadric, &build_cy, NULL}},
-	{NULL, {NULL, NULL, NULL, NULL}}
+static const t_obj_dispatch	g_obj_dispatch[] = {
+{"pl", {g_pl_msgs, &parse_pl, &build_pl, NULL}},
+{"sp", {g_sp_msgs, &parse_sp, &build_sp, NULL}},
+{"cy", {g_cy_msgs, &parse_quadric, &build_cy, NULL}},
+{NULL, {NULL, NULL, NULL, NULL}}
 };
 
 /**
@@ -89,15 +88,14 @@ static const t_obj_dispatch	g_obj_dispatch[] =
  * sentinel entry. Replace this file with the bonus version to support
  * additional scene element types without modifying any logic.
  */
-static const t_dispatch		g_dispatch[] =
-{
-	{"pl", &init_object},
-	{"cy", &init_object},
-	{"sp", &init_object},
-	{"C", &init_camera},
-	{"L", &init_light_p},
-	{"A", &init_light_a},
-	{NULL, NULL}
+static const t_dispatch		g_dispatch[] = {
+{"pl", &init_object},
+{"cy", &init_object},
+{"sp", &init_object},
+{"C", &init_camera},
+{"L", &init_light_p},
+{"A", &init_light_a},
+{NULL, NULL}
 };
 
 # endif
