@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:49:41 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:36:16 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:16:06 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static	int	ft_wrdlen(char const *s, char c)
  * @param wrdstr The ARRAY of STRINGS to free.
  * @param index The amount of STRINGS to free inside of the array.
  */
-static	void	ft_memfree(char **wrdstr, int index)
+static	void	*ft_memfree(char **wrdstr, int index)
 {
 	int	i;
 
@@ -71,6 +71,7 @@ static	void	ft_memfree(char **wrdstr, int index)
 		i++;
 	}
 	free(wrdstr);
+	return (NULL);
 }
 
 /**
@@ -101,7 +102,7 @@ char	**ft_split(char const *s, char c)
 			s = ft_strchr(s, c) + 1;
 		wrdstr[i] = ft_substr(s, 0, ft_wrdlen(s, c));
 		if (!wrdstr[i])
-			return (ft_memfree(wrdstr, i), NULL);
+			return (ft_memfree(wrdstr, i));
 		s = ft_strchr(s, c) + 1;
 		i++;
 	}

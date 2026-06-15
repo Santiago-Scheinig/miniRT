@@ -1,196 +1,190 @@
-# La Norma
+# The Norm
 
-## Version 4
+## Version 4.
 
-_Resumen: Este documento describe la norma aplicable en 42. Una norma de
-programación define un conjunto de reglas a seguir al escribir código. La Norma se
-aplica a todos los proyectos de C dentro del Common Core por defecto, y a cualquier
-proyecto donde se especifique. This document describes the applicable standard (Norm)
-at 42. A programming standard defines a set of rules to follow when writing code. The
-Norm applies to all C projects within the Common Core by default, and to any project
-where it’s specified._
+_Summary: This document describes the applicable standard (Norm) at 42: a
+programming standard that defines a set of rules to follow when writing code. The Norm
+applies to all C projects within the Common Core by default, and to any project where
+it’s specified._
 
 
-## Índice general
+## Contents
 
-- I. Prefacio
-- II. ¿Por qué?
-- III. La Norma
-   - III.1. Denominación
-   - III.2. Formato
-   - III.3. Funciones
-   - III.4. Typedef, struct, enum y union
-   - III.5. Headers - a.k.a archivos include
-   - III.6. La cabecera de 42 - a.k.a cómo empezar un archivo con estilo
-   - III.7. Macros y Preprocesadores
-   - III.8. ¡Cosas Prohibidas!
-   - III.9. Comentarios
-   - III.10. Archivos
-   - III.11. Makefile
-
-
-# Capítulo I
-
-# Prefacio
-
-Lanorminetteestá escrita en python y es de código abierto.
-Su repositorio está disponible enhttps://github.com/42School/norminette.
-¡Pull request, sugerencias e issues serán bien recibidos!
+- I Foreword
+- II Why?
+- III The Norm
+   - III.1 Naming
+   - III.2 Formatting
+   - III.3 Functions
+   - III.4 Typedef, struct, enum and union
+   - III.5 Headers - a.k.a include files
+   - III.6 The 42 header - a.k.a start a file with style
+   - III.7 Macros and Pre-processors
+   - III.8 Forbidden stuff!
+   - III.9 Comments
+   - III.10 Files
+   - III.11 Makefile
 
 
-# Capítulo II
+# Chapter I
 
-# ¿Por qué?
+# Foreword
 
-La Norma ha sido cuidadosamente elaborada para cumplir con muchas necesidades
-pedagógicas. Aquí están las razones más importantes para todas las elecciones a contin-
-uación:
-
-- Secuenciación: programar implica dividir una tarea grande y compleja en una larga
-    serie de instrucciones elementales. Todas estas instrucciones se ejecutarán en se-
-    cuencia: una tras otra. Un principiante que comienza a crear software necesita una
-    arquitectura simple y clara para su proyecto, con una comprensión completa de to-
-    das las instrucciones individuales y el orden preciso de ejecución. Los lenguajes de
-    programación crípticos que hacen múltiples instrucciones aparentemente al mismo
-    tiempo son confusos, las funciones que intentan abordar múltiples tareas mezcladas
-    en la misma porción de código son fuente de errores.
-    La Norma te pide que crees piezas de código simples, donde la tarea única de cada
-    pieza pueda ser claramente entendida y verificada, y donde la secuencia de todas
-    las instrucciones ejecutadas no deje lugar a dudas. Por eso pedimos un máximo de
-    25 líneas en las funciones, también por qué se prohíben losfor,do .. while, o
-    ternarios.
-- Aspecto: al intercambiar con tus amigos y compañeros de trabajo durante el proceso
-    normal de aprendizaje entre pares, y también durante las evaluaciones entre pares,
-    no quieres perder tiempo descifrando su código, sino hablar directamente sobre la
-    lógica de la pieza de código.
-    La Norma te pide que uses un aspecto específico, proporcionando instrucciones para
-    el nombre de las funciones y variables, indentación, reglas de llaves, tabulaciones y
-    espacios en muchos lugares.... Esto te permitirá echar un vistazo a otros códigos
-    que te resultarán familiares y llegar directamente al punto en lugar de perder tiempo
-    leyendo el código antes de entenderlo. La Norma también funciona como una marca
-    registrada. Como parte de la comunidad 42, podrás reconocer el código escrito por
-    otro estudiante o exalumno de 42 cuando estés en el mercado laboral.
-- Visión a largo plazo: hacer el esfuerzo de escribir código comprensible es la mejor
-    manera de mantenerlo. Cada vez que alguien más, incluyéndote a ti, tenga que
-    corregir un error o agregar una nueva característica, no tendrá que perder su valioso
-    tiempo tratando de entender lo que hace si previamente hiciste las cosas de la
-    manera correcta. Esto evitará situaciones en las que los fragmentos de código dejen
-    de ser mantenidos solo porque lleva tiempo, y eso puede marcar la diferencia cuando
-
+Thenorminetteis a Python and open source code that checks Norm compliance of your
+source code. It checks many constraints of the Norm, but not all of them (eg. subjective
+constraints). Unless specific local regulations on your campus, thenorminetteprevails
+during evaluations on the controlled items. In the following pages, rules that are not
+checked by thenorminetteare marked with _(*)_ , and can lead to project failure (using
+the Norm flag) if discovered by the evaluator during a code review.
 
 ```
-hablamos de tener un producto exitoso en el mercado. Cuanto antes aprendas a
-hacerlo, mejor.
-```
-- Referencias: puedes pensar que algunas, o todas, las reglas incluidas en la Norma
-    son arbitrarias, pero en realidad pensamos y leímos sobre qué hacer y cómo hacerlo.
-    Te animamos encarecidamente a buscar por qué las funciones deben ser cortas y
-    hacer una sola cosa, por qué el nombre de las variables debe tener sentido, por qué
-    las líneas no deben ser más largas de 80 columnas, por qué una función no debe
-    tener muchos parámetros, por qué los comentarios deben ser útiles, etc, etc, etc...
-
-
-# Capítulo III
-
-# La Norma
-
-### III.1. Denominación
-
-- El nombre de una estructura debe comenzar cons_.
-- El nombre de un typedef debe comenzar cont_.
-- El nombre de un union debe comenzar conu_.
-- El nombre de un enum debe comenzar cone_.
-- El nombre de una variable global debe comenzar cong_.
-- Los nombres de variables y funciones solo pueden contener minúsculas, dígitos y
-    ’_’ (snake_case).
-- Los nombres de archivos y directorios solo pueden contener minúsculas, dígitos y
-    ’_’ (snake_case).
-- Los caracteres que no forman parte de la tabla ASCII estándar están prohibidos.
-- Las variables, funciones y cualquier otro identificador deben usar snake case. Sin
-    letras mayúsculas, y cada palabra separada por un guión bajo.
-- Todos los identificadores (funciones, macros, tipos, variables, etc.) deben estar en
-    inglés.
-- Los objetos (variables, funciones, macros, tipos, archivos o directorios) deben tener
-    nombres lo más explícitos o mnemótecnicos posibles.
-- El uso de variables globales que no están marcadas como const y static está pro-
-    hibido y se considera un error de norma, a menos que el proyecto las permita
-    explícitamente.
-- El archivo debe compilar. Un archivo que no compila no se espera que pase la
-    Norma.
-
-
-### III.2. Formato
-
-- Debes indentar tu código con tabulaciones de 4 espacios. Esto no es lo mismo que
-    4 espacios normales, estamos hablando de verdaderas tabulaciones.
-- Cada función debe tener un máximo de 25 líneas, sin contar las llaves de la función.
-- Cada línea debe tener como máximo 80 columnas de ancho, incluidos los comentar-
-    ios. Advertencia: una tabulación no cuenta como una columna, sino como el número
-    de espacios que representa.
-- Cada función debe estar separada por una nueva línea. Cualquier comentario o
-    instrucción de preprocesador puede estar justo encima de la función. La nueva línea
-    está después de la función anterior.
-- Una instrucción por línea.
-- Una línea vacía debe estar vacía: sin espacios o tabulaciones.
-- Una línea no puede terminar con espacios o tabulaciones.
-- No puedes tener dos espacios consecutivos.
-- Debes comenzar una nueva línea después de cada llave de apertura o cierre o después
-    de una estructura de control.
-- Salvo que sea el final de una linea, cada coma o punto y coma debe ser seguido por
-    un espacio.
-- Cada operador u operando debe estar separado por un (y solo un) espacio.
-- Cada palabra clave de C debe ir seguida de un espacio, excepto las palabras clave
-    para tipos (como int, char, float, etc.), así como sizeof.
-- Cada declaración de variable debe estar indentada en la misma columna dentro de
-    su scope.
-- Los asteriscos que acompañan a los punteros deben estar pegados a los nombres de
-    las variables.
-- Una sola declaración de variable por línea.
-- La declaración y la inicialización no pueden estar en la misma línea, excepto para
-    las variables globales (cuando se permiten), variables estáticas y constantes.
-- Las declaraciones deben estar al principio de una función.
-- En una función, debes colocar una línea vacía entre las declaraciones de variables
-    y el resto de la función. No se permiten otras líneas vacías en una función.
-- Las asignaciones múltiples están completamente prohibidas.
-- Puedes agregar una nueva línea después de una instrucción o estructura de control,
-    pero tendrás que agregar una indentación con llaves o operador de asignación. Los
-    operadores deben estar al principio de una línea.
-
-
-- Las estructuras de control (if, while, etc...) deben tener llaves, salvo que contengan
-    una sola línea.
-- Las llaves que siguen a las funciones, declaradores o estructuras de control deben
-    estar precedidas y seguidas por una nueva línea.
-
-```
-Ejemplo general de formato:
+Its repository is available at https://github.com/42School/norminette.
 ```
 ```
-int g_global;
-typedef struct s_struct
+Pull requests, suggestions and issues are welcome!
+```
+
+# Chapter II
+
+# Why?
+
+The Norm has been carefully crafted to fulfill many pedagogical needs. Here are the most
+important reasons for all the choices below:
+
+- Sequencing: coding implies splitting a big and complex task into a long series of
+    elementary instructions. All these instructions will be executed in sequence: one
+    after another. A beginner that starts creating software needs a simple and clear
+    architecture for their project, with a full understanding of all individual instructions
+    and the precise order of execution. Cryptic language syntaxes that do multiple
+    instructions apparently at the same time are confusing, functions that try to address
+    multiple tasks mixed in the same portion of code are source of errors.
+    The Norm asks you to create simple pieces of code, where the unique task of each
+    piece can be clearly understood and verified, and where the sequence of all the
+    executed instructions leaves no doubt. That’s why we ask for 25 lines maximum in
+    functions, also whyfor,do .. while, or ternaries are forbidden.
+- Look and Feel: while exchanging with your friends and workmates during the nor-
+    mal peer-learning process, and also during the peer-evaluations, you do not want
+    to spend time to decrypt their code, but directly talk about the logic of the piece
+    of code.
+    The Norm asks you to use a specific look and feel, providing instructions for the
+    naming of the functions and variables, indentation, brace rules, tab and spaces at
+    many places.... This will allow you to smoothly have a look at other’s codes that
+    will look familiar, and get directly to the point instead of spending time reading
+    the code before understanding it. The Norm also comes as a trademark. As part of
+    the 42 community, you will be able to recognize code written by another 42 student
+    or alumni when you’ll be in the labor market.
+- Long-term vision: making the effort to write understandable code is the best way
+    to maintain it. Each time that someone else, including you, has to fix a bug or
+    add a new feature they won’t have to lose their precious time trying to figure out
+    what it does if previously you did things in the right way. This will avoid situations
+    where pieces of code stop being maintained just because it is time-consuming, and
+    that can make the difference when we talk about having a successful product in the
+    market. The sooner you learn to do so, the better.
+- References: you may think that some, or all, the rules included on the Norm are
+    arbitrary, but we actually thought and read about what to do and how to do it.
+
+
+We highly encourage you to Google why the functions should be short and just do
+one thing, why the name of the variables should make sense, why lines shouldn’t
+be longer than 80 columns wide, why a function should not take many parameters,
+why comments should be useful, etc.
+
+
+# Chapter III
+
+# The Norm
+
+### III.1 Naming
+
+- A structure’s name must start bys_.
+- A typedef’s name must start byt_.
+- A union’s name must start byu_.
+- An enum’s name must start bye_.
+- A global’s name must start byg_.
+- Identifiers, like variables, functions names, user defined types, can only contain
+    lowercases, digits and ’_’ (snake_case). No capital letters are allowed.
+- Files and directories names can only contain lowercases, digits and ’_’ (snake_case).
+- Characters that aren’t part of the standard ASCII table are forbidden, except inside
+    litteral strings and chars.
+- _(*)_ All identifiers (functions, types, variables, etc.) names should be explicit, or a
+    mnemonic, should be readable in English, with each word separated by an under-
+    score. This applies to macros, filenames and directories as well.
+- Using global variables that are not marked const or static is forbidden and is con-
+    sidered a norm error, unless the project explicitly allows them.
+- The file must compile. A file that doesn’t compile isn’t expected to pass the Norm.
+
+
+### III.2 Formatting
+
+- Each function must be at most 25 lines long, not counting the function’s own braces.
+- Each line must be at most 80 columns wide, comments included. Warning: a tabu-
+    lation doesn’t count as a single column, but as the number of spaces it represents.
+- Functions must be separated by an empty line. Comments or preprocessor instruc-
+    tions can be inserted between functions. At least an empty line must exists.
+- You must indent your code with 4-char-long tabulations. This is not the same as 4
+    spaces, we’re talking about real tabulations here (ASCII char number 9). Check that
+    your code editor is correctly configured in order to visually get a proper indentation
+    that will be validated by thenorminette.
+- Blocks within braces must be indented. Braces are alone on their own line, except
+    in declaration of struct, enum, union.
+- An empty line must be empty: no spaces or tabulations.
+- A line can never end with spaces or tabulations.
+- You can never have two consecutive empty lines. You can never have two consecu-
+    tive spaces.
+- Declarations must be at the beginning of a function.
+- All variable names must be indented on the same column in their scope. Note:
+    types are already indented by the containing block.
+- The asterisks that go with pointers must be stuck to variable names.
+- One single variable declaration per line.
+- Declaration and an initialisation cannot be on the same line, except for global
+    variables (when allowed), static variables, and constants.
+- In a function, you must place an empty line between variable declarations and the
+    remaining of the function. No other empty lines are allowed in a function.
+- Only one instruction or control structure per line is allowed. Eg.: Assignment in
+    a control structure is forbidden, two or multiple assignments on the same line is
+    forbidden, a newline is needed at the end of a control structure, ....
+- An instruction or control structure can be split into multiple lines when needed.
+    The following lines created must be indented compared to the first line, natural
+    spaces will be used to cut the line, and if applies, operators will be at the beginning
+    of the new line and not at the end of the previous one.
+- Unless it’s the end of a line, each comma or semi-colon must be followed by a space.
+- Each operator or operand must be separated by one - and only one - space.
+- Each C keyword must be followed by a space, except for keywords for types (such
+    as int, char, float, etc.), as well as sizeof.
+
+
+- Control structures (if, while..) must use braces, unless they contain a single in-
+    struction on a single line.
+
+```
+General example:
+```
+**int** g_global;
+**typedef struct** s_struct
 {
-char *my_string;
-int i;
+**char** *my_string;
+**int** i;
 } t_struct;
-struct s_other_struct;
-int main( void )
+**struct** s_other_struct;
+
+**int** main( **void** )
 {
-int i;
-char c;
-return (i);
+**int** i;
+**char** c;
+**return** (i);
 }
-```
 
-### III.3. Funciones
 
-- Una función no puede recibir más de 4 parámetros.
-- Una función que no recibe argumentos debe ser prototipada con la palabra “void”
-    como argumento.
-- Los parámetros en los prototipos de las funciones deben tener nombre.
-- Cada función debe estar separada de la siguiente por una línea vacía.
-- No puedes declarar más de 5 variables por función.
-- El retorno de una función debe estar entre paréntesis.
-- Cada función debe tener una sola tabulación entre su tipo de retorno y su nombre.
+### III.3 Functions
+
+- A function can take 4 named parameters at most.
+- A function that doesn’t take arguments must be explicitly prototyped with the
+    word "void" as the argument.
+- Parameters in functions’ prototypes must be named.
+- You can’t declare more than 5 variables per function.
+- Return of a function has to be between parenthesis, unless the function returns
+    nothing.
+- Each function must have a single tabulation between its return type and its name.
 
 ```
 int my_func( int arg1, char arg2, char *arg3)
@@ -203,30 +197,30 @@ return ;
 }
 ```
 
-### III.4. Typedef, struct, enum y union
+### III.4 Typedef, struct, enum and union
 
-- Agrega una tabulación al declarar un struct, enum o union.
-- Al declarar una variable de tipo struct, enum o union, agrega un solo espacio en el
-    tipo.
-- Al declarar un struct, union o enum con un typedef, se aplican todas las reglas de
-    indentación.
-- El nombre del typedef debe ir precedido por una tabulación.
-- Debes indentar todos los nombres de las estructuras en la misma columna dentro
-    de su scope.
-- No puedes declarar una estructura en un archivo .c.
+- As other C keywords, add a space between “struct” and the name when declaring
+    a struct. Same applies to enum and union.
+- When declaring a variable of type struct, apply the usual indentation for the name
+    of the variable. Same applies to enum and union.
+- Inside the braces of the struct, enum, union, regular indentation rules apply, like
+    any other blocks.
+- As other C keywords, add a space after “typedef”, and apply regular indentation
+    for the new defined name.
+- You must indent all structures’ names on the same column for their scope.
+- You cannot declare a structure in a .c file.
 
 
-### III.5. Headers - a.k.a archivos include
+### III.5 Headers - a.k.a include files
 
-- Las cosas permitidas en los archivos de cabecera son: inclusiones de cabecera (de
-    sistema o no), declaraciones, defines, prototipos y macros.
-- Todos los includes deben estar al principio del archivo.
-- No puedes incluir un archivo C.
-- Los archivos de cabecera deben estar protegidos de inclusiones dobles. Si el archivo
-    esft_foo.h, su macro de protección esFT_FOO_H.
-- Las inclusiones de cabecera no utilizadas (.h) están prohibidas.
-- Todas las inclusiones de cabecera deben estar justificadas en un archivo .c, así como
-    en un archivo .h.
+- _(*)_ The allowed elements of a header file are: header inclusions (system or not),
+    declarations, defines, prototypes and macros.
+- All includes must be at the beginning of the file.
+- You cannot include a C file in a header file or another C file.
+- Header files must be protected from double inclusions. If the file isft_foo.h, its
+    bystander macro isFT_FOO_H.
+- _(*)_ Inclusion of unused headers is forbidden.
+- Header inclusion can be justified in the .c file and in the .h file itself using comments.
 
 ```
 #ifndef FT_HEADER_H
@@ -239,36 +233,39 @@ struct s_struct;
 #endif
 ```
 
-### III.6. La cabecera de 42 - a.k.a cómo empezar un archivo con estilo
+### III.6 The 42 header - a.k.a start a file with style
 
-- Todos los archivos .c y .h deben comenzar inmediatamente con la cabecera 42
-    estándar: un comentario de varias líneas con un formato especial que incluye infor-
-    mación útil. La cabecera estándar está naturalmente disponible en las computado-
-    ras en clusters para varios editores de texto (emacs: usandoC-c C-h, vim usando
-    :StdheaderoF1, etc...).
-- La cabecera 42 debe contener varias informaciones actualizadas, incluyendo el creador
-    con login y correo electrónico, la fecha de creación, el login y la fecha de la últi-
-    ma actualización. Cada vez que el archivo se guarda en disco, la información debe
-    actualizarse automáticamente.
+- Every .c and .h file must immediately begin with the standard 42 header: a multi-
+    line comment with a special format including useful informations. The standard
+    header is naturally available on computers in clusters for various text editors (emacs:
+    usingC-c C-h, vim using:StdheaderorF1, etc...).
+- _(*)_ The 42 header must contain several informations up-to-date, including the cre-
+    ator with login and student email (@student.campus), the date of creation, the login
+    and date of the last update. Each time the file is saved on disk, the information
+    should be automatically updated.
+
+```
+The default standard header may not automatically be configured with
+your personnal information. You may need to change it to follow the
+previous rule.
+```
+
+### III.7 Macros and Pre-processors
+
+- _(*)_ Preprocessor constants (or #define) you create must be used only for literal
+    and constant values.
+- _(*)_ All #define created to bypass the norm and/or obfuscate code are forbidden.
+- _(*)_ You can use macros available in standard libraries, only if those ones are allowed
+    in the scope of the given project.
+- Multiline macros are forbidden.
+- Macro names must be all uppercase.
+- You must indent preprocessor directives inside #if, #ifdef or #ifndef blocks.
+- Preprocessor instructions are forbidden outside of global scope.
 
 
-### III.7. Macros y Preprocesadores
+### III.8 Forbidden stuff!
 
-- Las constantes del preprocesador (o #define) que crees, deben usarse solo para
-    valores literales y constantes.
-- Todos los #define creados para evitar la norma y/o para ofuscar el código están
-    prohibidos. Esta parte debe ser verificada por un humano.
-- Puedes usar macros disponibles en bibliotecas estándar, solo si esas están permitidas
-    en el alcance del proyecto dado.
-- Las macros de varias líneas están prohibidas.
-- Los nombres de las macros deben estar en mayúsculas.
-- Debes indentar los caracteres que siguen a #if, #ifdef o #ifndef.
-- Las instrucciones del preprocesador están prohibidas fuera del alcance global.
-
-
-### III.8. ¡Cosas Prohibidas!
-
-- No puedes utilizar:
+- You’re not allowed to use:
 
 ```
 ◦ for
@@ -283,56 +280,57 @@ struct s_struct;
 ◦ case
 ◦ goto
 ```
-- Operadores ternarios como ‘?’.
-- VLAs - o arrays de longitud variable.
-- Tipos implícitos en declaraciones de variables.
+- Ternary operators such as ‘?’.
+- VLAs - Variable Length Arrays.
+- Implicit type in variable declarations
 
 ```
 int main( int argc, char **argv)
 {
 int i;
-char string[argc]; // This is a VLA
+char str[argc]; // This is a VLA
 i = argc > 5? 0 : 1 // Ternary
 }
 ```
 
-### III.9. Comentarios
+### III.9 Comments
 
-- Los comentarios no pueden estar dentro de los cuerpos de las funciones. Los comen-
-    tarios deben estar al final de una línea, o en su propia línea.
-- Tus comentarios deben estar en inglés. Y deben ser útiles.
-- Un comentario no puede justificar la creación de un carryall o una mala función.
+- Comments cannot be inside function bodies. Comments must be at the end of a
+    line, or on their own line
+- _(*)_ Your comments should be in English, and useful.
+- _(*)_ A comment cannot justify the creation of a carryall or bad function.
 
 ```
-Un carryall o mala función generalmente viene con nombres que no
-son explícitos como f1, f2... para la función y a, b, i,.. para
-las declaraciones. Una función cuyo único objetivo es evitar la
-norma, sin un propósito lógico único, también se considera como una
-mala función. Por favor, recuerda que es preferible tener funciones
-claras y legibles que logren una tarea clara y simple cada una.
-Evita cualquier técnica de obfuscación de código, como la de una sola
-línea.
+A carryall or bad function usually comes with names that are not
+explicit such as f1, f2... for the function and a, b, c,.. for
+the variables names. A function whose only goal is to avoid the
+norm, without a unique logical purpose, is also considered as a
+bad function. Please remind that it is desirable to have clear and
+readable functions that achieve a clear and simple task each. Avoid
+any code obfuscation techniques, such as the one-liner, ....
 ```
 
-### III.10. Archivos
+### III.10 Files
 
-- No puedes incluir un archivo .c
-- No puedes tener más de 5 definiciones de funciones en un archivo .c.
-
-
-### III.11. Makefile
-
-Los Makefiles no son verificados por la Norma, y deben ser verificados durante la
-evaluación por el estudiante.
-
-- El $(NAME), clean, fclean, re y all son reglas obligatorias.
-- Si el makefile hace relinks, el proyecto se considerará no funcional.
-- En el caso de un proyecto multibinario, además de las reglas anteriores, debes tener
-    una regla que compile ambos binarios, así como una regla específica para cada
-    binario compilado.
-- En el caso de un proyecto que llama a una función de una librería no del sistema
-    (por ejemplo: libft), tu makefile debe compilar esta biblioteca automáticamente.
-- Todos los archivos fuente que necesitas para compilar tu proyecto deben estar nom-
-    brados explícitamente en tu Makefile.
+- You cannot include a .c file in a .c file.
+- You cannot have more than 5 function-definitions in a .c file.
 
 
+### III.11 Makefile
+
+Makefiles aren’t checked by thenorminette, and must be checked during evaluation by
+the student when asked by the evaluation guidelines. Unless specific instructions, the
+following rules apply to the Makefiles:
+
+- The _$(NAME)_ , _clean_ , _fclean_ , _re_ and _all_ rules are mandatory. The _all_ rule must be
+    the default one and executed when typing justmake.
+- If the makefile relinks when not necessary, the project will be considered non-
+    functional.
+- In the case of a multibinary project, in addition to the above rules, you must have
+    a rule for each binary (eg: $(NAME_1), $(NAME_2), ...). The “all” rule will
+    compile all the binaries, using each binary rule.
+- In the case of a project that calls a function from a non-system library (e.g.:libft)
+    that exists along your source code, your makefile must compile this library auto-
+    matically.
+- All source files needed to compile your project must be explicitly named in your
+    Makefile. Eg: no “*.c”, no “*.o” , etc ...

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/10 16:47:35 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/24 18:46:40 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:10:52 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_material
 {
 	t_texture		map;
 	t_vector		color;
-	t_phong			specular;		
+	t_phong			specular;
 	int				is_checker;
 }	t_material;
 

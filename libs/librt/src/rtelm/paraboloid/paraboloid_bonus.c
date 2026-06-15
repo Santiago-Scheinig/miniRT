@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   paraboloid_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/04 00:00:00 by aramos-r          #+#    #+#             */
-/*   Updated: 2026/05/24 17:34:30 by sscheini         ###   ########.fr       */
+/*   Created: 2026/06/15 16:27:31 by aramos-r          #+#    #+#             */
+/*   Updated: 2026/06/15 16:27:33 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

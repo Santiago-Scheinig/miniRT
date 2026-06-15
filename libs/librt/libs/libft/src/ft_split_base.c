@@ -6,7 +6,7 @@
 /*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 19:49:41 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/23 20:04:52 by aramos-r         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:15:31 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static int	ft_wrdlen(char const *s, char *c_str)
  * @param wrdstr The ARRAY of STRINGS to free.
  * @param index The amount of STRINGS to free inside of the array.
  */
-static	void	ft_memfree(char **wrdstr, int index)
+static	void	*ft_memfree(char **wrdstr, int index)
 {
 	int	i;
 
@@ -85,6 +85,7 @@ static	void	ft_memfree(char **wrdstr, int index)
 		i++;
 	}
 	free(wrdstr);
+	return (NULL);
 }
 
 /**
@@ -116,7 +117,7 @@ char	**ft_split_base(char const *s, char *c_str)
 			s++;
 		wrdstr[i] = ft_substr(s, 0, ft_wrdlen(s, c_str));
 		if (!wrdstr[i])
-			return (ft_memfree(wrdstr, i), NULL);
+			return (ft_memfree(wrdstr, i));
 		while (s[0] && !is_invalid(s[0], c_str))
 			s++;
 	}

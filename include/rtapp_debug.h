@@ -3,15 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_debug.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/12 20:22:21 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 18:06:20 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:10:07 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RTAPP_DEBUG_H
 # define RTAPP_DEBUG_H
+
+# include "rtapp.h"
+# include <errno.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/time.h>
+# include <sys/types.h>
 
 /*--------------------------------------------------------------------------*/
 /*-------------------------------ENUMERATIONS-------------------------------*/

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp_render_bonus.h                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/05/29 00:00:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/29 00:00:00 by sscheini         ###   ########.fr       */
+/*   Created: 2026/06/15 16:27:20 by aramos-r          #+#    #+#             */
+/*   Updated: 2026/06/15 16:27:21 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+         #
+#    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/06/09 18:11:56 by sscheini         ###   ########.fr        #
+#    Updated: 2026/06/15 16:24:27 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,9 +100,9 @@ COLOR_RESET = \033[0m
 
 # ================================ Build Rules =================================== #
 
-.PHONY: all msg dev bonus clean fclean re $(LIBS)
+.PHONY: all msg dev bonus clean fclean re libs libs_bonus
 
-all: $(NAME)
+all: libs $(NAME)
 
 dev:
 	@$(MAKE) -s re DEV=1
@@ -122,8 +122,8 @@ $(OBJECT_DIR) $(DEPEND_DIR): msg
 
 # ================================ Library Building ============================== #
 
-$(LIBS):
-	@$(MAKE) -s -C $@ W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
+libs:
+	@$(MAKE) -s -C $(LIBS) W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
 
 libs_bonus:
 	@$(MAKE) bonus -s -C $(LIBS) W_HEIGHT=$(W_HEIGHT) W_WIDTH=$(W_WIDTH)
@@ -143,12 +143,12 @@ $(OBJECT_DIR)/bonus/%.o: $(SOURCE_DIR)/%.c | $(DEPEND_DIR) $(OBJECT_DIR)
 
 # ================================ Linking ======================================= #
 
-$(NAME): $(LIBS) $(MAIN_OBJ)
+$(NAME): $(MAIN_OBJ) | libs
 	@$(CC) $(CFLAGS) $(MAIN_OBJ) $(LDFLAGS) $(LINK_LIBS) -o $@
 	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
 	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME) - Build complete.\n\n$(COLOR_RESET)"
 
-$(NAME_BONUS): libs_bonus $(BONUS_OBJ)
+$(NAME_BONUS): $(BONUS_OBJ) | libs_bonus
 	@$(CC) $(CFLAGS) -D BONUS=1 $(BONUS_OBJ) $(LDFLAGS) $(LINK_LIBS_BONUS) -o $@
 	@printf "\r\033[2K\t$(COLOR_CYAN)[OK] Program compiled successfully.\n\n$(COLOR_RESET)"
 	@printf "\033[2K$(COLOR_GREEN)[✓] $(NAME_BONUS) - Build complete.\n\n$(COLOR_RESET)"
@@ -158,7 +158,7 @@ clean:
 	@$(foreach lib, $(LIBS), $(MAKE) -s -C $(lib) clean;)
 	@if [ -d $(OBJECT_DIR) ]; then \
 		rm -rf $(OBJECT_DIR) $(DEPEND_DIR); \
-		printf "$(COLOR_BLUE)[i] $(NAME) - Object cleaning complete. \n$(COLOUR_END)\n"; \
+		printf "$(COLOR_BLUE)[i] $(NAME) - Object cleaning complete. \n$(COLOR_RESET)\n"; \
 	fi
 	@echo "$(COLOR_GREEN)[✓] $(NAME) - Cleaned build artifacts.$(COLOR_RESET)\n"
 
@@ -166,7 +166,7 @@ fclean: clean
 	@$(foreach lib, $(LIBS), $(MAKE) -s -C $(lib) fclean;)
 	@if [ -f $(NAME) ] || [ -f $(NAME_BONUS) ]; then \
 		rm -f $(NAME) $(NAME_BONUS); \
-		echo "$(COLOR_RED)[X] $(NAME) - Files removed.\n$(COLOUR_END)"; \
+		echo "$(COLOR_RED)[X] $(NAME) - Files removed.\n$(COLOR_RESET)"; \
 	fi
 	@if [ -f "vlog.txt" ]; then	\
 		rm -rf "vlog.txt";	\

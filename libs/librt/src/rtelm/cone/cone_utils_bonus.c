@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cone_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/17 17:25:02 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/24 17:28:56 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:11:48 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ t_roots	cn_calc_roots(t_ray local_ray)
  * Computes the closest valid intersection distance with the cone's sides.
  * @param local_ray The ray in the cone's local object space.
  * @return The smallest valid intersection distance T, or INFINITY.
- * @note A valid intersection must have an intersection point where 
+ * @note A valid intersection must have an intersection point where
  * 0.0 <= Y <= 1.0 to avoid rendering the infinite double cone.
  * @note Now the cone is finite with a single cap at Y=1.0,
  * if in the future we want to make it infinite we can just remove the

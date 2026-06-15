@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtapp.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 16:38:00 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 18:06:56 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 15:56:24 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@
 # include "rtmlx.h"
 # include "rtmth.h"
 # include "rtapp_debug.h"
-# include "rtapp_bonus_types.h"
-
-# ifndef DEV
-#  define DEV 0
-# endif
+# if BONUS
+#  include "rtapp_bonus_types.h"
+# else
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------STRUCTURES--------------------------------*/
@@ -53,8 +51,13 @@ typedef struct s_rtapp
 	t_elem_camera	camera;
 	t_elem_light_a	ambient;
 	t_tile_queue	tile_queue;
-	t_rtapp_bonus	bonus;
 }	t_rtapp;
+
+# endif
+
+# ifndef DEV
+#  define DEV 0
+# endif
 
 /*--------------------------------------------------------------------------*/
 /*--------------------------------APP_STEPS---------------------------------*/
