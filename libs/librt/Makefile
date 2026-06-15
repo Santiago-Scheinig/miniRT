@@ -52,7 +52,7 @@ NAME	=	librt.a
 BONUS	=	librt_bonus.a
 
 CC		=	cc
-CFLAGS	=	-g -Wall -Werror -Wextra -I include/ -I libs/libft/include -I libs/minilibx -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
+CFLAGS	=	-g -Wall -Werror -Wextra -MMD -MP -I include/ -I libs/libft/include -I libs/minilibx -D W_HEIGHT=$(W_HEIGHT) -D W_WIDTH=$(W_WIDTH)
 
 W_WIDTH ?= 1920
 W_HEIGHT ?= 1080
@@ -120,9 +120,11 @@ $(OBJDIR)bonus/%.o: $(SRCDIR)%.c
 	@$(CC) $(CFLAGS) -D BONUS=1 -c $< -o $@
 	@printf "\r\033[2K\t$(COLOUR_GREEN)[⚙] $@ created."
 
+-include $(OBJ:.o=.d) $(BOBJ:.o=.d)
+
 #- Compiles the $(NAME) static library.											-#
 $(NAME): $(OBJDIR) $(OBJ)
-	@ar rcs $(NAME) $(OBJ) $(LIBDIR)
+	@ar rcs $(NAME) $(OBJ)
 	@printf "\r\033[2K\t$(COLOUR_CIAN)[OK] Library compiled successfully.\n\n"
 
 bonus: libft minilibx $(BONUS)

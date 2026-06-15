@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 17:37:54 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/12 20:44:03 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:06:18 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
  * @return A pointer to the new allocated STRING with the results of
  * all the iterations in order; Or NULL in case of error.
  */
-char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+char	*ft_strmapi(char const *s, char (*f)(unsigned int i, char c));
 
 /**
  * Creates and allocates a new STRING resultant of the trimming of a 
@@ -230,7 +230,7 @@ char	*get_next_line(int fd);
  * @note This function modifies the original STRING, doesn't 
  * allocate a new one.
  */
-void	ft_striteri(char *s, void (*f)(unsigned int, char *));
+void	ft_striteri(char *s, void (*f)(unsigned int i, char * c));
 
 /**
  * Compares two CONST STRING for n bytes.
@@ -452,7 +452,7 @@ int		ft_read_file(t_list **lines, int fd);
  * @note If any node creation fails, frees every other previous iteration
  * using the del FUNCTION on every content. Usually being free().
  */
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *ptr));
 
 /**
  * Creates and allocates a new LIST node.
@@ -477,7 +477,7 @@ t_list	*ft_lstlast(t_list *lst);
  * @param del The function used to free each node.
  * @note In general, the del function should be free().
  */
-void	ft_lstclear(t_list **lst, void (*del)(void *));
+void	ft_lstclear(t_list **lst, void (*del)(void *ptr));
 
 /**
  * Frees the content of a NODE. then frees the NODE.
@@ -485,14 +485,14 @@ void	ft_lstclear(t_list **lst, void (*del)(void *));
  * @param del The function used to free the content.
  * @note In general, the del function should be free().
  */
-void	ft_lstdelone(t_list *lst, void (*del)(void*));
+void	ft_lstdelone(t_list *lst, void (*del)(void *ptr));
 
 /**
  * Iterates a FUNCTION on every content of every LIST following the first one.
  * @param lst The starting node to start iterating.
  * @param f The FUNCTION to iterate on every content.
  */
-void	ft_lstiter(t_list *lst, void (f)(void *));
+void	ft_lstiter(t_list *lst, void (f)(void *ptr));
 
 /**
  * Adds a LIST node at the start of a LIST HEAD.

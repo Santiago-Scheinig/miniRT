@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelm.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/03/19 17:20:30 by sscheini          #+#    #+#             */
-/*   Updated: 2026/06/09 18:17:04 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:05:00 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ int				build_sp(char **str, t_object *obj);
  * NULL both on allocation failure and if the builder reports an error.
  */
 t_object		*build_object(t_mlx *mlx, char **arr,
-					int (*builder)(char **, t_object *));
+					int (*builder)(char **arr, t_object *obj));
 
 /*--------------------------------------------------------------------------*/
 /*------------------------------------END-----------------------------------*/

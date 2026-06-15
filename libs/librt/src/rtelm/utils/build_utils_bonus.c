@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   build_utils_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/21 17:08:16 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/24 19:14:54 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:18:13 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

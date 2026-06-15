@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstmap_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
+/*   By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 20:51:56 by sscheini          #+#    #+#             */
-/*   Updated: 2026/04/01 17:35:53 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/06/15 16:44:19 by aramos-r         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
+static void	*memfree(void *content, t_list **lst, void (*del)(void *ptr))
+{
+	if (content)
+		del(content);
+	if ((*lst))
+		ft_lstclear(lst, del);
+	return (NULL);
+}
 /**
  * Creates and allocates a new LIST result of iterating a FUNCTION on every
  * content of the original LIST.
@@ -36,10 +44,10 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 	{
 		cont = f(lst->content);
 		if (!cont)
-			return (ft_lstclear(&tmp_lst, del), NULL);
+			return (memfree(NULL, &tmp_lst, del));
 		tmp_node = ft_lstnew(cont);
 		if (!tmp_node)
-			return (del(cont), ft_lstclear(&tmp_lst, del), NULL);
+			return (memfree(cont, &tmp_lst, del));
 		ft_lstadd_back(&tmp_lst, tmp_node);
 		lst = lst->next;
 	}
