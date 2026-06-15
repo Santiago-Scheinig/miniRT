@@ -1,4 +1,4 @@
-_This project has been created as part of the 42 curriculum by alraro, sscheini._
+_This project has been created as part of the 42 curriculum by aramos-r, sscheini._
 
 # miniRT
 
@@ -21,7 +21,7 @@ The renderer uses a matrix-based transform system: each object carries a local-t
 ### Compilation
 
 ```bash
-make           # Mandatory version → ./miniRT
+make           # Mandatory and bonus version → ./miniRT && ./miniRT_bonus
 make bonus     # Bonus version     → ./miniRT_bonus
 make clean     # Remove object files
 make fclean    # Remove object files and binaries

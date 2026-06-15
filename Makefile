@@ -6,7 +6,7 @@
 #    By: aramos-r <aramos-r@student.42malaga.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/03/22 19:07:47 by sscheini          #+#    #+#              #
-#    Updated: 2026/06/15 16:24:27 by aramos-r         ###   ########.fr        #
+#    Updated: 2026/06/15 16:52:20 by aramos-r         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,7 +102,7 @@ COLOR_RESET = \033[0m
 
 .PHONY: all msg dev bonus clean fclean re libs libs_bonus
 
-all: libs $(NAME)
+all: libs $(NAME) bonus
 
 dev:
 	@$(MAKE) -s re DEV=1
