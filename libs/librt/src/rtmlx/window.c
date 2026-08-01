@@ -6,7 +6,7 @@
 /*   By: sscheini <sscheini@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/14 19:01:10 by sscheini          #+#    #+#             */
-/*   Updated: 2026/05/24 17:43:02 by sscheini         ###   ########.fr       */
+/*   Updated: 2026/08/01 16:44:11 by sscheini         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,44 @@ static int	close_window(void *param)
 	return (0);
 }
 
+static int	save_ppm(t_mlx *mlx, char *filename)
+{
+	unsigned char	*out;
+    unsigned char	*src;
+	FILE			*f;
+    int 			out_i;
+    int 			size;
+
+	size = W_WIDTH * W_HEIGHT * 3;
+	out = malloc(size);
+	if (!out)
+		return(1);
+	src = (unsigned char *)mlx_get_data_addr(mlx->img, &mlx->bpp, &mlx->len, &mlx->end);
+	out_i = 0;
+    for (int y = 0; y < W_HEIGHT; y++)
+    {
+        for (int x = 0; x < W_WIDTH; x++)
+        {
+            unsigned char *pixel = src + (y * mlx->len) + (x * (mlx->bpp / 8));
+            out[out_i++] = pixel[2];
+            out[out_i++] = pixel[1];
+            out[out_i++] = pixel[0];
+        }
+    }
+	f = fopen(filename, "wb");
+    fprintf(f, "P6\n%d %d\n255\n", W_WIDTH, W_HEIGHT);
+    fwrite(out, 1, size, f);
+    fclose(f);
+    free(out);
+	return (0);
+}
+
 static int	on_keypress(int keycode, void *param)
 {
 	if (keycode == 65307)
 		return (close_window(param));
+	if (keycode == 115)
+		return (save_ppm(param, "render.ppm"));
 	return (0);
 }
 
